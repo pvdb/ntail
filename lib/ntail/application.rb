@@ -17,12 +17,17 @@ module NginxTail
             self.options.exit = true
           }
         ],
+        ['--execute',  '-e CODE', "Ruby code block that is yielded with each (parsed) line as argument.",
+          lambda { |value|
+            self.options.code = eval "Proc.new #{value}"
+          }
+        ],
       ]
     end
 
     def self.parse_options
       OptionParser.new do |opts|
-        opts.banner = "ntail {options} ..."
+        opts.banner = "ntail {options} {file(s)} ..."
         opts.separator ""
         opts.separator "Options are ..."
 
@@ -39,7 +44,12 @@ module NginxTail
       self.parse_options
       unless self.options.exit
         ARGF.each_line do |line|
-          puts line
+          line = line.chomp
+          if self.options.code
+            self.options.code.call line
+          else
+            puts line
+          end
         end
       end
       return 0
