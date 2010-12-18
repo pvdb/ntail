@@ -35,6 +35,10 @@ A parsing tail(1)-like utility for nginx log files
 
 * implement a native <tt>"-f"</tt> option for ntail, similar to that of <tt>tail(1)</tt>
 
+== Acknowledgements
+
+ntail's parsing feature is inspired by an nginx log parser written by {Richard Taylor (moomerman)}[https://github.com/moomerman]
+
 == Contributing to ntail
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
