@@ -45,7 +45,7 @@ module NginxTail
       end.parse!
     end
     
-    def self.run!(*argv)
+    def self.run!
       self.parse_options
       unless self.options.exit
         ARGF.each_line do |line|
