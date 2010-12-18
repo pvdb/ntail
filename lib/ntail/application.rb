@@ -9,7 +9,7 @@ module NginxTail
       @@options ||= OpenStruct.new
     end
     
-    def self.standard_ntail_options
+    def self.ntail_options
       [
         ['-v', '--version', '-V', "Display the program version.",
           lambda { |value|
@@ -31,7 +31,7 @@ module NginxTail
           self.options.exit = true
         end
 
-        standard_ntail_options.each { |args| opts.on(*args) }
+        self.ntail_options.each { |args| opts.on(*args) }
       end.parse!
     end
     
