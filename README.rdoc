@@ -2,7 +2,38 @@
 
 A parsing tail(1)-like utility for nginx log files
 
-> gem install ntail
+  > gem install ntail
+
+== Examples
+
+* read from STDIN and print each line to STDOUT <em>(stop with ^D)</em>
+
+    > ntail
+
+* process an nginx log file and print each line to STDOUT
+
+    > ntail /var/log/nginx/access.log
+
+* tail an "active" nginx log file and print each new line to STDOUT <em>(stop with ^C)</em>
+
+    > tail -f /var/log/nginx/access.log | ntail
+
+* tail STDIN and print out the length of each line <em>(to illustrate -e option)</em>
+
+    > ntail -e '{ |line| puts line.size }'
+
+* tail STDIN but only print out non-empty lines <em>(to illustrate -f option)</em>
+
+    > ntail -f '{ |line| line.size > 0 }'
+
+* the following invocations behave exactly the same <em>(to illustrate -e and -f options)</em>
+
+    > ntail
+    > ntail -f '{ |line| true }' -e '{ |line| puts line }'
+
+== TODO
+
+* implement a native <tt>"-f"</tt> option for ntail, similar to that of <tt>tail(1)</tt>
 
 == Contributing to ntail
  
