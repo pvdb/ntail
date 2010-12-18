@@ -17,7 +17,12 @@ module NginxTail
             self.options.exit = true
           }
         ],
-        ['--execute',  '-e CODE', "Ruby code block that is yielded with each (parsed) line as argument.",
+        ['--filter',  '-f CODE', "Ruby code block for filtering (parsed) lines - needs to return true or false.",
+          lambda { |value|
+            self.options.filter = eval "Proc.new #{value}"
+          }
+        ],
+        ['--execute',  '-e CODE', "Ruby code block for processing each (parsed) line.",
           lambda { |value|
             self.options.code = eval "Proc.new #{value}"
           }
@@ -45,10 +50,12 @@ module NginxTail
       unless self.options.exit
         ARGF.each_line do |line|
           line = line.chomp
-          if self.options.code
-            self.options.code.call line
-          else
-            puts line
+          if !self.options.filter or self.options.filter.call line
+            if self.options.code
+              self.options.code.call line
+            else
+              puts line
+            end
           end
         end
       end
