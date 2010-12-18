@@ -57,7 +57,7 @@ module NginxTail
         lines_read = lines_processed = lines_ignored = 0
         ARGF.each_line do |line|
           line = line.chomp ; lines_read += 1
-          if !self.options.filter || self.options.filter.call line
+          if !self.options.filter || self.options.filter.call(line)
             lines_processed += 1
             if self.options.code
               self.options.code.call line
