@@ -1,6 +1,8 @@
 = ntail
 
-Description goes here.
+A parsing tail(1)-like utility for nginx log files
+
+> gem install ntail
 
 == Contributing to ntail
  
@@ -14,6 +16,5 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Peter Vandenberk. See LICENSE.txt for
-further details.
+Copyright (c) 2010 Peter Vandenberk. See LICENSE.txt for further details.
 
