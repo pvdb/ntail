@@ -37,8 +37,12 @@ module NginxTail
     
     def self.run!(*argv)
       self.parse_options
-      return 0 if self.options.exit
-      return -1 # for now, until we implement actual processing...
+      unless self.options.exit
+        ARGF.each_line do |line|
+          puts line
+        end
+      end
+      return 0
     end # def run
     
   end
