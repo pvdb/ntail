@@ -33,15 +33,19 @@ A parsing tail(1)-like utility for nginx log files
 
 * find all HTTP requests that resulted in a '5xx' HTTP error/status code <em>(e.g. Rails 500 errors)</em>
 
-    > gunzip -S .gz -c access.log-20101216.gz | ./bin/ntail -f '{ |line| line.server_error_status? }'
+    > gunzip -S .gz -c access.log-20101216.gz | ntail -f '{ |line| line.server_error_status? }'
 
 * generate a summary report of HTTP status codes, for all non-200 HTTP requests
 
-    > ./bin/ntail -f '{ |line| line.status != "200" }' -e '{ |line| puts line.status }' access.log | sort | uniq -c
+    > ntail -f '{ |line| line.status != "200" }' -e '{ |line| puts line.status }' access.log | sort | uniq -c
     76 301
     16 302
      2 304
      1 406
+
+* print out GeoIP country and city information for each HTTP request <em>(depends on the optional <tt>geoip</tt> gem)</em>
+
+    > ntail -e '{ |line| puts [line.to_country, line.to_city].join("\t") }' /var/log/nginx/access.log 
 
 == TODO
 
