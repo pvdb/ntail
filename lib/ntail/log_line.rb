@@ -4,6 +4,12 @@ require 'rubygems'
 require 'rainbow'
 require 'user-agent'
 
+begin
+  require 'geoip'
+rescue
+  # NOOP (optional dependency)
+end
+
 module NginxTail
   class LogLine
 
@@ -210,7 +216,22 @@ module NginxTail
     end
 
     def nslookup() Socket::getaddrinfo(self.remote_address,nil)[0][2] ; end
-    def geoiplookup() GeoIP.new('/usr/share/GeoIP/GeoIP.dat').country(self.remote_address)[5] ; end
+    
+    if defined? GeoIP # ie. if the optional GeoIP gem is installed
+      
+      if File.exists?('/usr/share/GeoIP/GeoIP.dat')
+        def to_country()
+          record = GeoIP.new('/usr/share/GeoIP/GeoIP.dat').country(self.remote_address) ; record ? record[5] : 'N/A'
+        end
+      end
+      
+      if File.exists?('/usr/share/GeoIP/GeoIPCity.dat')
+        def to_city()
+          record = GeoIP.new('/usr/share/GeoIP/GeoIPCity.dat').city(self.remote_address) ; record ? record[7] : 'N/A'
+        end
+      end
+      
+    end
 
     #
     # downstream proxy servers
