@@ -38,6 +38,7 @@ A parsing tail(1)-like utility for nginx log files
 == TODO
 
 * implement a native <tt>"-f"</tt> option for ntail, similar to that of <tt>tail(1)</tt>
+* implement a <tt>"-i"</tt> option ("ignore exceptions"/"continue processing"), if handling a single line raised an exception
 
 * make <tt>PROXY_IP_ADDRESS</tt> configurable (from command line and/or rc file)
 * make <tt>OFFICE_IP_ADDRESS</tt> configurable (from command line and/or rc file)

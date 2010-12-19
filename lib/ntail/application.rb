@@ -40,6 +40,7 @@ module NginxTail
       
       # application defaults...
       self.options.running = true
+      self.options.exit = 0
       
       OptionParser.new do |opts|
         opts.banner = "ntail {options} {file(s)} ..."
@@ -69,27 +70,34 @@ module NginxTail
       
       while self.options.running and ARGF.gets
         raw_line = $_.chomp ; lines_read += 1
-        log_line = NginxTail::LogLine.new(raw_line)
-        if log_line.parsable
-          parsable_lines += 1
-          if !self.options.filter || self.options.filter.call(log_line)
-            lines_processed += 1
-            if self.options.code
-              self.options.code.call log_line
+        begin
+          log_line = NginxTail::LogLine.new(raw_line)
+          if log_line.parsable
+            parsable_lines += 1
+            if !self.options.filter || self.options.filter.call(log_line)
+              lines_processed += 1
+              if self.options.code
+                self.options.code.call log_line
+              else
+                puts log_line
+              end
             else
-              puts log_line
+              lines_ignored += 1
+              if self.options.verbose
+                $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+              end
             end
           else
-            lines_ignored += 1
+            unparsable_lines += 1
             if self.options.verbose
-              $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+              $stderr.puts "[ERROR] cannot parse '#{raw_line}'"
             end
           end
-        else
-          unparsable_lines += 1
-          if self.options.verbose
-            $stderr.puts "[ERROR] cannot parse '#{raw_line}'"
-          end
+        rescue
+          $stderr.puts "[ERROR] processing line #{lines_read} resulted in #{$!.message}"
+          $stderr.puts "[ERROR] " + raw_line
+          self.options.exit = -1
+          self.options.running = false
         end
       end
       
@@ -99,7 +107,7 @@ module NginxTail
         $stderr.puts "[INFO] processed #{lines_processed} lines, ignored #{lines_ignored} lines"
       end
       
-      return 0
+      return self.options.exit
       
     end # def run
     
