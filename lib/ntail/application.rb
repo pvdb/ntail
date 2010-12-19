@@ -77,7 +77,7 @@ module NginxTail
             if !self.options.filter || self.options.filter.call(log_line)
               lines_processed += 1
               if self.options.code
-                self.options.code.call log_line
+                self.options.code.call(log_line)
               else
                 puts log_line
               end

@@ -35,6 +35,14 @@ A parsing tail(1)-like utility for nginx log files
 
     > gunzip -S .gz -c access.log-20101216.gz | ./bin/ntail -f '{ |line| line.server_error_status? }'
 
+* generate a summary report of HTTP status codes, for all non-200 HTTP requests
+
+    > ./bin/ntail -f '{ |line| line.status != "200" }' -e '{ |line| puts line.status }' access.log | sort | uniq -c
+    76 301
+    16 302
+     2 304
+     1 406
+
 == TODO
 
 * implement a native <tt>"-f"</tt> option for ntail, similar to that of <tt>tail(1)</tt>

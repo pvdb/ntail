@@ -1,6 +1,7 @@
 require 'net/http'
 
 require 'rubygems'
+require 'rainbow'
 require 'user-agent'
 
 module NginxTail
@@ -51,9 +52,22 @@ module NginxTail
       raw_line.send method, *params
     end
     
-    # for now, until we make it fancier...
     def to_s()
-      raw_line.to_s
+      # simple but boring:
+      # raw_line.to_s
+      color = if redirect_status?
+        :yellow
+      elsif !success_status?
+        :red
+      else
+        :default
+      end
+      "%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s" % [
+        remote_address.foreground(color),
+        status.foreground(color),
+        uri.foreground(color),
+        to_agent_s.foreground(color)
+      ]
     end
 
     COMPONENTS = [
@@ -189,6 +203,10 @@ module NginxTail
       else
         Agent.new(self.http_user_agent)
       end
+    end
+    
+    def to_agent_s()
+      agent = self.to_agent ; "(%s, %s)" % [agent.name, agent.os]
     end
 
     def nslookup() Socket::getaddrinfo(self.remote_address,nil)[0][2] ; end
