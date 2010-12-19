@@ -45,7 +45,18 @@ A parsing tail(1)-like utility for nginx log files
 
 * print out GeoIP country and city information for each HTTP request <em>(depends on the optional <tt>geoip</tt> gem)</em>
 
-    > ntail -e '{ |line| puts [line.to_country, line.to_city].join("\t") }' /var/log/nginx/access.log 
+    > ntail -e '{ |line| puts [line.to_country, line.to_city].join("\t") }' /var/log/nginx/access.log
+    United States   Los Angeles
+    United States   Houston
+    Germany         Berlin
+    United Kingdom  London
+
+* print out the IP address and the corresponding host name for each HTTP request <em>(slows things down considerably, due to <tt>nslookup</tt> call)</em>
+
+    > ntail -e '{ |line| puts [line.remote_address, line.to_host_name].join("\t") }' /var/log/nginx/access.log
+    66.249.72.196   crawl-66-249-72-196.googlebot.com
+    67.192.120.134  s402.pingdom.com
+    75.31.109.144   adsl-75-31-109-144.dsl.irvnca.sbcglobal.net
 
 == TODO
 

@@ -1,3 +1,4 @@
+require 'socket'
 require 'net/http'
 
 require 'rubygems'
@@ -103,8 +104,9 @@ module NginxTail
       :to_date,
       :to_agent,
 
-      :nslookup,
-      :geoiplookup,
+      :to_host_name,
+      :to_country,
+      :to_city,
     
     ]
 
@@ -215,7 +217,9 @@ module NginxTail
       agent = self.to_agent ; "(%s, %s)" % [agent.name, agent.os]
     end
 
-    def nslookup() Socket::getaddrinfo(self.remote_address,nil)[0][2] ; end
+    def to_host_name()
+      Socket::getaddrinfo(self.remote_address,nil)[0][2]
+    end
     
     if defined? GeoIP # ie. if the optional GeoIP gem is installed
       
