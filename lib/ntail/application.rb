@@ -65,27 +65,38 @@ module NginxTail
         end
       end
       
-      lines_read = lines_processed = lines_ignored = 0
+      lines_read = lines_processed = lines_ignored = parsable_lines = unparsable_lines = 0
       
       while self.options.running and ARGF.gets
-        line = $_.chomp ; lines_read += 1
-        if !self.options.filter || self.options.filter.call(line)
-          lines_processed += 1
-          if self.options.code
-            self.options.code.call line
+        raw_line = $_.chomp ; lines_read += 1
+        log_line = NginxTail::LogLine.new(raw_line)
+        if log_line.parsable
+          parsable_lines += 1
+          if !self.options.filter || self.options.filter.call(log_line)
+            lines_processed += 1
+            if self.options.code
+              self.options.code.call log_line
+            else
+              puts log_line
+            end
           else
-            puts line
+            lines_ignored += 1
+            if self.options.verbose
+              $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+            end
           end
         else
-          lines_ignored += 1
+          unparsable_lines += 1
           if self.options.verbose
-            $stderr.puts "[WARN] ignoring line ##{lines_read}"
+            $stderr.puts "[ERROR] cannot parse '#{raw_line}'"
           end
         end
       end
       
       if self.options.verbose
-        $stderr.puts "[INFO] read #{lines_read} lines, processed #{lines_processed} lines, ignored #{lines_ignored} lines"
+        $stderr.puts "[INFO] read #{lines_read} lines"
+        $stderr.puts "[INFO] #{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
+        $stderr.puts "[INFO] processed #{lines_processed} lines, ignored #{lines_ignored} lines"
       end
       
       return 0

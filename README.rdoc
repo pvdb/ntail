@@ -31,9 +31,20 @@ A parsing tail(1)-like utility for nginx log files
     > ntail
     > ntail -f '{ |line| true }' -e '{ |line| puts line }'
 
+* find all HTTP requests that resulted in a '5xx' HTTP error/status code <em>(e.g. Rails 500 errors)</em>
+
+    > gunzip -S .gz -c access.log-20101216.gz | ./bin/ntail -f '{ |line| line.server_error_status? }'
+
 == TODO
 
 * implement a native <tt>"-f"</tt> option for ntail, similar to that of <tt>tail(1)</tt>
+
+* make <tt>PROXY_IP_ADDRESS</tt> configurable (from command line and/or rc file)
+* make <tt>OFFICE_IP_ADDRESS</tt> configurable (from command line and/or rc file)
+* make <tt>KNOWN_SEARCH_BOTS</tt> configurable (from command line and/or rc file)
+* make <tt>INTERNAL_REFERERS</tt> configurable (from command line and/or rc file)
+* make <tt>AUTOMATED_REQUESTS</tt> configurable (from command line and/or rc file)
+* make <tt>STATIC_REPOS</tt> configurable (from command line and/or rc file)
 
 == Acknowledgements
 
