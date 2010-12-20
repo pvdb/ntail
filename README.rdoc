@@ -1,6 +1,6 @@
 = ntail
 
-A parsing tail(1)-like utility for nginx log files
+A tail(1)-like utility for nginx log files that supports parsing, filtering and formatting individual log lines.
 
   > gem install ntail
 
@@ -30,6 +30,10 @@ A parsing tail(1)-like utility for nginx log files
 
     > ntail
     > ntail -f '{ |line| true }' -e '{ |line| puts line }'
+
+* print out all HTTP requests that are coming from a given IP address
+
+    > ntail -f '{ |line| line.remote_address == "208.67.222.222" }' /var/log/nginx/access.log
 
 * find all HTTP requests that resulted in a '5xx' HTTP error/status code <em>(e.g. Rails 500 errors)</em>
 
