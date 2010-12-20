@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = %q{2010-12-18}
+  s.date = %q{2010-12-20}
   s.default_executable = %q{ntail}
   s.description = %q{A parsing tail(1)-like utility for nginx log files}
   s.email = %q{pvandenberk@mac.com}
@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
     "bin/ntail",
     "lib/ntail.rb",
     "lib/ntail/application.rb",
+    "lib/ntail/log_line.rb",
+    "ntail.gemspec",
     "test/helper.rb",
     "test/test_ntail.rb"
   ]
@@ -51,17 +53,23 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<rainbow>, [">= 0"])
+      s.add_development_dependency(%q<user-agent>, [">= 0"])
     else
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<rainbow>, [">= 0"])
+      s.add_dependency(%q<user-agent>, [">= 0"])
     end
   else
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<rainbow>, [">= 0"])
+    s.add_dependency(%q<user-agent>, [">= 0"])
   end
 end
 
