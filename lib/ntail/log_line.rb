@@ -71,7 +71,8 @@ module NginxTail
       else
         :default
       end
-      "%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s" % [
+      "%s - %#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s" % [
+        to_date.strftime("%Y-%m-%d %X").foreground(color),
         remote_address.foreground(color),
         status.foreground(color),
         (uri || "-").foreground(color),
