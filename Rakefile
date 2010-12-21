@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "ntail"
   gem.homepage = "http://github.com/pvdb/ntail"
   gem.license = "MIT"
-  gem.summary = %Q{A parsing tail(1)-like utility for nginx log files}
-  gem.description = %Q{A parsing tail(1)-like utility for nginx log files}
+  gem.summary = %Q{A tail(1)-like utility for nginx log files}
+  gem.description = %Q{A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines.}
   gem.email = "pvandenberk@mac.com"
   gem.authors = ["Peter Vandenberk"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
