@@ -43,6 +43,8 @@ module NginxTail
       @parsable = if NGINX_LOG_PATTERN.match(@raw_line = line)
         @remote_address, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
         if NGINX_REQUEST_PATTERN.match(@request)
+          # counter example (ie. HTTP request that cannot by parsed)
+          # 91.203.96.51 - - [21/Dec/2010:05:26:53 +0000] "-" 400 0 "-" "-"
           @http_method, @uri, @http_version = $~.captures
         end
         if @proxy_addresses and NGINX_PROXY_PATTERN.match(@proxy_addresses)
@@ -72,7 +74,7 @@ module NginxTail
       "%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s" % [
         remote_address.foreground(color),
         status.foreground(color),
-        uri.foreground(color),
+        (uri || "-").foreground(color),
         to_agent_s.foreground(color)
       ]
     end
