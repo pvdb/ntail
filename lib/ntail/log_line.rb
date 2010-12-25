@@ -8,7 +8,7 @@ require 'user-agent'
 
 begin
   require 'geoip'
-rescue
+rescue LoadError
   # NOOP (optional dependency)
 end
 
