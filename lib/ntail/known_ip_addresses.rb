@@ -12,11 +12,23 @@ module NginxTail
     
         @@known_ip_addresses = []
 
-        def self.known_ip_addresses() @@known_ip_addresses.dup ; end # mainly (solely?) for testing purposes...
-        def self.reset_known_ip_addresses() while !@@known_ip_addresses.empty? ; @@known_ip_addresses.pop ; end ; end
-        def self.add_known_ip_address(known_ip_address) (@@known_ip_addresses << known_ip_address).uniq! ; end
+        # mainly (solely?) for testing purposes...
+        def self.known_ip_addresses()
+          @@known_ip_addresses.dup
+        end
+        
+        # mainly (solely?) for testing purposes...
+        def self.reset_known_ip_addresses()
+          while !@@known_ip_addresses.empty? ; @@known_ip_addresses.pop ; end
+        end
+        
+        def self.add_known_ip_address(known_ip_address)
+          (@@known_ip_addresses << known_ip_address).uniq!
+        end
 
-        def self.known_ip_address?(remote_address) @@known_ip_addresses.include?(remote_address) ; end
+        def self.known_ip_address?(remote_address)
+          @@known_ip_addresses.include?(remote_address)
+        end
         
       end
     end
