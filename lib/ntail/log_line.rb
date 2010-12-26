@@ -114,10 +114,24 @@ module NginxTail
     
     ]
 
-    def self.log_subcomponent?(subcomponent) SUBCOMPONENTS.include?(subcomponent) ; end # TODO replace with some clever meta-programming...
-    def self.log_component?(component) COMPONENTS.include?(component) ; end             # TODO replace with some clever meta-programming...
-    def self.log_conversion?(conversion) CONVERSIONS.include?(conversion) ; end         # TODO replace with some clever meta-programming...
-    def self.log_directive?(directive) (directive == :full) or log_conversion?(directive) or log_component?(directive) or log_subcomponent?(directive) ; end
+    def self.log_subcomponent?(subcomponent)
+      # TODO replace with some clever meta-programming...
+      SUBCOMPONENTS.include?(subcomponent)
+    end
+    
+    def self.log_component?(component)
+      # TODO replace with some clever meta-programming...
+      COMPONENTS.include?(component)
+    end
+    
+    def self.log_conversion?(conversion)
+      # TODO replace with some clever meta-programming...
+      CONVERSIONS.include?(conversion)
+    end
+    
+    def self.log_directive?(directive)
+      (directive == :full) or log_conversion?(directive) or log_component?(directive) or log_subcomponent?(directive)
+    end
 
     #
     # extraction filters for log line components
@@ -243,10 +257,16 @@ module NginxTail
 
 
     include KnownIpAddresses # module to identify known IP addresses
-    def known_ip_address?() self.class.known_ip_address?(self.remote_address) ; end
+    
+    def known_ip_address?()
+      self.class.known_ip_address?(self.remote_address)
+    end
     
     include LocalIpAddresses # module to identify local IP addresses
-    def local_ip_address?() self.class.local_ip_address?(self.remote_address) ; end
+    
+    def local_ip_address?()
+      self.class.local_ip_address?(self.remote_address)
+    end
 
     #
     # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
