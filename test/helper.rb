@@ -15,4 +15,9 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'ntail'
 
 class Test::Unit::TestCase
+
+  def random_ip_address
+    ((1..4).map { Kernel.rand(256) }).join('.')
+  end
+
 end

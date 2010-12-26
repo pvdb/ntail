@@ -1,7 +1,14 @@
 require 'helper'
 
 class TestNtail < Test::Unit::TestCase
-  should "probably rename this file and start testing for real" do
-    flunk "hey buddy, you should probably rename this file and start testing for real"
+  should "have namespaced classes" do
+    assert_equal "constant", defined? NginxTail
+    assert NginxTail.is_a? Module
+    
+    assert_equal "constant", defined? NginxTail::LogLine
+    assert NginxTail::LogLine.is_a? Class
+    
+    assert_equal "constant", defined? NginxTail::Application
+    assert NginxTail::Application.is_a? Class
   end
 end

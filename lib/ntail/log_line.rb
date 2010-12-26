@@ -257,12 +257,16 @@ module NginxTail
     #
     # known IP addresses, for filtering purposes
     #
+    # implementation note: using "mutable constant" in lieu of class variable...
+    # http://moonmaster9000.tumblr.com/post/477872071/class-variables-and-inheritance-in-ruby
+    #
   
-    OFFICE_IP_ADDRESSES = %w{
-    }
+    KNOWN_IP_ADDRESSES = []
 
-    def self.office_ip_address?(remote_address) OFFICE_IP_ADDRESSES.include?(remote_address) ; end
-    def      office_ip_address?() self.class.office_ip_address?(self.remote_address) ; end
+    def self.reset_known_ip_addresses() while !KNOWN_IP_ADDRESSES.empty? ; KNOWN_IP_ADDRESSES.pop ; end ; end
+    def self.add_known_ip_address(remote_address) (KNOWN_IP_ADDRESSES << remote_address).uniq! ; end
+    def self.known_ip_address?(remote_address) KNOWN_IP_ADDRESSES.include?(remote_address) ; end
+    def known_ip_address?() self.class.known_ip_address?(self.remote_address) ; end
 
     #
     # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
