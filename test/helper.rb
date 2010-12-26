@@ -19,5 +19,10 @@ class Test::Unit::TestCase
   def random_ip_address
     ((1..4).map { Kernel.rand(256) }).join('.')
   end
+  
+  def local_ip_address
+    # http://en.wikipedia.org/wiki/IP_address#IPv4_private_addresses
+    (['192', '168'] + (1..2).map { Kernel.rand(256) }).join('.')
+  end
 
 end

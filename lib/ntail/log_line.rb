@@ -242,30 +242,36 @@ module NginxTail
     end
 
     #
-    # downstream proxy servers
+    # local IP addresses, for filtering and formatting purposes
+    #
+    # e.g. downstream proxy servers (nginx web servers -> mongrel app servers)
     #
 
-    PROXY_IP_ADDRESSES = %w{
-      192.168.0.2
-      192.168.0.3
-      192.168.0.4
-    }
-
-    def self.proxy_ip_address?(remote_address) PROXY_IP_ADDRESSES.include?(remote_address) ; end
-    def      proxy_ip_address?() self.class.proxy_ip_address?(self.remote_address) ; end
-
-    #
-    # known IP addresses, for filtering purposes
-    #
+    LOCAL_IP_ADDRESSES = []
     # implementation note: using "mutable constant" in lieu of class variable...
     # http://moonmaster9000.tumblr.com/post/477872071/class-variables-and-inheritance-in-ruby
+
+    def self.local_ip_addresses() LOCAL_IP_ADDRESSES.dup ; end
+    def self.reset_local_ip_addresses() while !LOCAL_IP_ADDRESSES.empty? ; LOCAL_IP_ADDRESSES.pop ; end ; end
+    def self.add_local_ip_address(local_ip_address) (LOCAL_IP_ADDRESSES << local_ip_address).uniq! ; end
+
+    def self.local_ip_address?(remote_address) LOCAL_IP_ADDRESSES.include?(remote_address) ; end
+    def      local_ip_address?() self.class.local_ip_address?(self.remote_address) ; end
+
     #
-  
+    # known IP addresses, for filtering and formatting purposes
+    #
+    # e.g. office IP addresses, IP addresses of remote workers, ...
+    #
+
     KNOWN_IP_ADDRESSES = []
+    # implementation note: using "mutable constant" in lieu of class variable...
+    # http://moonmaster9000.tumblr.com/post/477872071/class-variables-and-inheritance-in-ruby
 
     def self.known_ip_addresses() KNOWN_IP_ADDRESSES.dup ; end
     def self.reset_known_ip_addresses() while !KNOWN_IP_ADDRESSES.empty? ; KNOWN_IP_ADDRESSES.pop ; end ; end
-    def self.add_known_ip_address(remote_address) (KNOWN_IP_ADDRESSES << remote_address).uniq! ; end
+    def self.add_known_ip_address(known_ip_address) (KNOWN_IP_ADDRESSES << known_ip_address).uniq! ; end
+
     def self.known_ip_address?(remote_address) KNOWN_IP_ADDRESSES.include?(remote_address) ; end
     def known_ip_address?() self.class.known_ip_address?(self.remote_address) ; end
 
