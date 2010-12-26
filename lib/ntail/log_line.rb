@@ -263,6 +263,7 @@ module NginxTail
   
     KNOWN_IP_ADDRESSES = []
 
+    def self.known_ip_addresses() KNOWN_IP_ADDRESSES.dup ; end
     def self.reset_known_ip_addresses() while !KNOWN_IP_ADDRESSES.empty? ; KNOWN_IP_ADDRESSES.pop ; end ; end
     def self.add_known_ip_address(remote_address) (KNOWN_IP_ADDRESSES << remote_address).uniq! ; end
     def self.known_ip_address?(remote_address) KNOWN_IP_ADDRESSES.include?(remote_address) ; end
