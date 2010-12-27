@@ -269,21 +269,29 @@ module NginxTail
 
     include KnownIpAddresses # module to identify known IP addresses
     
-    def known_ip_address?()
+    def known_ip_address?
       self.class.known_ip_address?(self.remote_address)
     end
     
     include LocalIpAddresses # module to identify local IP addresses
     
-    def local_ip_address?()
+    def local_ip_address?
       self.class.local_ip_address?(self.remote_address)
     end
 
     include HttpReferers # module to label HTTP referers: unknown, internal, external
 
-    def unknown_referer?()  self.class.unknown_referer?(self.http_referer)  ; end
-    def internal_referer?() self.class.internal_referer?(self.http_referer) ; end
-    def external_referer?() self.class.external_referer?(self.http_referer) ; end
+    def unknown_referer?
+      self.class.unknown_referer?(self.http_referer)
+    end
+    
+    def internal_referer?
+      self.class.internal_referer?(self.http_referer)
+    end
+    
+    def external_referer?
+      self.class.external_referer?(self.http_referer)
+    end
 
     #
     # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
