@@ -1,3 +1,4 @@
+require 'uri'
 require 'date'
 require 'socket'
 require 'net/http'
@@ -78,7 +79,7 @@ module NginxTail
         status.foreground(color),
         (uri || "-").foreground(color),
         to_agent_s.foreground(color),
-        http_referer.foreground(color).inverse
+        to_referer_s.foreground(color).inverse
       ]
     end
 
@@ -110,6 +111,8 @@ module NginxTail
       :to_agent,
 
       :to_host_name,
+      :to_refering_website,
+      
       :to_country,
       :to_city,
     
@@ -239,6 +242,14 @@ module NginxTail
     def to_host_name()
       Socket::getaddrinfo(self.remote_address,nil)[0][2]
     end
+    
+    def to_referer_s()
+      if unknown_referer?
+        http_referer
+      else
+        URI.parse(http_referer).host
+      end
+   end
     
     if defined? GeoIP # ie. if the optional GeoIP gem is installed
       
