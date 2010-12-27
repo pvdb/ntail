@@ -74,7 +74,7 @@ module NginxTail
         :default
       end
       "%s - %#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s - %s" % [
-        to_date.strftime("%Y-%m-%d %X").foreground(color),
+        to_date_s.foreground(color),
         remote_address.foreground(color),
         status.foreground(color),
         (uri || "-").foreground(color),
@@ -108,7 +108,10 @@ module NginxTail
     CONVERSIONS = [
   
       :to_date,
+      :to_date_s,
+      
       :to_agent,
+      :to_agent_s,
 
       :to_host_name,
       :to_refering_website,
@@ -183,17 +186,6 @@ module NginxTail
     def self.valid_referer?(referer) true ; end
     def self.valid_user_agent?(user_agent) true ; end
 
-    #
-    # conversion of log line components
-    #
-
-    # >> DateTime.strptime("13/Apr/2010:04:45:51 +0100", '%d/%b/%Y:%T %z').to_s
-    # => "2010-04-13T04:45:51+01:00"
-    # >> DateTime.strptime("13/Apr/2010:04:45:51 +0100", '%d/%b/%Y:%H:%M:%S %z').to_s
-    # => "2010-04-13T04:45:51+01:00"
-    # >> _
-
-    def to_date() DateTime.strptime(self.time_local, '%d/%b/%Y:%T %z') ; end
 
     class SearchBot < Agent
       attr_accessor :name
@@ -265,6 +257,16 @@ module NginxTail
         end
       end
       
+    end
+    
+    include VariableConversions # module to convert log line variables into a variety of Ruby objects
+    
+    def to_date
+      self.class.to_date(self.time_local)
+    end
+
+    def to_date_s
+      self.class.to_date_s(self.time_local)
     end
 
     include KnownIpAddresses # module to identify known IP addresses
