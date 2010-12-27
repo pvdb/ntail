@@ -7,6 +7,8 @@ module NginxTail
     # e.g. Regexp.compile('^http(s)?://(www\.)?MY_WEBSITE_NAME\.com')
     #
 
+    UNKNOWN_REFERER = "-".freeze # the 'default' nginx value for $http_referer variable
+
     def self.included(base) # :nodoc:
       base.class_eval do
 
@@ -23,11 +25,12 @@ module NginxTail
         end
         
         def self.add_internal_referer(internal_referer)
+          raise "Cannot add unkown HTTP referer" if self.unknown_referer? internal_referer
           (@@internal_referers << internal_referer).uniq!
         end
 
         def self.unknown_referer?(http_referer)
-          http_referer == "-"
+          http_referer == UNKNOWN_REFERER
         end
         
         def self.internal_referer?(http_referer)

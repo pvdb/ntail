@@ -12,9 +12,16 @@ class TestHttpReferers < Test::Unit::TestCase
   end
   
   should "correctly identify the default/unknown HTTP referer" do
-    assert NginxTail::LogLine.unknown_referer?("-")
-    assert !NginxTail::LogLine.internal_referer?("-")
-    assert !NginxTail::LogLine.external_referer?("-")
+    unknown_referer = NginxTail::HttpReferers::UNKNOWN_REFERER
+    assert NginxTail::LogLine.unknown_referer?(unknown_referer)
+    assert !NginxTail::LogLine.internal_referer?(unknown_referer)
+    assert !NginxTail::LogLine.external_referer?(unknown_referer)
+  end
+  
+  should "not allow the default/unknown HTTP referer to be added" do
+    assert_raise RuntimeError do
+      NginxTail::LogLine.add_internal_referer(NginxTail::HttpReferers::UNKNOWN_REFERER)
+    end
   end
 
   should "have non-empty list of internal referers after configuration" do
