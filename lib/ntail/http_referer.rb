@@ -1,5 +1,5 @@
 module NginxTail
-  module HttpReferers
+  module HttpReferer
 
     #
     # to easily identify external referers, for filtering and formatting purposes

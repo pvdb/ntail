@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestHttpReferers < Test::Unit::TestCase
+class TestHttpReferer < Test::Unit::TestCase
 
   def teardown
     # undo any changes the test may have made
@@ -12,7 +12,7 @@ class TestHttpReferers < Test::Unit::TestCase
   end
   
   should "correctly identify the default/unknown HTTP referer" do
-    unknown_referer = NginxTail::HttpReferers::UNKNOWN_REFERER
+    unknown_referer = NginxTail::HttpReferer::UNKNOWN_REFERER
     log_line = random_log_line(:http_referer => unknown_referer)
     
     assert NginxTail::LogLine.unknown_referer?(unknown_referer)
@@ -24,7 +24,7 @@ class TestHttpReferers < Test::Unit::TestCase
   
   should "not allow the default/unknown HTTP referer to be added" do
     assert_raise RuntimeError do
-      NginxTail::LogLine.add_internal_referer(NginxTail::HttpReferers::UNKNOWN_REFERER)
+      NginxTail::LogLine.add_internal_referer(NginxTail::HttpReferer::UNKNOWN_REFERER)
     end
   end
 

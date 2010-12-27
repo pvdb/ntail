@@ -281,7 +281,7 @@ module NginxTail
       self.class.local_ip_address?(self.remote_address)
     end
 
-    include HttpReferers # module to label HTTP referers: unknown, internal, external
+    include HttpReferer # module to label HTTP referers: unknown, internal, external
 
     def unknown_referer?
       self.class.unknown_referer?(self.http_referer)
