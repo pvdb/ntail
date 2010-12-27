@@ -294,6 +294,20 @@ module NginxTail
     def external_referer?
       self.class.external_referer?(self.http_referer)
     end
+    
+    include RemoteUser # module to identify remote and authenticated users
+
+    def unknown_remote_user?
+      self.class.unknown_remote_user?(self.remote_user)
+    end
+
+    def remote_user?
+      self.class.remote_user?(self.remote_user)
+    end
+    
+    def authenticated_user?
+      self.class.authenticated_user?(self.remote_user)
+    end
 
     #
     # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
@@ -320,8 +334,6 @@ module NginxTail
     def self.known_search_bot?(user_agent) !KNOWN_SEARCH_BOTS.detect { |bot| bot.match(user_agent) }.nil? end 
     def      known_search_bot?() self.class.known_search_bot?(self.http_user_agent) ; end
 
-    def self.authenticated_user?(remote_user) remote_user and remote_user != "-" ; end
-    def      authenticated_user?() self.class.authenticated_user?(self.remote_user) ; end
     #
     # "GET /xd_receiver.html HTTP/1.1"
     # "GET /crossdomain.xml HTTP/1.1"
