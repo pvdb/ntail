@@ -72,12 +72,13 @@ module NginxTail
       else
         :default
       end
-      "%s - %#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s" % [
+      "%s - %#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s - %s" % [
         to_date.strftime("%Y-%m-%d %X").foreground(color),
         remote_address.foreground(color),
         status.foreground(color),
         (uri || "-").foreground(color),
-        to_agent_s.foreground(color)
+        to_agent_s.foreground(color),
+        http_referer.foreground(color).inverse
       ]
     end
 
@@ -255,7 +256,6 @@ module NginxTail
       
     end
 
-
     include KnownIpAddresses # module to identify known IP addresses
     
     def known_ip_address?()
@@ -267,6 +267,12 @@ module NginxTail
     def local_ip_address?()
       self.class.local_ip_address?(self.remote_address)
     end
+
+    include HttpReferers # module to label HTTP referers: unknown, internal, external
+
+    def unknown_referer?()  self.class.unknown_referer?(self.http_referer)  ; end
+    def internal_referer?() self.class.internal_referer?(self.http_referer) ; end
+    def external_referer?() self.class.external_referer?(self.http_referer) ; end
 
     #
     # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
@@ -293,24 +299,8 @@ module NginxTail
     def self.known_search_bot?(user_agent) !KNOWN_SEARCH_BOTS.detect { |bot| bot.match(user_agent) }.nil? end 
     def      known_search_bot?() self.class.known_search_bot?(self.http_user_agent) ; end
 
-    #
-    # mainly to easily identify external referers, for filtering purposes
-    #
-
-    INTERNAL_REFERERS = [
-      Regexp.compile('^http://(www\.)?MY_WEBSITE_NAME\.com'),
-      Regexp.compile('^-$'),
-    ]
-
-    def self.internal_referer?(http_referer) !INTERNAL_REFERERS.detect { |referer| referer.match(http_referer) }.nil? end
-    def      internal_referer?() self.class.internal_referer?(self.http_referer) ; end
-
-    def self.external_referer?(http_referer) !self.internal_referer?(http_referer) ; end
-    def      external_referer?() self.class.external_referer?(self.http_referer) ; end
-
     def self.authenticated_user?(remote_user) remote_user and remote_user != "-" ; end
     def      authenticated_user?() self.class.authenticated_user?(self.remote_user) ; end
-
     #
     # "GET /xd_receiver.html HTTP/1.1"
     # "GET /crossdomain.xml HTTP/1.1"
