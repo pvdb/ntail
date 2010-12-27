@@ -41,7 +41,22 @@ module NginxTail
           self.remote_user?(remote_user) && @@authenticated_users.include?(remote_user)
         end
 
+        # this ensures the below module methods actually make sense...
+        raise "Class #{base.name} should implement instance method 'remote_user'" unless base.instance_methods.include? 'remote_user'
+
       end
+    end
+
+    def unknown_remote_user?
+      self.class.unknown_remote_user?(self.remote_user)
+    end
+
+    def remote_user?
+      self.class.remote_user?(self.remote_user)
+    end
+    
+    def authenticated_user?
+      self.class.authenticated_user?(self.remote_user)
     end
 
   end

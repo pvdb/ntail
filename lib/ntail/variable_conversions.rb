@@ -17,8 +17,19 @@ module NginxTail
         def self.to_date_s(time_local, format = "%Y-%m-%d %X")
           self.to_date(time_local).strftime(format)
         end
+
+        # this ensures the below module methods actually make sense...
+        raise "Class #{base.name} should implement instance method 'time_local'" unless base.instance_methods.include? 'time_local'
         
       end
+    end
+    
+    def to_date
+      self.class.to_date(self.time_local)
+    end
+
+    def to_date_s
+      self.class.to_date_s(self.time_local)
     end
     
   end

@@ -41,7 +41,22 @@ module NginxTail
           !self.unknown_referer?(http_referer) && !self.internal_referer?(http_referer)
         end
 
+        # this ensures the below module methods actually make sense...
+        raise "Class #{base.name} should implement instance method 'http_referer'" unless base.instance_methods.include? 'http_referer'
+
       end
+    end
+
+    def unknown_referer?
+      self.class.unknown_referer?(self.http_referer)
+    end
+    
+    def internal_referer?
+      self.class.internal_referer?(self.http_referer)
+    end
+    
+    def external_referer?
+      self.class.external_referer?(self.http_referer)
     end
 
   end

@@ -260,54 +260,10 @@ module NginxTail
     end
     
     include VariableConversions # module to convert log line variables into a variety of Ruby objects
-    
-    def to_date
-      self.class.to_date(self.time_local)
-    end
-
-    def to_date_s
-      self.class.to_date_s(self.time_local)
-    end
-
     include KnownIpAddresses # module to identify known IP addresses
-    
-    def known_ip_address?
-      self.class.known_ip_address?(self.remote_address)
-    end
-    
     include LocalIpAddresses # module to identify local IP addresses
-    
-    def local_ip_address?
-      self.class.local_ip_address?(self.remote_address)
-    end
-
-    include HttpReferer # module to label HTTP referers: unknown, internal, external
-
-    def unknown_referer?
-      self.class.unknown_referer?(self.http_referer)
-    end
-    
-    def internal_referer?
-      self.class.internal_referer?(self.http_referer)
-    end
-    
-    def external_referer?
-      self.class.external_referer?(self.http_referer)
-    end
-    
+    include HttpReferer # module to label HTTP referers: unknown, internal, external    
     include RemoteUser # module to identify remote and authenticated users
-
-    def unknown_remote_user?
-      self.class.unknown_remote_user?(self.remote_user)
-    end
-
-    def remote_user?
-      self.class.remote_user?(self.remote_user)
-    end
-    
-    def authenticated_user?
-      self.class.authenticated_user?(self.remote_user)
-    end
 
     #
     # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)

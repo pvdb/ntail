@@ -29,8 +29,15 @@ module NginxTail
         def self.local_ip_address?(remote_address)
           @@local_ip_addresses.include?(remote_address)
         end
+
+        # this ensures the below module methods actually make sense...
+        raise "Class #{base.name} should implement instance method 'remote_address'" unless base.instance_methods.include? 'remote_address'
         
       end
+    end
+    
+    def local_ip_address?
+      self.class.local_ip_address?(self.remote_address)
     end
     
   end
