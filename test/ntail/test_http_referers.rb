@@ -13,9 +13,13 @@ class TestHttpReferers < Test::Unit::TestCase
   
   should "correctly identify the default/unknown HTTP referer" do
     unknown_referer = NginxTail::HttpReferers::UNKNOWN_REFERER
+    log_line = random_log_line(:http_referer => unknown_referer)
+    
     assert NginxTail::LogLine.unknown_referer?(unknown_referer)
     assert !NginxTail::LogLine.internal_referer?(unknown_referer)
     assert !NginxTail::LogLine.external_referer?(unknown_referer)
+    
+    assert log_line.unknown_referer?
   end
   
   should "not allow the default/unknown HTTP referer to be added" do

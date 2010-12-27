@@ -31,9 +31,15 @@ class TestLocalIpAddresses < Test::Unit::TestCase
   
   should "recognize a known IP address after configuration" do
     remote_address = local_ip_address
+    log_line = random_log_line(:remote_addr => remote_address)
+    
     assert !NginxTail::LogLine.local_ip_address?(remote_address)
+    assert !log_line.local_ip_address?
+    
     NginxTail::LogLine.add_local_ip_address(remote_address)
+    
     assert NginxTail::LogLine.local_ip_address?(remote_address)
+    assert log_line.local_ip_address?
   end
 
 end
