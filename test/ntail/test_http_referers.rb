@@ -36,12 +36,18 @@ class TestHttpReferers < Test::Unit::TestCase
 
   should "recognize an internal referer after configuration" do
     refering_page = "http://my_website.com/index.html"
+    log_line = random_log_line(:http_referer => refering_page)
+
     assert !NginxTail::LogLine.internal_referer?(refering_page)
     assert NginxTail::LogLine.external_referer?(refering_page)
+    assert !log_line.internal_referer?
+    assert log_line.external_referer?
     
     NginxTail::LogLine.add_internal_referer(/http:\/\/my_website\.com/)
     assert NginxTail::LogLine.internal_referer?(refering_page)
     assert !NginxTail::LogLine.external_referer?(refering_page)
+    assert log_line.internal_referer?
+    assert !log_line.external_referer?
   end
 
 end
