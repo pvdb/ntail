@@ -1,5 +1,5 @@
 module NginxTail
-  module VariableConversions
+  module TimeLocal
     
     def self.included(base) # :nodoc:
       base.class_eval do

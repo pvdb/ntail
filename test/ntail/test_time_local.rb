@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestVariableConversions < Test::Unit::TestCase
+class TestTimeLocal < Test::Unit::TestCase
 
   should "parse local time (in the common log format) into a date object" do
     time_local = "13/Apr/2010:04:45:51 +0100"

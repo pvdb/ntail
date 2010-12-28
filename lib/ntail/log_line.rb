@@ -259,7 +259,7 @@ module NginxTail
       
     end
     
-    include VariableConversions # module to convert log line variables into a variety of Ruby objects
+    include TimeLocal # module to convert the request's local time into Ruby objects
     include KnownIpAddresses # module to identify known IP addresses
     include LocalIpAddresses # module to identify local IP addresses
     include HttpReferer # module to label HTTP referers: unknown, internal, external    
