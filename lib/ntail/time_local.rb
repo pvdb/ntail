@@ -1,3 +1,5 @@
+require 'date'
+
 module NginxTail
   module TimeLocal
     

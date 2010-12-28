@@ -1,6 +1,4 @@
 require 'uri'
-require 'date'
-require 'socket'
 require 'net/http'
 
 require 'rubygems'
@@ -19,7 +17,7 @@ module NginxTail
     attr_accessor :raw_line
     attr_accessor :parsable
 
-    attr_accessor :remote_address
+    attr_accessor :remote_addr
     attr_accessor :remote_user
     attr_accessor :time_local
     attr_accessor :request
@@ -43,7 +41,7 @@ module NginxTail
 
     def initialize(line)
       @parsable = if NGINX_LOG_PATTERN.match(@raw_line = line)
-        @remote_address, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
+        @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
         if NGINX_REQUEST_PATTERN.match(@request)
           # counter example (ie. HTTP request that cannot by parsed)
           # 91.203.96.51 - - [21/Dec/2010:05:26:53 +0000] "-" 400 0 "-" "-"
@@ -57,6 +55,8 @@ module NginxTail
         false
       end
     end
+    
+    alias_method :remote_address, :remote_addr # a non-abbreviated alias, for convenience and readability...
     
     # for now, until we make it fancier...
     def method_missing(method, *params)
@@ -231,10 +231,6 @@ module NginxTail
       agent = self.to_agent ; "(%s, %s)" % [agent.name, agent.os]
     end
 
-    def to_host_name()
-      Socket::getaddrinfo(self.remote_address,nil)[0][2]
-    end
-    
     def to_referer_s()
       if unknown_referer?
         http_referer
@@ -259,6 +255,7 @@ module NginxTail
       
     end
     
+    include RemoteAddr # module to convert the request's remote address into Ruby objects
     include TimeLocal # module to convert the request's local time into Ruby objects
     include KnownIpAddresses # module to identify known IP addresses
     include LocalIpAddresses # module to identify local IP addresses
