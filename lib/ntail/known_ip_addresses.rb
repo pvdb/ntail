@@ -26,18 +26,18 @@ module NginxTail
           (@@known_ip_addresses << known_ip_address).uniq!
         end
 
-        def self.known_ip_address?(remote_address)
-          @@known_ip_addresses.include?(remote_address)
+        def self.known_ip_address?(remote_addr)
+          @@known_ip_addresses.include?(remote_addr)
         end
 
         # this ensures the below module methods actually make sense...
-        raise "Class #{base.name} should implement instance method 'remote_address'" unless base.instance_methods.include? 'remote_address'
+        raise "Class #{base.name} should implement instance method 'remote_addr'" unless base.instance_methods.include? 'remote_addr'
         
       end
     end
     
     def known_ip_address?
-      self.class.known_ip_address?(self.remote_address)
+      self.class.known_ip_address?(self.remote_addr)
     end
     
   end

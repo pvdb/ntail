@@ -18,7 +18,6 @@ class TestLogLine < Test::Unit::TestCase
       assert !log_line.parsable
     end
     
-    
     should "implement non-abbreviated alias for $remote_addr" do
       remote_addr = random_ip_address
       log_line = random_log_line(:remote_addr => remote_addr)
@@ -26,15 +25,24 @@ class TestLogLine < Test::Unit::TestCase
       assert_equal remote_addr, log_line.remote_address
     end
     
-    should "implement attr_reader for each (sub-)component" do
+    should "implement a getter method for each (sub-)component" do
       (NginxTail::LogLine::COMPONENTS + NginxTail::LogLine::SUBCOMPONENTS).each do |component|
-        assert NginxTail::LogLine.instance_methods.include?(component.to_s), "getter '#{component}' should exist"
+        getter_method = component.to_s
+        assert NginxTail::LogLine.instance_methods.include?(getter_method), "getter '#{getter_method}' should exist"
       end
     end
 
-    should "NOT implement attr_writer for any (sub-)component" do
+    should "NOT implement a setter method for any (sub-)component" do
       (NginxTail::LogLine::COMPONENTS + NginxTail::LogLine::SUBCOMPONENTS).each do |component|
-        assert !NginxTail::LogLine.instance_methods.include?(component.to_s + "="), "setter '#{component.to_s + "="}' should NOT exist"
+        setter_method = component.to_s + "="
+        assert !NginxTail::LogLine.instance_methods.include?(setter_method), "setter '#{setter_method}' should NOT exist"
+      end
+    end
+    
+    should "include an extension module for each (sub-)component" do
+      (NginxTail::LogLine::COMPONENTS + NginxTail::LogLine::SUBCOMPONENTS).each do |component|
+        ntail_module = NginxTail::LogLine.component_to_ntail_module(component)
+        assert NginxTail::LogLine.included_modules.include?(ntail_module), "module '#{ntail_module.name}' should be included"
       end
     end
       
