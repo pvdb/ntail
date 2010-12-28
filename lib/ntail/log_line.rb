@@ -7,22 +7,44 @@ require 'user-agent'
 module NginxTail
   class LogLine
 
-    attr_accessor :raw_line
-    attr_accessor :parsable
+    attr_reader :raw_line
+    attr_reader :parsable
 
-    attr_accessor :remote_addr
-    attr_accessor :remote_user
-    attr_accessor :time_local
-    attr_accessor :request
-    attr_accessor :status
-    attr_accessor :body_bytes_sent
-    attr_accessor :http_referer
-    attr_accessor :http_user_agent
-    attr_accessor :proxy_addresses
-  
-    attr_accessor :http_method
-    attr_accessor :uri
-    attr_accessor :http_version
+    COMPONENTS = [
+    
+      :remote_addr,
+      :remote_user,
+      :time_local,
+      :request,
+      :status,
+      :body_bytes_sent,
+      :http_referer,
+      :http_user_agent,
+      :proxy_addresses,
+      
+    ]
+
+    attr_reader :remote_addr
+    attr_reader :remote_user
+    attr_reader :time_local
+    attr_reader :request
+    attr_reader :status
+    attr_reader :body_bytes_sent
+    attr_reader :http_referer
+    attr_reader :http_user_agent
+    attr_reader :proxy_addresses
+
+    SUBCOMPONENTS = [
+    
+      :http_method,
+      :uri,
+      :http_version,
+      
+    ]
+
+    attr_reader :http_method
+    attr_reader :uri
+    attr_reader :http_version
 
     #
     # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
@@ -75,28 +97,6 @@ module NginxTail
         to_referer_s.foreground(color).inverse
       ]
     end
-
-    COMPONENTS = [
-    
-      :remote_address,
-      :remote_user,
-      :time_local,
-      :request,
-      :status,
-      :body_bytes_sent,
-      :http_referer,
-      :http_user_agent,
-      :proxy_addresses,
-
-    ]
-
-    SUBCOMPONENTS = [
-    
-      :http_method,
-      :uri,
-      :http_version,
-    
-    ]
   
     CONVERSIONS = [
   
