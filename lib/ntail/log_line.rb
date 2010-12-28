@@ -11,7 +11,6 @@ module NginxTail
     attr_reader :parsable
 
     COMPONENTS = [
-    
       :remote_addr,
       :remote_user,
       :time_local,
@@ -21,30 +20,21 @@ module NginxTail
       :http_referer,
       :http_user_agent,
       :proxy_addresses,
-      
     ]
-
-    attr_reader :remote_addr
-    attr_reader :remote_user
-    attr_reader :time_local
-    attr_reader :request
-    attr_reader :status
-    attr_reader :body_bytes_sent
-    attr_reader :http_referer
-    attr_reader :http_user_agent
-    attr_reader :proxy_addresses
+    
+    COMPONENTS.each do |symbol|
+      attr_reader symbol
+    end
 
     SUBCOMPONENTS = [
-    
       :http_method,
       :uri,
       :http_version,
-      
     ]
-
-    attr_reader :http_method
-    attr_reader :uri
-    attr_reader :http_version
+    
+    SUBCOMPONENTS.each do |symbol|
+      attr_reader symbol
+    end
 
     #
     # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
