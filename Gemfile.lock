@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    geoip (0.8.7)
     git (1.2.5)
     jeweler (1.5.1)
       bundler (~> 1.0.0)
@@ -17,6 +18,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.0.0)
+  geoip
   jeweler (~> 1.5.1)
   rainbow
   rcov

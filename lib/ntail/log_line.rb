@@ -5,12 +5,6 @@ require 'rubygems'
 require 'rainbow'
 require 'user-agent'
 
-begin
-  require 'geoip'
-rescue LoadError
-  # NOOP (optional dependency)
-end
-
 module NginxTail
   class LogLine
 
@@ -116,8 +110,8 @@ module NginxTail
       :to_host_name,
       :to_refering_website,
       
-      :to_country,
-      :to_city,
+      :to_country_s,
+      :to_city_s,
     
     ]
 
@@ -238,22 +232,6 @@ module NginxTail
         URI.parse(http_referer).host
       end
    end
-    
-    if defined? GeoIP # ie. if the optional GeoIP gem is installed
-      
-      if File.exists?('/usr/share/GeoIP/GeoIP.dat')
-        def to_country()
-          record = GeoIP.new('/usr/share/GeoIP/GeoIP.dat').country(self.remote_address) ; record ? record[5] : 'N/A'
-        end
-      end
-      
-      if File.exists?('/usr/share/GeoIP/GeoIPCity.dat')
-        def to_city()
-          record = GeoIP.new('/usr/share/GeoIP/GeoIPCity.dat').city(self.remote_address) ; record ? record[7] : 'N/A'
-        end
-      end
-      
-    end
     
     include RemoteAddr # module to convert the request's remote address into Ruby objects
     include TimeLocal # module to convert the request's local time into Ruby objects

@@ -49,7 +49,7 @@ A tail(1)-like utility for nginx log files that supports parsing, filtering and 
 
 * print out GeoIP country and city information for each HTTP request <em>(depends on the optional <tt>geoip</tt> gem)</em>
 
-    > ntail -e '{ |line| puts [line.to_country, line.to_city].join("\t") }' /var/log/nginx/access.log
+    > ntail -e '{ |line| puts [line.to_country_s, line.to_city_s].join("\t") }' /var/log/nginx/access.log
     United States   Los Angeles
     United States   Houston
     Germany         Berlin
