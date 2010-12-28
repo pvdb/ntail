@@ -2,7 +2,6 @@ require 'net/http'
 
 require 'rubygems'
 require 'rainbow'
-require 'user-agent'
 
 module NginxTail
   class LogLine
@@ -183,76 +182,6 @@ module NginxTail
     def self.valid_request?(request) true ; end
     def self.valid_referer?(referer) true ; end
     def self.valid_user_agent?(user_agent) true ; end
-
-
-    class SearchBot < Agent
-      attr_accessor :name
-      attr_accessor :os
-      def initialize(string)
-        super string
-        @name = self.class.name_for_user_agent(string)
-        @os = self.class.os_for_user_agent(string)
-      end
-      def self.name_for_user_agent string
-        case string
-          when  GOOGLE_BOT then "googlebot"
-          when     MSN_BOT then "msnbot"
-          when   YAHOO_BOT then "yahoo_slurp"
-          when   ALEXA_BOT then "ia_archiver"
-          when PINGDOM_BOT then "pingdom_bot"
-          when  YANDEX_BOT then "yandex_bot"
-          else super(string)
-        end
-      end
-      def self.os_for_user_agent string
-        case string
-          when  GOOGLE_BOT then "google.com"
-          when     MSN_BOT then "msn.com"
-          when   YAHOO_BOT then "yahoo.com"
-          when   ALEXA_BOT then "alexa.com"
-          when PINGDOM_BOT then "pingdom.com"
-          when  YANDEX_BOT then "yandex.com"
-          else super(string)
-        end
-      end
-    end
-
-    def to_agent() 
-      if known_search_bot?
-        SearchBot.new(self.http_user_agent)
-      else
-        Agent.new(self.http_user_agent)
-      end
-    end
-    
-    def to_agent_s()
-      agent = self.to_agent ; "(%s, %s)" % [agent.name, agent.os]
-    end
-  
-    #
-    # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
-    # Googlebot-Image/1.0
-    # msnbot/2.0b (+http://search.msn.com/msnbot.htm)
-    # msnbot/2.0b (+http://search.msn.com/msnbot.htm).
-    # msnbot/2.0b (+http://search.msn.com/msnbot.htm)._
-    # Mozilla/5.0 (compatible; Yahoo! Slurp/3.0; http://help.yahoo.com/help/us/ysearch/slurp)
-    # Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)
-    # ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)
-    # Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
-    #
-  
-    KNOWN_SEARCH_BOTS = [
-       GOOGLE_BOT = Regexp.compile('Googlebot.*\/'),
-          MSN_BOT = Regexp.compile('msnbot\/'),
-        YAHOO_BOT = Regexp.compile('Yahoo! Slurp\/?'),
-      PINGDOM_BOT = Regexp.compile('Pingdom.com_bot_version_'),
-        ALEXA_BOT = Regexp.compile('ia_archiver'),
-       YANDEX_BOT = Regexp.compile('YandexBot\/'),
-      nil
-    ].compact!
-
-    def self.known_search_bot?(user_agent) !KNOWN_SEARCH_BOTS.detect { |bot| bot.match(user_agent) }.nil? end 
-    def      known_search_bot?() self.class.known_search_bot?(self.http_user_agent) ; end
 
     #
     # "GET /xd_receiver.html HTTP/1.1"
