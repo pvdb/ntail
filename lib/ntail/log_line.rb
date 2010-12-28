@@ -1,4 +1,3 @@
-require 'uri'
 require 'net/http'
 
 require 'rubygems'
@@ -224,15 +223,7 @@ module NginxTail
     def to_agent_s()
       agent = self.to_agent ; "(%s, %s)" % [agent.name, agent.os]
     end
-
-    def to_referer_s()
-      if unknown_referer?
-        http_referer
-      else
-        URI.parse(http_referer).host
-      end
-   end
-    
+  
     include RemoteAddr # module to convert the request's remote address into Ruby objects
     include TimeLocal # module to convert the request's local time into Ruby objects
     include KnownIpAddresses # module to identify known IP addresses

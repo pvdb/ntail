@@ -1,3 +1,5 @@
+require 'uri'
+
 module NginxTail
   module HttpReferer
 
@@ -41,6 +43,14 @@ module NginxTail
           !self.unknown_referer?(http_referer) && !self.internal_referer?(http_referer)
         end
 
+         def self.to_referer_s(http_referer)
+           if self.unknown_referer? http_referer
+             http_referer
+           else
+             URI.parse(http_referer).host
+           end
+        end
+        
         # this ensures the below module methods actually make sense...
         raise "Class #{base.name} should implement instance method 'http_referer'" unless base.instance_methods.include? 'http_referer'
 
@@ -57,6 +67,10 @@ module NginxTail
     
     def external_referer?
       self.class.external_referer?(self.http_referer)
+    end
+    
+    def to_referer_s
+      self.class.to_referer_s(self.http_referer)
     end
 
   end
