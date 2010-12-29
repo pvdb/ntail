@@ -78,4 +78,14 @@ class Test::Unit::TestCase
     NginxTail::LogLine.new(random_raw_line(options))
   end
   
+  def bad_request_raw_line
+    # a "bad request", resulting in a 400 status, is logged by nginx as follows:
+    # 121.8.101.138 - - [28/Dec/2010:23:50:58 +0000] "-" 400 0 "-" "-"
+    '121.8.101.138 - - [28/Dec/2010:23:50:58 +0000] "-" 400 0 "-" "-"'
+  end
+  
+  def bad_request_log_line
+    NginxTail::LogLine.new(bad_request_raw_line)
+  end
+  
 end

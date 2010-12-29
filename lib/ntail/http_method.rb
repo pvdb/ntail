@@ -2,9 +2,7 @@ module NginxTail
   module HttpMethod
     
     #
-    # http://www.ietf.org/rfc/rfc2616.txt
-    # 
-    # "section 5.1.1 Method"
+    # http://www.ietf.org/rfc/rfc2616.txt - "section 5.1.1 Method"
     # 
     # OPTIONS GET HEAD POST PUT DELETE TRACE CONNECT 
     #
@@ -13,10 +11,10 @@ module NginxTail
       base.class_eval do
         
         def self.to_http_method_s(http_method)
-          http_method ||= "" ; http_method.upcase!
+          (http_method ||= "").upcase!  # will be nil if $request == "-" (ie. "dodgy" HTTP requests)
           case http_method
           when "POST", "PUT", "DELETE"
-            http_method.inverse # Sickill::Rainbow.enabled
+            http_method.inverse # if Sickill::Rainbow.enabled...
           else
             http_method
           end
