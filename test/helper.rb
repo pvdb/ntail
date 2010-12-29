@@ -43,15 +43,25 @@ class Test::Unit::TestCase
     :remote_addr => '72.46.130.42',
     :remote_user => '-',
     :time_local => '01/Jan/2010:04:00:29 +0000',
-    :request => 'GET /index.html HTTP/1.1',
+    # :request => 'GET /index.html HTTP/1.1',
+      :http_method => 'GET',
+      :uri => '/index.html',
+      :http_version => 'HTTP/1.1',
     :status => 200,
     :body_bytes_sent => 6918,
     :http_referer => 'http://www.google.com/search?q=example',
     :http_user_agent => 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.224 Safari/534.10'
   }
-
+  
+  REQUEST_FORMAT = '%s %s %s'
+  
   def random_raw_line(options = {})
     options = DEFAULT_VALUES.merge options
+    options[:request] ||= REQUEST_FORMAT % [
+      options[:http_method],
+      options[:uri],
+      options[:http_version]
+    ]
     LOG_FORMAT_COMBINED % [
       options[:remote_addr],
       options[:remote_user],

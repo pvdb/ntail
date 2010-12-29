@@ -96,7 +96,7 @@ module NginxTail
         to_date_s.foreground(color),
         remote_address.foreground(color),
         status.foreground(color),
-        (uri || "-").foreground(color),
+        to_http_method_s + " " + (uri || "-").foreground(color),
         to_agent_s.foreground(color),
         to_referer_s.foreground(color).inverse
       ]
