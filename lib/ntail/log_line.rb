@@ -228,28 +228,5 @@ module NginxTail
     def self.static_request?(request) !STATIC_REQUESTS.detect { |static_request_regexp| request.match(static_request_regexp) }.nil? end
     def      static_request?()        self.class.static_request?(self.request) ; end
 
-    NGINX_MAGIC_STATUS = '499'   # ex-standard HTTP response code specific to nginx, in addition to http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-    UNPROCESSABLE_ENTITY = '422' # not supported by 'net/http' (Net::HTTPResponse::CODE_TO_OBJ["422"] == nil), see also: http://www.ruby-forum.com/topic/98002 
-
-    # Informational 1xx
-    def self.information_status?(status) (status.to_s != NGINX_MAGIC_STATUS) and Net::HTTPResponse::CODE_TO_OBJ[status.to_s] <= Net::HTTPInformation ; end
-    def      information_status?()       self.class.information_status?(self.status) ; end
-
-    # Successful 2xx
-    def self.success_status?(status) (status.to_s != NGINX_MAGIC_STATUS) and Net::HTTPResponse::CODE_TO_OBJ[status.to_s] <= Net::HTTPSuccess ; end
-    def      success_status?()       self.class.success_status?(self.status) ; end
-
-    # Redirection 3xx
-    def self.redirect_status?(status) (status.to_s != NGINX_MAGIC_STATUS) and Net::HTTPResponse::CODE_TO_OBJ[status.to_s] <= Net::HTTPRedirection ; end
-    def      redirect_status?()       self.class.redirect_status?(self.status) ; end
-
-    # Client Error 4xx
-    def self.client_error_status?(status) (status.to_s != NGINX_MAGIC_STATUS) and Net::HTTPResponse::CODE_TO_OBJ[status.to_s] <= Net::HTTPClientError ; end
-    def      client_error_status?()       self.class.client_error_status?(self.status) ; end
-
-    # Internal Server Error 5xx
-    def self.server_error_status?(status) (status.to_s != NGINX_MAGIC_STATUS) and Net::HTTPResponse::CODE_TO_OBJ[status.to_s] <= Net::HTTPServerError ; end
-    def      server_error_status?()       self.class.server_error_status?(self.status) ; end
-  
   end # class LogLine
 end # module NginxTail
