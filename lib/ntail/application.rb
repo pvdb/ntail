@@ -94,10 +94,11 @@ module NginxTail
             end
           end
         rescue
-          $stderr.puts "[ERROR] processing line #{lines_read} resulted in #{$!.message}"
+          $stderr.puts "[ERROR] processing line #{lines_read} of file #{ARGF.filename} resulted in #{$!.message}"
           $stderr.puts "[ERROR] " + raw_line
           self.options.exit = -1
           self.options.running = false
+          raise $!
         end
       end
       
