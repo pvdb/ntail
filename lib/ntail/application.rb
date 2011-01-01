@@ -17,6 +17,11 @@ module NginxTail
             self.options.verbose = true
           }
         ],
+        ['--dry-run', '--n', "Dry-run: process files, but don't actually parse the lines",
+          lambda { |value|
+            self.options.dry_run = true
+          }
+        ],
         ['--version', '-V', "Display the program version.",
           lambda { |value|
             puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
@@ -66,44 +71,52 @@ module NginxTail
         end
       end
       
-      lines_read = lines_processed = lines_ignored = parsable_lines = unparsable_lines = 0
+      files_read = lines_read = lines_processed = lines_ignored = parsable_lines = unparsable_lines = 0
       
       while self.options.running and ARGF.gets
+        if ARGF.file.lineno == 1
+          files_read += 1
+          if self.options.verbose
+            $stderr.puts "[INFO] now processing file #{ARGF.filename}"
+          end
+        end
         raw_line = $_.chomp ; lines_read += 1
-        begin
-          log_line = NginxTail::LogLine.new(raw_line)
-          if log_line.parsable
-            parsable_lines += 1
-            if !self.options.filter || self.options.filter.call(log_line)
-              lines_processed += 1
-              if self.options.code
-                self.options.code.call(log_line)
+        unless self.options.dry_run
+          begin
+            log_line = NginxTail::LogLine.new(raw_line)
+            if log_line.parsable
+              parsable_lines += 1
+              if !self.options.filter || self.options.filter.call(log_line)
+                lines_processed += 1
+                if self.options.code
+                  self.options.code.call(log_line)
+                else
+                  puts log_line
+                end
               else
-                puts log_line
+                lines_ignored += 1
+                if self.options.verbose
+                  $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+                end
               end
             else
-              lines_ignored += 1
+              unparsable_lines += 1
               if self.options.verbose
-                $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+                $stderr.puts "[ERROR] cannot parse '#{raw_line}'"
               end
             end
-          else
-            unparsable_lines += 1
-            if self.options.verbose
-              $stderr.puts "[ERROR] cannot parse '#{raw_line}'"
-            end
+          rescue
+            $stderr.puts "[ERROR] processing line #{lines_read} of file #{ARGF.filename} resulted in #{$!.message}"
+            $stderr.puts "[ERROR] " + raw_line
+            self.options.exit = -1
+            self.options.running = false
+            raise $! # TODO if the "re-raise exceptions" option has been set...
           end
-        rescue
-          $stderr.puts "[ERROR] processing line #{lines_read} of file #{ARGF.filename} resulted in #{$!.message}"
-          $stderr.puts "[ERROR] " + raw_line
-          self.options.exit = -1
-          self.options.running = false
-          raise $!
         end
       end
       
       if self.options.verbose
-        $stderr.puts "[INFO] read #{lines_read} lines"
+        $stderr.puts "[INFO] read #{lines_read} lines in #{files_read} files"
         $stderr.puts "[INFO] #{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
         $stderr.puts "[INFO] processed #{lines_processed} lines, ignored #{lines_ignored} lines"
       end
