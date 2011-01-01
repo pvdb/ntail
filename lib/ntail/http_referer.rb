@@ -46,10 +46,13 @@ module NginxTail
          def self.to_referer_s(http_referer)
            if self.unknown_referer? http_referer
              http_referer
-           else
-             # try to parse it, but with default if un-parsable
-             URI.parse(http_referer).host || http_referer
-           end
+           else begin
+               # try to parse it as a URI, but with default value if un-parsable
+               URI.parse(http_referer).host || http_referer
+            rescue URI::InvalidURIError
+               http_referer
+            end
+          end
         end
         
         # this ensures the below module methods actually make sense...
