@@ -22,6 +22,11 @@ module NginxTail
             self.options.dry_run = true
           }
         ],
+        ['--parse-only', '-p', "Parse only: parse all lines, but don't actually process them",
+          lambda { |value|
+            self.options.parse_only = true
+          }
+        ],
         ['--version', '-V', "Display the program version.",
           lambda { |value|
             puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
@@ -92,17 +97,19 @@ module NginxTail
               log_line = NginxTail::LogLine.new(raw_line)
               if log_line.parsable
                 parsable_lines += 1
-                if !self.options.filter || self.options.filter.call(log_line)
-                  lines_processed += 1
-                  if self.options.code
-                    self.options.code.call(log_line)
+                unless self.options.parse_only
+                  if !self.options.filter || self.options.filter.call(log_line)
+                    lines_processed += 1
+                    if self.options.code
+                      self.options.code.call(log_line)
+                    else
+                      puts log_line
+                    end
                   else
-                    puts log_line
-                  end
-                else
-                  lines_ignored += 1
-                  if self.options.verbose
-                    $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+                    lines_ignored += 1
+                    if self.options.verbose
+                      $stderr.puts "[WARNING] ignoring line ##{lines_read}"
+                    end
                   end
                 end
               else
