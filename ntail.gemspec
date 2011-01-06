@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ntail}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = %q{2010-12-21}
+  s.date = %q{2011-01-06}
   s.default_executable = %q{ntail}
   s.description = %q{A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines.}
   s.email = %q{pvandenberk@mac.com}
@@ -29,9 +29,34 @@ Gem::Specification.new do |s|
     "bin/ntail",
     "lib/ntail.rb",
     "lib/ntail/application.rb",
+    "lib/ntail/body_bytes_sent.rb",
+    "lib/ntail/http_method.rb",
+    "lib/ntail/http_referer.rb",
+    "lib/ntail/http_user_agent.rb",
+    "lib/ntail/http_version.rb",
+    "lib/ntail/known_ip_addresses.rb",
+    "lib/ntail/local_ip_addresses.rb",
     "lib/ntail/log_line.rb",
+    "lib/ntail/proxy_addresses.rb",
+    "lib/ntail/remote_addr.rb",
+    "lib/ntail/remote_user.rb",
+    "lib/ntail/request.rb",
+    "lib/ntail/status.rb",
+    "lib/ntail/time_local.rb",
+    "lib/ntail/uri.rb",
     "ntail.gemspec",
     "test/helper.rb",
+    "test/ntail/test_http_method.rb",
+    "test/ntail/test_http_referer.rb",
+    "test/ntail/test_http_user_agent.rb",
+    "test/ntail/test_known_ip_addresses.rb",
+    "test/ntail/test_local_ip_addresses.rb",
+    "test/ntail/test_log_line.rb",
+    "test/ntail/test_remote_addr.rb",
+    "test/ntail/test_remote_user.rb",
+    "test/ntail/test_request.rb",
+    "test/ntail/test_status.rb",
+    "test/ntail/test_time_local.rb",
     "test/test_ntail.rb"
   ]
   s.homepage = %q{http://github.com/pvdb/ntail}
@@ -41,6 +66,17 @@ Gem::Specification.new do |s|
   s.summary = %q{A tail(1)-like utility for nginx log files}
   s.test_files = [
     "test/helper.rb",
+    "test/ntail/test_http_method.rb",
+    "test/ntail/test_http_referer.rb",
+    "test/ntail/test_http_user_agent.rb",
+    "test/ntail/test_known_ip_addresses.rb",
+    "test/ntail/test_local_ip_addresses.rb",
+    "test/ntail/test_log_line.rb",
+    "test/ntail/test_remote_addr.rb",
+    "test/ntail/test_remote_user.rb",
+    "test/ntail/test_request.rb",
+    "test/ntail/test_status.rb",
+    "test/ntail/test_time_local.rb",
     "test/test_ntail.rb"
   ]
 
@@ -55,6 +91,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<geoip>, [">= 0"])
     else
       s.add_dependency(%q<rainbow>, [">= 0"])
       s.add_dependency(%q<user-agent>, [">= 0"])
@@ -62,6 +99,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<geoip>, [">= 0"])
     end
   else
     s.add_dependency(%q<rainbow>, [">= 0"])
@@ -70,6 +108,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<geoip>, [">= 0"])
   end
 end
 
