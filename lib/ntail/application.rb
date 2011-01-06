@@ -54,6 +54,7 @@ module NginxTail
     def self.parse_options
       
       # application defaults...
+      self.options.interrupted = false
       self.options.running = true
       self.options.exit = 0
       
@@ -77,7 +78,8 @@ module NginxTail
       
       ['TERM', 'INT'].each do |signal|
         Signal.trap(signal) do
-          self.options.running = false ; puts
+          self.options.running = false ; self.options.interrupted = true
+          $stdin.close if ARGF.file == $stdin # ie. reading from STDIN
         end
       end
       
@@ -130,7 +132,9 @@ module NginxTail
       end
       
       if self.options.verbose
-        $stderr.puts "[INFO] read #{lines_read} lines in #{files_read} files"
+        $stderr.puts if self.options.interrupted
+        $stderr.print "[INFO] read #{lines_read} lines in #{files_read} files"
+        $stderr.print " (interrupted)" if self.options.interrupted ; $stderr.puts
         $stderr.puts "[INFO] #{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
         $stderr.puts "[INFO] processed #{lines_processed} lines, ignored #{lines_ignored} lines"
       end
