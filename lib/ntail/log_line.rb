@@ -102,50 +102,5 @@ module NginxTail
       ]
     end
   
-    #
-    # "GET /xd_receiver.html HTTP/1.1"
-    # "GET /crossdomain.xml HTTP/1.1"
-    # "GET /favicon.ico HTTP/1.1"
-    # "GET /robots.txt HTTP/1.0"
-    #
-
-    AUTOMATED_REQUESTS = [
-      Regexp.compile('^[A-Z]+ \/xd_receiver.html'),
-      Regexp.compile('^[A-Z]+ \/crossdomain.xml'),
-      Regexp.compile('^[A-Z]+ \/favicon.ico'),
-      Regexp.compile('^[A-Z]+ \/robots.txt'),
-      nil
-    ].compact!
-  
-    def self.automated_request?(request) !AUTOMATED_REQUESTS.detect { |automated_request_regexp| request.match(automated_request_regexp) }.nil? end
-    def      automated_request?()        self.class.automated_request?(self.request) ; end
-
-    # 
-    # subdirectories of the "public" folder in the web root,
-    # which - in a typical Rails setup - are served by nginx
-    #
-
-    STATIC_REPOS = %w{
-      flash
-      html
-      images
-      javascripts
-      movies
-      newsletters
-      pictures
-      stylesheets
-      xml
-    }
-
-    STATIC_URIS = STATIC_REPOS.map { |repo| Regexp.compile("^\/#{repo}\/") }
-  
-    def self.static_uri?(uri) !STATIC_URIS.detect { |static_uri_regexp| uri.match(static_uri_regexp) }.nil? end
-    def      static_uri?()    self.class.static_uri?(self.uri); end
-
-    STATIC_REQUESTS = STATIC_REPOS.map { |repo| Regexp.compile("^[A-Z]+ \/#{repo}\/") }
-  
-    def self.static_request?(request) !STATIC_REQUESTS.detect { |static_request_regexp| request.match(static_request_regexp) }.nil? end
-    def      static_request?()        self.class.static_request?(self.request) ; end
-
   end # class LogLine
 end # module NginxTail
