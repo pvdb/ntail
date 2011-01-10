@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ntail}
-  s.version = "0.0.8"
+  s.version = "0.0.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
@@ -30,6 +30,8 @@ Gem::Specification.new do |s|
     "lib/ntail.rb",
     "lib/ntail/application.rb",
     "lib/ntail/body_bytes_sent.rb",
+    "lib/ntail/formatting.rb",
+    "lib/ntail/formatting.treetop",
     "lib/ntail/http_method.rb",
     "lib/ntail/http_referer.rb",
     "lib/ntail/http_user_agent.rb",
@@ -37,6 +39,7 @@ Gem::Specification.new do |s|
     "lib/ntail/known_ip_addresses.rb",
     "lib/ntail/local_ip_addresses.rb",
     "lib/ntail/log_line.rb",
+    "lib/ntail/node.rb",
     "lib/ntail/proxy_addresses.rb",
     "lib/ntail/remote_addr.rb",
     "lib/ntail/remote_user.rb",
@@ -93,6 +96,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<geoip>, [">= 0"])
+      s.add_development_dependency(%q<treetop>, ["~> 1.4.9"])
     else
       s.add_dependency(%q<rainbow>, [">= 0"])
       s.add_dependency(%q<user-agent>, [">= 0"])
@@ -101,6 +105,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<geoip>, [">= 0"])
+      s.add_dependency(%q<treetop>, ["~> 1.4.9"])
     end
   else
     s.add_dependency(%q<rainbow>, [">= 0"])
@@ -110,6 +115,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<geoip>, [">= 0"])
+    s.add_dependency(%q<treetop>, ["~> 1.4.9"])
   end
 end
 
