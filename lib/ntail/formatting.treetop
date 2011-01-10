@@ -1,0 +1,70 @@
+grammar Formatting
+
+  rule format_string
+    (token / literal)+
+  end
+
+  rule literal
+    . {
+      def value(log_line, color)
+        # context-independent...
+        self.text_value
+      end
+    }
+  end
+
+  rule token
+    date / referer / remote_address / request / status / user_agent
+  end
+
+  rule date
+    '%d' <Node> {
+      def value(log_line, color)
+        log_line.to_date_s.foreground(color)
+      end
+    }
+  end
+
+  rule referer
+    '%f' <Node> {
+      def value(log_line, color)
+        log_line.to_referer_s.foreground(color).inverse
+      end
+    }
+  end
+
+  rule remote_address
+    '%a' <Node> {
+      def value(log_line, color)
+    		"%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s" % log_line.remote_address.foreground(color)
+      end
+    }
+  end
+
+  rule request
+    '%r' <Node> {
+      def value(log_line, color)
+    		log_line.to_request_s.foreground(color)
+      end
+    }
+  end
+
+  rule status
+    '%s' <Node> {
+      def value(log_line, color)
+        log_line.status.foreground(color)
+      end
+    }
+  end
+
+  rule user_agent
+    '%u' <Node> {
+      def value(log_line, color)
+        log_line.to_agent_s.foreground(color)
+      end
+    }
+  end
+
+end
+
+# vim:syntax=ruby

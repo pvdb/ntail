@@ -7,10 +7,13 @@ GEM
       bundler (~> 1.0.0)
       git (>= 1.2.5)
       rake
+    polyglot (0.3.1)
     rainbow (1.1)
     rake (0.8.7)
     rcov (0.9.9)
     shoulda (2.11.3)
+    treetop (1.4.9)
+      polyglot (>= 0.3.1)
     user-agent (1.0.0)
 
 PLATFORMS
@@ -23,4 +26,5 @@ DEPENDENCIES
   rainbow
   rcov
   shoulda
+  treetop (~> 1.4.9)
   user-agent

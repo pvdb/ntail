@@ -21,6 +21,10 @@ require 'ntail/http_version'
 require 'ntail/known_ip_addresses'
 require 'ntail/local_ip_addresses'
 
+# the formatting classes...
+require 'ntail/node.rb'
+require 'ntail/formatting.rb'
+
 # the core classes...
 require 'ntail/log_line'
 require 'ntail/application'

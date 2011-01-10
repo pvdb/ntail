@@ -82,6 +82,8 @@ module NginxTail
       raw_line.send method, *params
     end
     
+    @@parser = FormattingParser.new
+    
     def to_s()
       # simple but boring:
       # raw_line.to_s
@@ -92,14 +94,14 @@ module NginxTail
       else
         :default
       end
-      "%s - %#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s - %s - %s - %s - %s" % [
-        to_date_s.foreground(color),
-        remote_address.foreground(color),
-        status.foreground(color),
-        to_request_s.foreground(color),
-        to_agent_s.foreground(color),
-        to_referer_s.foreground(color).inverse
-      ]
+      unless result = @@parser.parse("%d - %a - %s - %r - %u - %f")
+        raise @@parser.terminal_failures.join("\n")
+      else
+        def result.value(log_line, color)
+          elements.map { |element| element.value(log_line, color) }.join
+        end
+      end
+      result.value(self, color) 
     end
   
   end # class LogLine
