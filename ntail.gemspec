@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = %q{2011-01-10}
+  s.date = %q{2011-01-11}
   s.default_executable = %q{ntail}
   s.description = %q{A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines.}
   s.email = %q{pvandenberk@mac.com}
@@ -91,31 +91,31 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rainbow>, [">= 0"])
       s.add_runtime_dependency(%q<user-agent>, [">= 0"])
+      s.add_runtime_dependency(%q<treetop>, ["~> 1.4.9"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<geoip>, [">= 0"])
-      s.add_development_dependency(%q<treetop>, ["~> 1.4.9"])
     else
       s.add_dependency(%q<rainbow>, [">= 0"])
       s.add_dependency(%q<user-agent>, [">= 0"])
+      s.add_dependency(%q<treetop>, ["~> 1.4.9"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<geoip>, [">= 0"])
-      s.add_dependency(%q<treetop>, ["~> 1.4.9"])
     end
   else
     s.add_dependency(%q<rainbow>, [">= 0"])
     s.add_dependency(%q<user-agent>, [">= 0"])
+    s.add_dependency(%q<treetop>, ["~> 1.4.9"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<geoip>, [">= 0"])
-    s.add_dependency(%q<treetop>, ["~> 1.4.9"])
   end
 end
 

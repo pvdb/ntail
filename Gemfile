@@ -4,6 +4,7 @@ source "http://rubygems.org"
 #   gem "activesupport", ">= 2.3.5"
 gem "rainbow", ">= 0"
 gem "user-agent", ">= 0"
+gem "treetop", "~> 1.4.9"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
@@ -13,5 +14,4 @@ group :development do
   gem "jeweler", "~> 1.5.1"
   gem "rcov", ">= 0"
   gem "geoip", ">= 0"
-  gem "treetop", "~> 1.4.9"
 end
