@@ -74,7 +74,8 @@ To ensure easy execution of the <tt>ntail</tt> script, add the actual installati
 == TODO
 
 * implement a native <tt>"-f"</tt> option for ntail, similar to that of <tt>tail(1)</tt>, using e.g. flori's {file-tail gem}[https://github.com/flori/file-tail]
-* implement a <tt>"-i"</tt> option ("ignore exceptions"/"continue processing"), if handling a single line raises an exception (or indeed the reverse: "re-raise exception")
+* implement a <tt>"-i"</tt> option ("ignore exceptions"/"continue processing"), if handling a single line raises an exception
+* or indeed a reverse <tt>"-r"</tt> option ("re-raise exception"), to immediately stop processing and raising the exception for investigation
 * implement (better) support for custom nginx log formats, in addition to {nginx's default "combined" log format}[http://wiki.nginx.org/NginxHttpLogModule#log_format].
 
 == Acknowledgements
