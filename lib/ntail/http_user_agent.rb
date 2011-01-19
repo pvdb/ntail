@@ -25,6 +25,7 @@ class SearchBot < Agent
   # Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)
   # ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)
   # Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
+  # Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
   #
 
   KNOWN_SEARCH_BOTS = [
@@ -34,6 +35,7 @@ class SearchBot < Agent
     PINGDOM_BOT = Regexp.compile('Pingdom.com_bot_version_'),
       ALEXA_BOT = Regexp.compile('ia_archiver'),
      YANDEX_BOT = Regexp.compile('YandexBot\/'),
+       BING_BOT = Regexp.compile('bingbot\/'),
   ]
 
   def self.search_bot?(http_user_agent)
@@ -57,6 +59,7 @@ class SearchBot < Agent
       when   ALEXA_BOT then :ia_archiver
       when PINGDOM_BOT then :pingdom_bot
       when  YANDEX_BOT then :yandex_bot
+      when    BING_BOT then :bingbot
       else super(string)
     end
   end
@@ -69,6 +72,7 @@ class SearchBot < Agent
       when   ALEXA_BOT then :"alexa.com"
       when PINGDOM_BOT then :"pingdom.com"
       when  YANDEX_BOT then :"yandex.com"
+      when    BING_BOT then :"bing.com"
       else super(string)
     end
   end
