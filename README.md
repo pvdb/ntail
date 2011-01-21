@@ -78,10 +78,10 @@ Advanced Examples
 TODO
 ----
     
-* implement a native `"-f"` option for ntail, similar to that of `tail(1)`, using e.g. flori's {file-tail gem}[https://github.com/flori/file-tail]
+* implement a native `"-f"` option for ntail, similar to that of `tail(1)`, using e.g. flori's [file-tail gem](https://github.com/flori/file-tail)
 * implement a `"-i"` option ("ignore exceptions"/"continue processing"), if handling a single line raises an exception
 * or indeed a reverse `"-r"` option ("re-raise exception"), to immediately stop processing and raising the exception for investigation
-* implement (better) support for custom nginx log formats, in addition to {nginx's default "combined" log format}[http://wiki.nginx.org/NginxHttpLogModule#log_format].
+* implement (better) support for custom nginx log formats, in addition to [nginx's default "combined" log format](http://wiki.nginx.org/NginxHttpLogModule#log_format).
 
 Acknowledgements
 ----------------
