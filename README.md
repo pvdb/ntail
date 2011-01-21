@@ -4,6 +4,33 @@ ntail
 A `tail(1)`-like utility for nginx log files that supports parsing, filtering and formatting of individual 
 log lines (in nginx's so-called ["combined" log format](http://wiki.nginx.org/NginxHttpLogModule#log_format)).
 
+Check it out, yo!
+-----------------
+
+Instead of this...
+
+<pre style="background-color: black; color: white; padding: 15px; width: 1100px; overflow: hidden; text-overflow: ellipsis;">
+<span style="color:white;">$ tail -f /var/log/nginx/access.log</span>
+<span style="color: green;">192.0.32.10 - - [21/Jan/2011:14:07:34 +0000] "GET / HTTP/1.1" 200 3700 "-" "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10" "-"</span>
+<span style="color: green;">192.0.32.10 - - [21/Jan/2011:14:07:34 +0000] "GET /nginx-logo.png HTTP/1.1" 200 370 "http://localhost/" "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10" "-"</span>
+<span style="color: green;">192.0.32.10 - - [21/Jan/2011:14:07:34 +0000] "GET /poweredby.png HTTP/1.1" 200 3034 "http://localhost/" "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10" "-"</span>
+<span style="color: green;">192.0.32.10 - - [21/Jan/2011:14:07:34 +0000] "GET /favicon.ico HTTP/1.1" 404 3650 "-" "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10" "-"</span>
+<span style="color: green;">192.0.32.10 - - [21/Jan/2011:14:19:04 +0000] "GET /nginx-logo.png HTTP/1.1" 304 0 "-" "Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10" "-"</span>
+<span style="color:white;">$ _</span>
+</pre>
+
+... you get this:
+
+<pre style="background-color: black; padding: 15px; width: 800px;">
+<span style="color:white;">$ tail -f /var/log/nginx/access.log <strong>| ntail</strong></span>
+<span style="color: green;">2011-01-21 14:07:34 -       192.0.32.10 - 200 - GET / - (Chrome, Linux) - -</span>
+<span style="color: green;">2011-01-21 14:07:34 -       192.0.32.10 - 200 - GET /nginx-logo.png - (Chrome, Linux) - localhost</span>
+<span style="color: green;">2011-01-21 14:07:34 -       192.0.32.10 - 200 - GET /spanoweredby.png - (Chrome, Linux) - localhost</span>
+<span style="color: red;">2011-01-21 14:07:34 -       192.0.32.10 - 404 - GET /favicon.ico - (Chrome, Linux) - -</span>
+<span style="color: orange;">2011-01-21 14:19:04 -       192.0.32.10 - 304 - GET /nginx-logo.png - (Chrome, Linux) - -</span>
+<span style="color:white;">$ _</span>
+</pre>
+
 Installation
 ------------
 
