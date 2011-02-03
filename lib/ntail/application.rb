@@ -9,67 +9,62 @@ module NginxTail
       @@options ||= OpenStruct.new
     end
     
-    def self.ntail_options
-      # shamelessly copied from lib/rake.rb (rake gem)
-      [
-        ['--verbose', '-v', "Run verbosely (log messages to STDERR).",
-          lambda { |value|
-            self.options.verbose = true
-          }
-        ],
-        ['--dry-run', '-n', "Dry-run: process files, but don't actually parse the lines",
-          lambda { |value|
-            self.options.dry_run = true
-          }
-        ],
-        ['--parse-only', '-p', "Parse only: parse all lines, but don't actually process them",
-          lambda { |value|
-            self.options.parse_only = true
-          }
-        ],
-        ['--version', '-V', "Display the program version.",
-          lambda { |value|
-            puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
-            self.options.running = false
-          }
-        ],
-        ['--line-number', '-l LINE_NUMBER', "Only process the line with the given line number",
-          lambda { |value|
-            self.options.line_number = value.to_i
-          }
-        ],
-        ['--filter',  '-f CODE', "Ruby code block for filtering (parsed) lines - needs to return true or false.",
-          lambda { |value|
-            self.options.filter = eval "Proc.new #{value}"
-          }
-        ],
-        ['--execute',  '-e CODE', "Ruby code block for processing each (parsed) line.",
-          lambda { |value|
-            self.options.code = eval "Proc.new #{value}"
-          }
-        ],
-      ]
-    end
-
     def self.parse_options
-      
+
       # application defaults...
       self.options.interrupted = false
       self.options.running = true
       self.options.exit = 0
-      
+
       OptionParser.new do |opts|
-        opts.banner = "ntail {options} {file(s)} ..."
+
+        opts.banner = "Usage: ntail {options} {file(s)}"
         opts.separator ""
         opts.separator "Options are ..."
+
+        opts.on '--verbose', '-v', "Run verbosely (log messages to STDERR).",
+          lambda { |value|
+            self.options.verbose = true
+          }
+
+        opts.on '--filter',  '-f CODE', "Ruby code block for filtering (parsed) lines - needs to return true or false.",
+          lambda { |value|
+            self.options.filter = eval "Proc.new #{value}"
+          }
+
+        opts.on '--execute',  '-e CODE', "Ruby code block for processing each (parsed) line.",
+          lambda { |value|
+            self.options.code = eval "Proc.new #{value}"
+          }
+
+        opts.on '--line-number', '-l LINE_NUMBER', "Only process the line with the given line number",
+          lambda { |value|
+            self.options.line_number = value.to_i
+          }
+
+        opts.on '--dry-run', '-n', "Dry-run: process files, but don't actually parse the lines",
+          lambda { |value|
+            self.options.dry_run = true
+          }
+
+        opts.on '--parse-only', '-p', "Parse only: parse all lines, but don't actually process them",
+          lambda { |value|
+            self.options.parse_only = true
+          }
+
+        opts.on '--version', '-V', "Display the program version.",
+          lambda { |value|
+            puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
+            self.options.running = false
+          }
 
         opts.on_tail("-h", "--help", "-H", "Display this help message.") do
           puts opts
           self.options.running = false
         end
 
-        self.ntail_options.each { |args| opts.on(*args) }
       end.parse!
+
     end
     
     def self.run!
