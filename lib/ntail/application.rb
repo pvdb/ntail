@@ -5,16 +5,15 @@ module NginxTail
   class Application
     
     def self.options
-      # application options from the command line
-      @@options ||= OpenStruct.new
+      # application options from the command line, incl. defaults
+      @@options ||= OpenStruct.new({
+        :interrupted => false,
+        :running => true,
+        :exit => 0
+      })
     end
     
     def self.parse_options
-
-      # application defaults...
-      self.options.interrupted = false
-      self.options.running = true
-      self.options.exit = 0
 
       OptionParser.new do |opts|
 
@@ -57,6 +56,8 @@ module NginxTail
         end
 
       end.parse!
+
+      return self.options
 
     end
     
