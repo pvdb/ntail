@@ -41,7 +41,7 @@ class TestLogLine < Test::Unit::TestCase
     
     should "include an extension module for each (sub-)component" do
       (NginxTail::LogLine::COMPONENTS + NginxTail::LogLine::SUBCOMPONENTS).each do |component|
-        ntail_module = NginxTail::LogLine.component_to_ntail_module(component)
+        ntail_module = NginxTail::Inflections.component_to_ntail_module(component)
         assert NginxTail::LogLine.included_modules.include?(ntail_module), "module '#{ntail_module.name}' should be included"
       end
     end

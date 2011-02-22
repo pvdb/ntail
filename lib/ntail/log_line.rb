@@ -6,16 +6,6 @@ require 'rainbow'
 module NginxTail
   class LogLine
 
-    def self.component_to_module_name(component)
-      # this mimicks the ActiveSupport::Inflector.camelize() method in Rails...
-      component.to_s.gsub(/\/(.?)/) { "::#{$1.upcase}" }.gsub(/(?:^|_)(.)/) { $1.upcase }
-    end
-    
-    def self.component_to_ntail_module(component)
-      # this mimicks the ActiveSupport::Inflector.constantize() method in Rails...
-      NginxTail.const_get(self.component_to_module_name(component))
-    end
-
     attr_reader :raw_line
     attr_reader :parsable
 
@@ -33,12 +23,12 @@ module NginxTail
     
     COMPONENTS.each do |symbol|
       attr_reader symbol
-      include component_to_ntail_module(symbol)
+      include Inflections.component_to_ntail_module(symbol)
     end
-
+    
     include KnownIpAddresses # module to identify known IP addresses
     include LocalIpAddresses # module to identify local IP addresses
-
+    
     SUBCOMPONENTS = [
       :http_method,
       :uri,
@@ -47,7 +37,7 @@ module NginxTail
     
     SUBCOMPONENTS.each do |symbol|
       attr_reader symbol
-      include component_to_ntail_module(symbol)
+      include Inflections.component_to_ntail_module(symbol)
     end
 
     #
