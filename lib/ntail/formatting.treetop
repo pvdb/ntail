@@ -14,29 +14,29 @@ grammar Formatting
   end
 
   rule token
-    date / referer / remote_address / request / status / user_agent
+    remote_addr / remote_user / time_local / request / status / body_bytes_sent / http_referer / http_user_agent / proxy_addresses
   end
 
-  rule date
-    '%d' <Node> {
-      def value(log_line, color)
-        log_line.to_date_s.foreground(color)
-      end
-    }
-  end
-
-  rule referer
-    '%f' <Node> {
-      def value(log_line, color)
-        log_line.to_referer_s.foreground(color).inverse
-      end
-    }
-  end
-
-  rule remote_address
+  rule remote_addr
     '%a' <Node> {
       def value(log_line, color)
-    		"%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s" % log_line.remote_address.foreground(color)
+        "%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s" % log_line.remote_address.foreground(color)
+      end
+    }
+  end
+
+  rule remote_user
+    '%u' <Node> {
+      def value(log_line, color)
+        log_line.remote_user.foreground(color)
+      end
+    }
+  end
+
+  rule time_local
+    '%t' <Node> {
+      def value(log_line, color)
+        log_line.to_date_s.foreground(color)
       end
     }
   end
@@ -44,7 +44,7 @@ grammar Formatting
   rule request
     '%r' <Node> {
       def value(log_line, color)
-    		log_line.to_request_s.foreground(color)
+        log_line.to_request_s.foreground(color)
       end
     }
   end
@@ -57,10 +57,34 @@ grammar Formatting
     }
   end
 
-  rule user_agent
-    '%u' <Node> {
+  rule body_bytes_sent
+    '%b' <Node> {
+      def value(log_line, color)
+        log_line.body_bytes_sent.foreground(color)
+      end
+    }
+  end
+
+  rule http_referer
+    '%R' <Node> {
+      def value(log_line, color)
+        log_line.to_referer_s.foreground(color).inverse
+      end
+    }
+  end
+
+  rule http_user_agent
+    '%U' <Node> {
       def value(log_line, color)
         log_line.to_agent_s.foreground(color)
+      end
+    }
+  end
+
+  rule proxy_addresses
+    '%p' <Node> {
+      def value(log_line, color)
+        (log_line.proxy_addresses || []).join(", ").foreground(color)
       end
     }
   end

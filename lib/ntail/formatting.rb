@@ -96,15 +96,15 @@ module Formatting
     end
 
     i0 = index
-    r1 = _nt_date
+    r1 = _nt_remote_addr
     if r1
       r0 = r1
     else
-      r2 = _nt_referer
+      r2 = _nt_remote_user
       if r2
         r0 = r2
       else
-        r3 = _nt_remote_address
+        r3 = _nt_time_local
         if r3
           r0 = r3
         else
@@ -116,12 +116,27 @@ module Formatting
             if r5
               r0 = r5
             else
-              r6 = _nt_user_agent
+              r6 = _nt_body_bytes_sent
               if r6
                 r0 = r6
               else
-                @index = i0
-                r0 = nil
+                r7 = _nt_http_referer
+                if r7
+                  r0 = r7
+                else
+                  r8 = _nt_http_user_agent
+                  if r8
+                    r0 = r8
+                  else
+                    r9 = _nt_proxy_addresses
+                    if r9
+                      r0 = r9
+                    else
+                      @index = i0
+                      r0 = nil
+                    end
+                  end
+                end
               end
             end
           end
@@ -134,78 +149,16 @@ module Formatting
     r0
   end
 
-  module Date0
+  module RemoteAddr0
     def value(log_line, color)
-      log_line.to_date_s.foreground(color)
+      "%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s" % log_line.remote_address.foreground(color)
     end
   end
 
-  def _nt_date
+  def _nt_remote_addr
     start_index = index
-    if node_cache[:date].has_key?(index)
-      cached = node_cache[:date][index]
-      if cached
-        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
-        @index = cached.interval.end
-      end
-      return cached
-    end
-
-    if has_terminal?('%d', false, index)
-      r0 = instantiate_node(Node,input, index...(index + 2))
-      r0.extend(Date0)
-      @index += 2
-    else
-      terminal_parse_failure('%d')
-      r0 = nil
-    end
-
-    node_cache[:date][start_index] = r0
-
-    r0
-  end
-
-  module Referer0
-    def value(log_line, color)
-      log_line.to_referer_s.foreground(color).inverse
-    end
-  end
-
-  def _nt_referer
-    start_index = index
-    if node_cache[:referer].has_key?(index)
-      cached = node_cache[:referer][index]
-      if cached
-        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
-        @index = cached.interval.end
-      end
-      return cached
-    end
-
-    if has_terminal?('%f', false, index)
-      r0 = instantiate_node(Node,input, index...(index + 2))
-      r0.extend(Referer0)
-      @index += 2
-    else
-      terminal_parse_failure('%f')
-      r0 = nil
-    end
-
-    node_cache[:referer][start_index] = r0
-
-    r0
-  end
-
-  module RemoteAddress0
-    def value(log_line, color)
-  		"%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s" % log_line.remote_address.foreground(color)
-    end
-  end
-
-  def _nt_remote_address
-    start_index = index
-    if node_cache[:remote_address].has_key?(index)
-      cached = node_cache[:remote_address][index]
+    if node_cache[:remote_addr].has_key?(index)
+      cached = node_cache[:remote_addr][index]
       if cached
         cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
         @index = cached.interval.end
@@ -215,21 +168,83 @@ module Formatting
 
     if has_terminal?('%a', false, index)
       r0 = instantiate_node(Node,input, index...(index + 2))
-      r0.extend(RemoteAddress0)
+      r0.extend(RemoteAddr0)
       @index += 2
     else
       terminal_parse_failure('%a')
       r0 = nil
     end
 
-    node_cache[:remote_address][start_index] = r0
+    node_cache[:remote_addr][start_index] = r0
+
+    r0
+  end
+
+  module RemoteUser0
+    def value(log_line, color)
+      log_line.remote_user.foreground(color)
+    end
+  end
+
+  def _nt_remote_user
+    start_index = index
+    if node_cache[:remote_user].has_key?(index)
+      cached = node_cache[:remote_user][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%u', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 2))
+      r0.extend(RemoteUser0)
+      @index += 2
+    else
+      terminal_parse_failure('%u')
+      r0 = nil
+    end
+
+    node_cache[:remote_user][start_index] = r0
+
+    r0
+  end
+
+  module TimeLocal0
+    def value(log_line, color)
+      log_line.to_date_s.foreground(color)
+    end
+  end
+
+  def _nt_time_local
+    start_index = index
+    if node_cache[:time_local].has_key?(index)
+      cached = node_cache[:time_local][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%t', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 2))
+      r0.extend(TimeLocal0)
+      @index += 2
+    else
+      terminal_parse_failure('%t')
+      r0 = nil
+    end
+
+    node_cache[:time_local][start_index] = r0
 
     r0
   end
 
   module Request0
     def value(log_line, color)
-  		log_line.to_request_s.foreground(color)
+      log_line.to_request_s.foreground(color)
     end
   end
 
@@ -289,16 +304,16 @@ module Formatting
     r0
   end
 
-  module UserAgent0
+  module BodyBytesSent0
     def value(log_line, color)
-      log_line.to_agent_s.foreground(color)
+      log_line.body_bytes_sent.foreground(color)
     end
   end
 
-  def _nt_user_agent
+  def _nt_body_bytes_sent
     start_index = index
-    if node_cache[:user_agent].has_key?(index)
-      cached = node_cache[:user_agent][index]
+    if node_cache[:body_bytes_sent].has_key?(index)
+      cached = node_cache[:body_bytes_sent][index]
       if cached
         cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
         @index = cached.interval.end
@@ -306,16 +321,109 @@ module Formatting
       return cached
     end
 
-    if has_terminal?('%u', false, index)
+    if has_terminal?('%b', false, index)
       r0 = instantiate_node(Node,input, index...(index + 2))
-      r0.extend(UserAgent0)
+      r0.extend(BodyBytesSent0)
       @index += 2
     else
-      terminal_parse_failure('%u')
+      terminal_parse_failure('%b')
       r0 = nil
     end
 
-    node_cache[:user_agent][start_index] = r0
+    node_cache[:body_bytes_sent][start_index] = r0
+
+    r0
+  end
+
+  module HttpReferer0
+    def value(log_line, color)
+      log_line.to_referer_s.foreground(color).inverse
+    end
+  end
+
+  def _nt_http_referer
+    start_index = index
+    if node_cache[:http_referer].has_key?(index)
+      cached = node_cache[:http_referer][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%R', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 2))
+      r0.extend(HttpReferer0)
+      @index += 2
+    else
+      terminal_parse_failure('%R')
+      r0 = nil
+    end
+
+    node_cache[:http_referer][start_index] = r0
+
+    r0
+  end
+
+  module HttpUserAgent0
+    def value(log_line, color)
+      log_line.to_agent_s.foreground(color)
+    end
+  end
+
+  def _nt_http_user_agent
+    start_index = index
+    if node_cache[:http_user_agent].has_key?(index)
+      cached = node_cache[:http_user_agent][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%U', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 2))
+      r0.extend(HttpUserAgent0)
+      @index += 2
+    else
+      terminal_parse_failure('%U')
+      r0 = nil
+    end
+
+    node_cache[:http_user_agent][start_index] = r0
+
+    r0
+  end
+
+  module ProxyAddresses0
+    def value(log_line, color)
+      (log_line.proxy_addresses || []).join(", ").foreground(color)
+    end
+  end
+
+  def _nt_proxy_addresses
+    start_index = index
+    if node_cache[:proxy_addresses].has_key?(index)
+      cached = node_cache[:proxy_addresses][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%p', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 2))
+      r0.extend(ProxyAddresses0)
+      @index += 2
+    else
+      terminal_parse_failure('%p')
+      r0 = nil
+    end
+
+    node_cache[:proxy_addresses][start_index] = r0
 
     r0
   end

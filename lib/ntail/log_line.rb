@@ -17,7 +17,7 @@ module NginxTail
       :status,          # %s
       :body_bytes_sent, # %b
       :http_referer,    # %R
-      :http_user_agent, # %u
+      :http_user_agent, # %U
       :proxy_addresses, # %p
     ]
     
@@ -86,7 +86,7 @@ module NginxTail
       end
     end
 
-    self.format = "%d - %a - %s - %r - %u - %f"
+    self.format = "%t - %a - %s - %r - %U - %R"
     
     def to_s()
       # simple but boring:
