@@ -18,6 +18,7 @@ class TestRemoteAddr < Test::Unit::TestCase
     end
     
     should "convert the request's remote address into a country string" do
+      return unless File.exists?('/usr/share/GeoIP/GeoIP.dat')
       # directly via the helper function
       to_country_s = NginxTail::LogLine.to_country_s(@remote_addr)
       assert_equal "United States", to_country_s
@@ -26,6 +27,7 @@ class TestRemoteAddr < Test::Unit::TestCase
     end
     
     should "convert the request's remote address into a city string" do
+      return unless File.exists?('/usr/share/GeoIP/GeoIPCity.dat')
       # directly via the helper function
       to_city_s = NginxTail::LogLine.to_city_s(@remote_addr)
       assert_equal "Marina Del Rey", to_city_s
