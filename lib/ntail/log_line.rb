@@ -9,26 +9,26 @@ module NginxTail
     attr_reader :raw_line
     attr_reader :parsable
 
-    COMPONENTS = [
-      :remote_addr,
-      :remote_user,
-      :time_local,
-      :request,
-      :status,
-      :body_bytes_sent,
-      :http_referer,
-      :http_user_agent,
-      :proxy_addresses,
+    COMPONENTS = [ # formatting token:
+      :remote_addr,     # %a
+      :remote_user,     # %u
+      :time_local,      # %t
+      :request,         # %r
+      :status,          # %s
+      :body_bytes_sent, # %b
+      :http_referer,    # %R
+      :http_user_agent, # %u
+      :proxy_addresses, # %p
     ]
     
     COMPONENTS.each do |symbol|
       attr_reader symbol
       include Inflections.component_to_ntail_module(symbol)
     end
-    
+
     include KnownIpAddresses # module to identify known IP addresses
     include LocalIpAddresses # module to identify local IP addresses
-    
+
     SUBCOMPONENTS = [
       :http_method,
       :uri,
@@ -73,6 +73,20 @@ module NginxTail
     end
     
     @@parser = FormattingParser.new
+
+    @@result = @@format = nil
+
+    def self.format= format
+      unless @@result = @@parser.parse(@@format = format)
+        raise @@parser.terminal_failures.join("\n")
+      else
+        def @@result.value(log_line, color)
+          elements.map { |element| element.value(log_line, color) }.join
+        end
+      end
+    end
+
+    self.format = "%d - %a - %s - %r - %u - %f"
     
     def to_s()
       # simple but boring:
@@ -84,14 +98,7 @@ module NginxTail
       else
         :default
       end
-      unless result = @@parser.parse("%d - %a - %s - %r - %u - %f")
-        raise @@parser.terminal_failures.join("\n")
-      else
-        def result.value(log_line, color)
-          elements.map { |element| element.value(log_line, color) }.join
-        end
-      end
-      result.value(self, color) 
+      @@result.value(self, color) 
     end
   
   end # class LogLine
