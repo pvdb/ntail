@@ -92,7 +92,7 @@ module NginxTail
                     if @@options.code
                       @@options.code.call(log_line)
                     else
-                      puts log_line
+                      puts log_line.to_s(:color => true)
                     end
                   else
                     lines_ignored += 1

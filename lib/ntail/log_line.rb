@@ -88,10 +88,10 @@ module NginxTail
 
     self.format = "%t - %a - %s - %r - %U - %R"
     
-    def to_s()
+    def to_s(options = {})
       # simple but boring:
       # raw_line.to_s
-      color = if redirect_status?
+      color = options[:color] && if redirect_status?
         :yellow
       elsif !success_status?
         :red
