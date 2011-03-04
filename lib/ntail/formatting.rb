@@ -151,7 +151,12 @@ module Formatting
 
   module RemoteAddr0
     def value(log_line, color)
-      "%#{Sickill::Rainbow.enabled ? 15 + 9 : 15}s" % log_line.remote_address.foreground(color)
+      if color && Sickill::Rainbow.enabled
+        # 24 = 15 + 9, the extra amount of bytes required for the ANSI escape codes...
+        "%24s" % log_line.remote_address.foreground(color)
+      else
+        "%15s" % log_line.remote_address
+      end
     end
   end
 
