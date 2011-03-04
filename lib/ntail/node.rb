@@ -5,5 +5,8 @@ module Formatting
     def value(log_line, color)
       raise "SubclassResponsibility" # override in node "subclasses"...
     end
+    def foreground(string, color)
+      color ? string.foreground(color) : string
+    end
   end
 end

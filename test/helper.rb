@@ -50,7 +50,8 @@ class Test::Unit::TestCase
     :status => 200,
     :body_bytes_sent => 6918,
     :http_referer => 'http://www.google.com/search?q=example',
-    :http_user_agent => 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.224 Safari/534.10'
+    :http_user_agent => 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.224 Safari/534.10',
+    :proxy_addresses => nil
   }
   
   REQUEST_FORMAT = '%s %s %s'
@@ -71,6 +72,7 @@ class Test::Unit::TestCase
       options[:body_bytes_sent],
       options[:http_referer],
       options[:http_user_agent],
+      # TODO implement support for :proxy_addresses
     ]
   end
   

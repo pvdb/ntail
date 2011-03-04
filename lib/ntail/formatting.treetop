@@ -22,7 +22,7 @@ grammar Formatting
       def value(log_line, color)
         if color && Sickill::Rainbow.enabled
           # 24 = 15 + 9, the extra amount of bytes required for the ANSI escape codes...
-          "%24s" % log_line.remote_address.foreground(color)
+          "%24s" % foreground(log_line.remote_address, color)
         else
           "%15s" % log_line.remote_address
         end
@@ -33,7 +33,7 @@ grammar Formatting
   rule remote_user
     '%u' <Node> {
       def value(log_line, color)
-        log_line.remote_user.foreground(color)
+        foreground(log_line.remote_user, color)
       end
     }
   end
@@ -41,7 +41,7 @@ grammar Formatting
   rule time_local
     '%t' <Node> {
       def value(log_line, color)
-        log_line.to_date_s.foreground(color)
+        foreground(log_line.to_date_s, color)
       end
     }
   end
@@ -49,7 +49,7 @@ grammar Formatting
   rule request
     '%r' <Node> {
       def value(log_line, color)
-        log_line.to_request_s.foreground(color)
+        foreground(log_line.to_request_s, color)
       end
     }
   end
@@ -57,7 +57,7 @@ grammar Formatting
   rule status
     '%s' <Node> {
       def value(log_line, color)
-        log_line.status.foreground(color)
+        foreground(log_line.status, color)
       end
     }
   end
@@ -65,7 +65,7 @@ grammar Formatting
   rule body_bytes_sent
     '%b' <Node> {
       def value(log_line, color)
-        log_line.body_bytes_sent.foreground(color)
+        foreground(log_line.body_bytes_sent, color)
       end
     }
   end
@@ -73,7 +73,7 @@ grammar Formatting
   rule http_referer
     '%R' <Node> {
       def value(log_line, color)
-        log_line.to_referer_s.foreground(color).inverse
+        foreground(log_line.to_referer_s, color)
       end
     }
   end
@@ -81,7 +81,7 @@ grammar Formatting
   rule http_user_agent
     '%U' <Node> {
       def value(log_line, color)
-        log_line.to_agent_s.foreground(color)
+        foreground(log_line.to_agent_s, color)
       end
     }
   end

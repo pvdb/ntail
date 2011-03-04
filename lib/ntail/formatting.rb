@@ -153,7 +153,7 @@ module Formatting
     def value(log_line, color)
       if color && Sickill::Rainbow.enabled
         # 24 = 15 + 9, the extra amount of bytes required for the ANSI escape codes...
-        "%24s" % log_line.remote_address.foreground(color)
+        "%24s" % foreground(log_line.remote_address, color)
       else
         "%15s" % log_line.remote_address
       end
@@ -187,7 +187,7 @@ module Formatting
 
   module RemoteUser0
     def value(log_line, color)
-      log_line.remote_user.foreground(color)
+      foreground(log_line.remote_user, color)
     end
   end
 
@@ -218,7 +218,7 @@ module Formatting
 
   module TimeLocal0
     def value(log_line, color)
-      log_line.to_date_s.foreground(color)
+      foreground(log_line.to_date_s, color)
     end
   end
 
@@ -249,7 +249,7 @@ module Formatting
 
   module Request0
     def value(log_line, color)
-      log_line.to_request_s.foreground(color)
+      foreground(log_line.to_request_s, color)
     end
   end
 
@@ -280,7 +280,7 @@ module Formatting
 
   module Status0
     def value(log_line, color)
-      log_line.status.foreground(color)
+      foreground(log_line.status, color)
     end
   end
 
@@ -311,7 +311,7 @@ module Formatting
 
   module BodyBytesSent0
     def value(log_line, color)
-      log_line.body_bytes_sent.foreground(color)
+      foreground(log_line.body_bytes_sent, color)
     end
   end
 
@@ -342,7 +342,7 @@ module Formatting
 
   module HttpReferer0
     def value(log_line, color)
-      log_line.to_referer_s.foreground(color).inverse
+      foreground(log_line.to_referer_s, color)
     end
   end
 
@@ -373,7 +373,7 @@ module Formatting
 
   module HttpUserAgent0
     def value(log_line, color)
-      log_line.to_agent_s.foreground(color)
+      foreground(log_line.to_agent_s, color)
     end
   end
 
