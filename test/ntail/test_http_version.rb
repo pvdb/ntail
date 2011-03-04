@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestHttpUserAgent < Test::Unit::TestCase
+class TestHttpVersion < Test::Unit::TestCase
 
   context "ntail" do
     
