@@ -49,9 +49,16 @@ RSpec::Core::RakeTask.new(:spec) do |test|
 end
 
 require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
+Rcov::RcovTask.new(:test_rcov) do |test|
   test.libs << 'test'
   test.pattern = 'test/**/test_*.rb'
+  test.rcov_opts = %w{--exclude test\/,spec\/ -T}
+  test.verbose = true
+end
+Rcov::RcovTask.new(:spec_rcov) do |test|
+  test.libs << 'spec'
+  test.pattern = 'spec/**/*_spec.rb'
+  test.rcov_opts = %w{--exclude test\/,spec\/ -T}
   test.verbose = true
 end
 
