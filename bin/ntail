@@ -9,6 +9,6 @@ rescue LoadError
   require 'ntail'
 end
 
-exit NginxTail::Application.run!
+exit NginxTail::Application.new(ARGV).run!
 
 # That's all, Folks!
