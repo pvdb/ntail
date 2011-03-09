@@ -4,12 +4,17 @@ require 'optparse'
 module NginxTail
   class Application
     
-    # application options from the command line, incl. defaults
-    DEFAULT_OPTIONS = OpenStruct.new({
+    include NginxTail::Options
+    
+    # default application options...
+    DEFAULT_OPTIONS = {
       :interrupted => false,
       :running => true,
       :exit => 0
-    })
+    }
+    
+    # parsed application options...
+    @options = nil
     
     def respond_to?(symbol, include_private = false)
       @options.respond_to?(symbol) || super
@@ -19,57 +24,8 @@ module NginxTail
       respond_to?(methodId) ? @options.send(methodId.to_sym) : super
     end
 
-    def parse_options(argv)
-
-      OptionParser.new do |opts|
-
-        opts.banner = "Usage: ntail {options} {file(s)}"
-        opts.separator ""
-        opts.separator "Options are ..."
-
-        opts.on '--verbose', '-v', "Run verbosely (log messages to STDERR)." do |value|
-          @options.verbose = true
-        end
-
-        opts.on '--filter',  '-f CODE', "Ruby code block for filtering (parsed) lines - needs to return true or false." do |value|
-          @options.filter = eval "Proc.new #{value}"
-        end
-
-        opts.on '--execute',  '-e CODE', "Ruby code block for processing each (parsed) line." do |value|
-          @options.code = eval "Proc.new #{value}"
-        end
-
-        opts.on '--line-number', '-l LINE_NUMBER', "Only process the line with the given line number" do |value|
-          @options.line_number = value.to_i
-        end
-
-        opts.on '--dry-run', '-n', "Dry-run: process files, but don't actually parse the lines" do |value|
-          @options.dry_run = true
-        end
-
-        opts.on '--parse-only', '-p', "Parse only: parse all lines, but don't actually process them" do |value|
-          @options.parse_only = true
-        end
-
-        opts.on '--version', '-V', "Display the program version." do |value|
-          puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
-          @options.running = false
-        end
-
-        opts.on_tail("-h", "--help", "-H", "Display this help message.") do
-          puts opts
-          @options.running = false
-        end
-
-      end.parse!(argv)
-
-      return @options
-
-    end
-    
     def initialize(argv = [])
-      @options = DEFAULT_OPTIONS
-      parse_options(argv)
+      @options = parse_options(argv, DEFAULT_OPTIONS)
     end
     
     def run!
@@ -131,7 +87,7 @@ module NginxTail
       
       if @options.verbose
         $stderr.puts if @options.interrupted
-        $stderr.print "[INFO] read #{lines_read} lines in #{files_read} files"
+        $stderr.print "[INFO] read #{lines_read} line(s) in #{files_read} file(s)"
         $stderr.print " (interrupted)" if @options.interrupted ; $stderr.puts
         $stderr.puts "[INFO] #{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
         $stderr.puts "[INFO] processed #{lines_processed} lines, ignored #{lines_ignored} lines"

@@ -41,6 +41,7 @@ require 'ntail/formatting.rb'
 
 # the core classes...
 require 'ntail/log_line.rb'
+require 'ntail/options.rb'
 require 'ntail/application.rb'
 
 # That's all, Folks!
