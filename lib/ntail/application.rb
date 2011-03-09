@@ -11,9 +11,13 @@ module NginxTail
       :exit => 0
     })
     
-    def exit() @options.exit ; end
-    def running() @options.running ; end
-    def interrupted() @options.interrupted ; end
+    def respond_to?(symbol, include_private = false)
+      @options.respond_to?(symbol) || super
+    end
+
+    def method_missing(methodId)
+      respond_to?(methodId) ? @options.send(methodId.to_sym) : super
+    end
 
     def parse_options(argv)
 
