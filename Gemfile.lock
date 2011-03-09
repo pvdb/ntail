@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    diff-lcs (1.1.2)
     geoip (1.0.0)
     git (1.2.5)
     jeweler (1.5.2)
@@ -11,6 +12,14 @@ GEM
     rainbow (1.1.1)
     rake (0.8.7)
     rcov (0.9.9)
+    rspec (2.5.0)
+      rspec-core (~> 2.5.0)
+      rspec-expectations (~> 2.5.0)
+      rspec-mocks (~> 2.5.0)
+    rspec-core (2.5.1)
+    rspec-expectations (2.5.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.5.0)
     shoulda (2.11.3)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
@@ -25,6 +34,7 @@ DEPENDENCIES
   jeweler (~> 1.5.1)
   rainbow
   rcov
+  rspec (>= 2.5)
   shoulda
   treetop (~> 1.4.9)
   user-agent

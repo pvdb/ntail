@@ -33,6 +33,11 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |test|
+  test.verbose = true
+end
+
 require 'rcov/rcovtask'
 Rcov::RcovTask.new do |test|
   test.libs << 'test'
