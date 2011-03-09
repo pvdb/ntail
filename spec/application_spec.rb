@@ -1,24 +1,17 @@
 require 'spec_helper'
 
 describe NginxTail::Application do
-  
-  describe "#initialize" do
-    
-    it "sets 0 as the default 'exit' value" do
-      application = NginxTail::Application.new
-      application.exit.should == 0
-    end
-    
-    it "sets true as the default 'running' value" do
-      application = NginxTail::Application.new
-      application.running.should == true
-    end
 
-    it "sets true as the default 'interrupted' value" do
-      application = NginxTail::Application.new
-      application.interrupted.should == false
-    end
-    
+  it "has a default 'exit' value of 0" do
+    NginxTail::Application.new.exit.should eq(0)
+  end
+  
+  it "has a default 'running' value of true" do
+    NginxTail::Application.new.running.should eq(true)
+  end
+
+  it "has a default 'interrupted' value of false" do
+    NginxTail::Application.new.interrupted.should eq(false)
   end
   
 end
