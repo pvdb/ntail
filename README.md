@@ -101,7 +101,11 @@ Advanced Examples
         66.249.72.196   crawl-66-249-72-196.googlebot.com
         67.192.120.134  s402.pingdom.com
         75.31.109.144   adsl-75-31-109-144.dsl.irvnca.sbcglobal.net
-    
+
+* parse an access log file, and pipe its raw output (indirectly - via the `parsed.log` file) into the `gltail` realtime logfile visualizer
+
+        $ ntail -v --raw /var/log/nginx/access.log | ./replay.sh > parsed.log
+
 TODO
 ----
     
@@ -115,6 +119,7 @@ Acknowledgements
 
 * ntail's parsing feature is inspired by an nginx log parser written by [Richard Taylor (moomerman)](https://github.com/moomerman)
 * parsing and expanding ntail's formatting string is done using nathansobo's quite brilliant [treetop gem](https://github.com/nathansobo/treetop)
+* ntail's raw line output is compatible with Fudge's fun and useful [gltail gem](https://github.com/Fudge/gltail)
 
 Contributing to ntail
 ---------------------

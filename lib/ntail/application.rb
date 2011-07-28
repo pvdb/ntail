@@ -58,6 +58,8 @@ module NginxTail
                     lines_processed += 1
                     if @options.code
                       @options.code.call(log_line)
+                    elsif @options.raw
+                      $stdout.puts raw_line
                     else
                       puts log_line.to_s(:color => true)
                     end

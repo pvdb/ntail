@@ -35,6 +35,10 @@ module NginxTail
           options.parse_only = true
         end
 
+        opts.on '--raw', '-r', "Parse lines, and - for parseable ones - print out the raw input" do |value|
+          options.raw = true
+        end
+
         opts.on '--version', '-V', "Display the program version." do |value|
           puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
           options.running = false
