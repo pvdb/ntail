@@ -3,19 +3,19 @@ require 'optparse'
 
 module NginxTail
   class Application
-    
+
     include NginxTail::Options
-    
+
     # default application options...
     DEFAULT_OPTIONS = {
       :interrupted => false,
       :running => true,
       :exit => 0
     }
-    
+
     # parsed application options...
     @options = nil
-    
+
     def respond_to?(symbol, include_private = false)
       @options.respond_to?(symbol) || super
     end
@@ -27,30 +27,33 @@ module NginxTail
     def initialize(argv = [])
       @options = parse_options(argv, DEFAULT_OPTIONS)
     end
-    
+
     def run!
-            
+
       ['TERM', 'INT'].each do |signal|
         Signal.trap(signal) do
           @options.running = false ; @options.interrupted = true
           $stdin.close if ARGF.file == $stdin # ie. reading from STDIN
         end
       end
-      
+
       files_read = lines_read = lines_processed = lines_ignored = parsable_lines = unparsable_lines = 0
-      
+
+      current_filename = nil ; current_line_number = 0
+
       while @options.running and ARGF.gets
         if ARGF.file.lineno == 1
+          current_filename = ARGF.filename ; current_line_number = 0
           files_read += 1
           if @options.verbose
             $stderr.puts "[INFO] now processing file #{ARGF.filename}"
           end
         end
-        raw_line = $_.chomp ; lines_read += 1
+        raw_line = $_.chomp ; lines_read += 1 ; current_line_number += 1
         unless @options.dry_run
           if !@options.line_number or @options.line_number == ARGF.lineno
             begin
-              log_line = NginxTail::LogLine.new(raw_line)
+              log_line = NginxTail::LogLine.new(raw_line, current_filename, current_line_number)
               if log_line.parsable
                 parsable_lines += 1
                 unless @options.parse_only
@@ -87,7 +90,7 @@ module NginxTail
           end
         end
       end
-      
+
       if @options.verbose
         $stderr.puts if @options.interrupted
         $stderr.print "[INFO] read #{lines_read} line(s) in #{files_read} file(s)"
@@ -95,10 +98,10 @@ module NginxTail
         $stderr.puts "[INFO] #{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
         $stderr.puts "[INFO] processed #{lines_processed} lines, ignored #{lines_ignored} lines"
       end
-      
+
       return @options.exit
-      
+
     end
-    
+
   end
 end

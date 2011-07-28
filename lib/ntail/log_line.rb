@@ -8,6 +8,8 @@ module NginxTail
 
     attr_reader :raw_line
     attr_reader :parsable
+    attr_reader :filename
+    attr_reader :line_number
 
     COMPONENTS = [ # formatting token:
       :remote_addr,     # %a
@@ -76,7 +78,8 @@ module NginxTail
     NGINX_REQUEST_PATTERN = Regexp.compile(/\A(\S+) (.*?) (\S+)\Z/)
     NGINX_PROXY_PATTERN = Regexp.compile(/\A "([^"]*)"\Z/)
 
-    def initialize(line)
+    def initialize(line, filename = nil, line_number = nil)
+      @filename = filename ; @line_number = line_number
       @parsable = if APACHE_LOG_PATTERN.match(@raw_line = line)
         # @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
         @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie = $~.captures
