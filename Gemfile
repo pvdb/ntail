@@ -5,6 +5,7 @@ source "http://rubygems.org"
 gem "rainbow", ">= 0"
 gem "user-agent", ">= 0"
 gem "treetop", "~> 1.4.9"
+gem 'sequel'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
 # Add dependencies to develop your gem here.
