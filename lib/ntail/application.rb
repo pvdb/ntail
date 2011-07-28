@@ -60,6 +60,7 @@ module NginxTail
                       @options.code.call(log_line)
                     elsif @options.raw
                       $stdout.puts raw_line
+                      sleep @options.sleep if @options.sleep
                     else
                       puts log_line.to_s(:color => true)
                     end

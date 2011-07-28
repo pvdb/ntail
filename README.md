@@ -104,7 +104,7 @@ Advanced Examples
 
 * parse an access log file, and pipe its raw output (indirectly - via the `parsed.log` file) into the `gltail` realtime logfile visualizer
 
-        $ ntail -v --raw /var/log/nginx/access.log | ./replay.sh > parsed.log
+        $ ntail -v --raw --sleep 0.1 /var/log/nginx/access.log > parsed.log
 
 TODO
 ----

@@ -2,7 +2,7 @@ module NginxTail
   module Options
 
     def parse_options(argv, defaults = {})
-      
+
       options = OpenStruct.new(defaults)
 
       OptionParser.new do |opts|
@@ -37,6 +37,10 @@ module NginxTail
 
         opts.on '--raw', '-r', "Parse lines, and - for parseable ones - print out the raw input" do |value|
           options.raw = true
+        end
+
+        opts.on '--sleep [SECONDS]', '-s', Float, "Sleeps for the given number of seconds before processing the next line (--raw only)" do |value|
+          options.sleep = value
         end
 
         opts.on '--version', '-V', "Display the program version." do |value|
