@@ -40,6 +40,7 @@ module NginxTail
       # :http_referer,    # %%{Referer}i
       # :http_user_agent, # %%{User-agent}i
       :http_cookie,     # %{Cookie}i
+      :time_taken,      # %D
     ]
 
     APACHE_COMPONENTS.each do |symbol|
@@ -67,7 +68,7 @@ module NginxTail
     # "%V %h %l %u %t \"%r\" %s %b \"%{Referer}i\" \"%{User-agent}i\" \"%{Cookie}i\" %I %O %D %{deflate_ratio}n%%"
     #
 
-    APACHE_LOG_PATTERN = Regexp.compile(/\A([\S]*) ([\S]+) ([\S]+|-) ([\S]+|-) \[([^\]]+)\] "(.*)" ([\d]+) ([\d]+|-) "(.*?)" "(.*?)" "(.*?)" .*\Z/)
+    APACHE_LOG_PATTERN = Regexp.compile(/\A([\S]*) ([\S]+) ([\S]+|-) ([\S]+|-) \[([^\]]+)\] "(.*)" ([\d]+) ([\d]+|-) "(.*?)" "(.*?)" "(.*?)" [\d]+ [\d]+ ([\d]+) .*\Z/)
 
     #
     # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
@@ -82,7 +83,7 @@ module NginxTail
       @filename = filename ; @line_number = line_number
       @parsable = if APACHE_LOG_PATTERN.match(@raw_line = line)
         # @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
-        @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie = $~.captures
+        @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie, @time_taken = $~.captures
         if NGINX_REQUEST_PATTERN.match(@request)
           # counter example (ie. HTTP request that cannot by parsed)
           # 91.203.96.51 - - [21/Dec/2010:05:26:53 +0000] "-" 400 0 "-" "-"
