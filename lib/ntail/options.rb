@@ -43,6 +43,13 @@ module NginxTail
           options.sleep = value
         end
 
+        opts.on '--progress', '-p', String, "In-flight progress animation during parsing" do |value|
+          unless $stdout.tty?
+            Sickill::Rainbow.enabled = true
+            options.progress = true
+          end
+        end
+
         opts.on '--version', '-V', "Display the program version." do |value|
           puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
           options.running = false

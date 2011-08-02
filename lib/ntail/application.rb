@@ -39,7 +39,7 @@ module NginxTail
 
       files_read = lines_read = lines_processed = lines_ignored = parsable_lines = unparsable_lines = 0
 
-      current_filename = nil ; current_line_number = 0
+      current_filename = nil ; current_line_number = 0 ; file_count = ARGV.count
 
       while @options.running and ARGF.gets
         if ARGF.file.lineno == 1
@@ -89,7 +89,21 @@ module NginxTail
             end
           end
         end
+        if @options.progress
+          progress_line = [
+            " Processing file ".inverse + (" %d/%d" % [files_read, file_count]),
+            " Current filename ".inverse + " " + current_filename.to_s,
+            " Line number ".inverse + " " + current_line_number.to_s,
+            " Lines processed ".inverse + " " + lines_read.to_s
+          ].join(" \342\200\242 ")
+          max_length = [max_length || 0, progress_line.size].max
+          $stderr.print progress_line
+          $stderr.print " " * (max_length - progress_line.size)
+          $stderr.print "\r"
+        end
       end
+
+      $stderr.puts if @options.progress
 
       if @options.verbose
         $stderr.puts if @options.interrupted
