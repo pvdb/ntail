@@ -64,14 +64,21 @@ module NginxTail
           html
           images
           javascripts
+          js
           movies
           newsletters
           pictures
           stylesheets
+          css
           xml
         }
 
         @@static_uris = @@static_repos.map { |repo| Regexp.compile("^\/#{repo}\/") }
+
+        def self.add_static_repo(repo)
+          # TODO make this DRY...
+          @@static_uris << Regexp.compile("^\/#{repo}\/")
+        end
 
         def self.static_uri?(uri)
           !@@static_uris.detect { |static_uri_regexp| uri.match(static_uri_regexp) }.nil?

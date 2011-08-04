@@ -50,6 +50,14 @@ module NginxTail
           end
         end
 
+        opts.on '--static-repo [REPO]', String, "Add [REPO] to the list of static repos" do |value|
+          NginxTail::LogLine.add_static_repo(value)
+        end
+
+        opts.on '--persist', '-P', String, "Persist the parsed lines for future use" do |value|
+          options.persist = true
+        end
+
         opts.on '--version', '-V', "Display the program version." do |value|
           puts "#{NTAIL_NAME}, version #{NTAIL_VERSION}"
           options.running = false
