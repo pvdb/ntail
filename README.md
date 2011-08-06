@@ -115,6 +115,9 @@ Acknowledgements
 
 * ntail's parsing feature is inspired by an nginx log parser written by [Richard Taylor (moomerman)](https://github.com/moomerman)
 * parsing and expanding ntail's formatting string is done using nathansobo's quite brilliant [treetop gem](https://github.com/nathansobo/treetop)
+* Kudos to [Ed James (edjames)](https://github.com/edjames) for recommending the use of [instance_eval][eval] to clean up the DSL
+
+[eval]: https://github.com/pvdb/ntail/commit/b0f40522012b9858c433808cd1f5c21cb455fadd "use instance_eval to simplify the DSL"
 
 Contributing to ntail
 ---------------------
