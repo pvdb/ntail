@@ -103,7 +103,7 @@ module NginxTail
         end
 
         # this ensures the below module methods actually make sense...
-        raise "Class #{base.name} should implement instance method 'http_user_agent'" unless base.instance_methods.include? 'http_user_agent'
+        raise "Class #{base.name} should implement instance method 'http_user_agent'" unless base.instance_methods.map(&:to_s).include? 'http_user_agent'
         
       end
     end

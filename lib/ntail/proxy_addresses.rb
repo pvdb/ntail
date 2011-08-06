@@ -5,7 +5,7 @@ module NginxTail
       base.class_eval do
 
         # this ensures the below module methods actually make sense...
-        raise "Class #{base.name} should implement instance method 'proxy_addresses'" unless base.instance_methods.include? 'proxy_addresses'
+        raise "Class #{base.name} should implement instance method 'proxy_addresses'" unless base.instance_methods.map(&:to_s).include? 'proxy_addresses'
         
       end
     end

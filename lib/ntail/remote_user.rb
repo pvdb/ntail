@@ -42,7 +42,7 @@ module NginxTail
         end
 
         # this ensures the below module methods actually make sense...
-        raise "Class #{base.name} should implement instance method 'remote_user'" unless base.instance_methods.include? 'remote_user'
+        raise "Class #{base.name} should implement instance method 'remote_user'" unless base.instance_methods.map(&:to_s).include? 'remote_user'
 
       end
     end

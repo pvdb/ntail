@@ -56,7 +56,7 @@ module NginxTail
         end
         
         # this ensures the below module methods actually make sense...
-        raise "Class #{base.name} should implement instance method 'http_referer'" unless base.instance_methods.include? 'http_referer'
+        raise "Class #{base.name} should implement instance method 'http_referer'" unless base.instance_methods.map(&:to_s).include? 'http_referer'
 
       end
     end

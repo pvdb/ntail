@@ -28,14 +28,14 @@ class TestLogLine < Test::Unit::TestCase
     should "implement a getter method for each (sub-)component" do
       (NginxTail::LogLine::COMPONENTS + NginxTail::LogLine::SUBCOMPONENTS).each do |component|
         getter_method = component.to_s
-        assert NginxTail::LogLine.instance_methods.include?(getter_method), "getter '#{getter_method}' should exist"
+        assert NginxTail::LogLine.instance_methods.map(&:to_s).include?(getter_method), "getter '#{getter_method}' should exist"
       end
     end
 
     should "NOT implement a setter method for any (sub-)component" do
       (NginxTail::LogLine::COMPONENTS + NginxTail::LogLine::SUBCOMPONENTS).each do |component|
         setter_method = component.to_s + "="
-        assert !NginxTail::LogLine.instance_methods.include?(setter_method), "setter '#{setter_method}' should NOT exist"
+        assert !NginxTail::LogLine.instance_methods.map(&:to_s).include?(setter_method), "setter '#{setter_method}' should NOT exist"
       end
     end
     

@@ -21,7 +21,7 @@ module NginxTail
         end
 
         # this ensures the below module methods actually make sense...
-        raise "Class #{base.name} should implement instance method 'time_local'" unless base.instance_methods.include? 'time_local'
+        raise "Class #{base.name} should implement instance method 'time_local'" unless base.instance_methods.map(&:to_s).include? 'time_local'
         
       end
     end
