@@ -4,9 +4,10 @@ ntail
 A `tail(1)`-like utility for nginx log files that supports parsing, filtering and formatting of individual 
 log lines (in nginx's so-called ["combined" log format](http://wiki.nginx.org/NginxHttpLogModule#log_format)).
 
+<a name="intro"/>
+
 Check it out, yo!
 -----------------
-<a name="intro"/>
 
 Instead of this...
 
@@ -32,9 +33,10 @@ Instead of this...
 <span style="color:white;">$ _</span>
 </pre>
 
+<a name="installation"/>
+
 Installation
 ------------
-<a name="installation"/>
 
 Installing the gem also installs the `ntail` executable, typically as `/usr/bin/ntail` or `/usr/local/bin/ntail`:
 
@@ -42,9 +44,10 @@ Installing the gem also installs the `ntail` executable, typically as `/usr/bin/
 
 To ensure easy execution of the `ntail` script, add the actual installation directory to your shell's `$PATH` variable.
 
+<a name="basic"/>
+
 Basic Usage
 -----------
-<a name="basic"/>
 
 * process an entire nginx log file and print each parsed and formatted line to STDOUT
 
@@ -54,9 +57,10 @@ Basic Usage
 
         $ tail -f /var/log/nginx/access.log | ntail
 
+<a name="advanced"/>
+
 Advanced Examples
 -----------------
-<a name="advanced"/>
 
 * read from STDIN and print each line to STDOUT _(stop with ^D)_
 
@@ -106,18 +110,20 @@ Advanced Examples
         67.192.120.134  s402.pingdom.com
         75.31.109.144   adsl-75-31-109-144.dsl.irvnca.sbcglobal.net
     
+<a name="todo"/>
+
 TODO
 ----
-<a name="todo"/>
     
 * implement a native `"-f"` option for ntail, similar to that of `tail(1)`, using e.g. flori's [file-tail gem](https://github.com/flori/file-tail)
 * implement a `"-i"` option ("ignore exceptions"/"continue processing"), if handling a single line raises an exception
 * or indeed a reverse `"-r"` option ("re-raise exception"), to immediately stop processing and raising the exception for investigation
 * implement (better) support for custom nginx log formats, in addition to [nginx's default "combined" log format](http://wiki.nginx.org/NginxHttpLogModule#log_format).
 
+<a name="acknowledgements"/>
+
 Acknowledgements
 ----------------
-<a name="acknowledgements"/>
 
 * ntail's parsing feature is inspired by an nginx log parser written by [Richard Taylor (moomerman)](https://github.com/moomerman)
 * parsing and expanding ntail's formatting string is done using nathansobo's quite brilliant [treetop gem](https://github.com/nathansobo/treetop)
@@ -125,9 +131,10 @@ Acknowledgements
 
 [eval]: https://github.com/pvdb/ntail/commit/b0f40522012b9858c433808cd1f5c21cb455fadd "use instance_eval to simplify the DSL"
 
+<a name="contributing"/>
+
 Contributing to ntail
 ---------------------
-<a name="contributing"/>
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
@@ -137,9 +144,10 @@ Contributing to ntail
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
+<a name="copyright"/>
+
 Copyright
 ---------
-<a name="copyright"/>
 
 Copyright (c) 2011 Peter Vandenberk. See LICENSE.txt for further details.
 
