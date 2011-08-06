@@ -6,6 +6,7 @@ log lines (in nginx's so-called ["combined" log format](http://wiki.nginx.org/Ng
 
 Check it out, yo!
 -----------------
+<a name="intro"/>
 
 Instead of this...
 
