@@ -60,28 +60,28 @@ Advanced Examples
 
 * read from STDIN and print out the length of each line _(to illustrate -e option)_
 
-        $ ntail -e '{ |line| puts line.size }'
+        $ ntail -e 'puts size'
 
 * read from STDIN but only print out non-empty lines _(to illustrate -f option)_
 
-        $ ntail -f '{ |line| line.size $ 0 }'
+        $ ntail -f 'size != 0'
 
 * the following invocations behave exactly the same _(to illustrate -e and -f options)_
 
         $ ntail
-        $ ntail -f '{ |line| true }' -e '{ |line| puts line }'
+        $ ntail -f 'true' -e 'puts self'
 
 * print out all HTTP requests that are coming from a given IP address
 
-        $ ntail -f '{ |line| line.remote_address == "208.67.222.222" }' /var/log/nginx/access.log
+        $ ntail -f 'remote_address == "208.67.222.222"' /var/log/nginx/access.log
 
 * find all HTTP requests that resulted in a '5xx' HTTP error/status code _(e.g. Rails 500 errors)_
 
-        $ gunzip -S .gz -c access.log-20101216.gz | ntail -f '{ |line| line.server_error_status? }'
+        $ gunzip -S .gz -c access.log-20101216.gz | ntail -f 'server_error_status?'
 
 * generate a summary report of HTTP status codes, for all non-200 HTTP requests
 
-        $ ntail -f '{ |line| line.status != "200" }' -e '{ |line| puts line.status }' access.log | sort | uniq -c
+        $ ntail -f 'status != "200"' -e 'puts status' access.log | sort | uniq -c
         76 301
         16 302
          2 304
@@ -89,7 +89,7 @@ Advanced Examples
 
 * print out GeoIP country and city information for each HTTP request _(depends on the optional `geoip` gem)_
 
-        $ ntail -e '{ |line| puts [line.to_country_s, line.to_city_s].join("\t") }' /var/log/nginx/access.log
+        $ ntail -e 'puts [to_country_s, to_city_s].join("\t")' /var/log/nginx/access.log
         United States   Los Angeles
         United States   Houston
         Germany         Berlin
@@ -97,7 +97,7 @@ Advanced Examples
 
 * print out the IP address and the corresponding host name for each HTTP request _(slows things down considerably, due to `nslookup` call)_
 
-        $ ntail -e '{ |line| puts [line.remote_address, line.to_host_name].join("\t") }' /var/log/nginx/access.log
+        $ ntail -e 'puts [remote_address, to_host_s].join("\t")' /var/log/nginx/access.log
         66.249.72.196   crawl-66-249-72-196.googlebot.com
         67.192.120.134  s402.pingdom.com
         75.31.109.144   adsl-75-31-109-144.dsl.irvnca.sbcglobal.net

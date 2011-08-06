@@ -54,10 +54,10 @@ module NginxTail
               if log_line.parsable
                 parsable_lines += 1
                 unless @options.parse_only
-                  if !@options.filter || @options.filter.call(log_line)
+                  if !@options.filter || log_line.instance_eval(@options.filter)
                     lines_processed += 1
                     if @options.code
-                      @options.code.call(log_line)
+                      log_line.instance_eval(@options.code)
                     else
                       puts log_line.to_s(:color => true)
                     end

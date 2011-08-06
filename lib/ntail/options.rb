@@ -16,11 +16,11 @@ module NginxTail
         end
 
         opts.on '--filter',  '-f CODE', "Ruby code block for filtering (parsed) lines - needs to return true or false." do |value|
-          options.filter = eval "Proc.new #{value}"
+          options.filter = value
         end
 
         opts.on '--execute',  '-e CODE', "Ruby code block for processing each (parsed) line." do |value|
-          options.code = eval "Proc.new #{value}"
+          options.code = value
         end
 
         opts.on '--line-number', '-l LINE_NUMBER', "Only process the line with the given line number" do |value|
