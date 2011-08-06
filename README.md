@@ -33,6 +33,7 @@ Instead of this...
 
 Installation
 ------------
+<a name="installation"/>
 
 Installing the gem also installs the `ntail` executable, typically as `/usr/bin/ntail` or `/usr/local/bin/ntail`:
 
@@ -42,6 +43,7 @@ To ensure easy execution of the `ntail` script, add the actual installation dire
 
 Basic Usage
 -----------
+<a name="basic"/>
 
 * process an entire nginx log file and print each parsed and formatted line to STDOUT
 
@@ -53,6 +55,7 @@ Basic Usage
 
 Advanced Examples
 -----------------
+<a name="advanced"/>
 
 * read from STDIN and print each line to STDOUT _(stop with ^D)_
 
@@ -104,6 +107,7 @@ Advanced Examples
     
 TODO
 ----
+<a name="todo"/>
     
 * implement a native `"-f"` option for ntail, similar to that of `tail(1)`, using e.g. flori's [file-tail gem](https://github.com/flori/file-tail)
 * implement a `"-i"` option ("ignore exceptions"/"continue processing"), if handling a single line raises an exception
@@ -112,6 +116,7 @@ TODO
 
 Acknowledgements
 ----------------
+<a name="acknowledgements"/>
 
 * ntail's parsing feature is inspired by an nginx log parser written by [Richard Taylor (moomerman)](https://github.com/moomerman)
 * parsing and expanding ntail's formatting string is done using nathansobo's quite brilliant [treetop gem](https://github.com/nathansobo/treetop)
@@ -121,7 +126,8 @@ Acknowledgements
 
 Contributing to ntail
 ---------------------
- 
+<a name="todo"/>
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
@@ -132,6 +138,7 @@ Contributing to ntail
 
 Copyright
 ---------
+<a name="copyright"/>
 
 Copyright (c) 2011 Peter Vandenberk. See LICENSE.txt for further details.
 
