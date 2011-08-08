@@ -81,7 +81,7 @@ module NginxTail
     # the actual pattern used for line matching, either nginx (default) or apache
     #
 
-    @@log_pattern = nil
+    @@log_pattern = NGINX_LOG_PATTERN
 
     def self.set_log_pattern(nginx_format)
       @@log_pattern = nginx_format ? NGINX_LOG_PATTERN : APACHE_LOG_PATTERN
