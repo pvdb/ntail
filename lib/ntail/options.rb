@@ -2,7 +2,7 @@ module NginxTail
   module Options
 
     def parse_options(argv, defaults = {})
-      
+
       options = OpenStruct.new(defaults)
 
       OptionParser.new do |opts|
@@ -33,6 +33,33 @@ module NginxTail
 
         opts.on '--parse-only', '-p', "Parse only: parse all lines, but don't actually process them" do |value|
           options.parse_only = true
+        end
+
+        opts.on '--raw', '-r', "Parse lines, and - for parseable ones - print out the raw input" do |value|
+          options.raw = true
+        end
+
+        opts.on '--apache', "Try to match lines using the Apache log format instead of nginx (the default)" do |value|
+          options.nginx = false
+        end
+
+        opts.on '--sleep [SECONDS]', '-s', Float, "Sleeps for the given number of seconds before processing the next line (--raw only)" do |value|
+          options.sleep = value
+        end
+
+        opts.on '--progress', '-p', String, "In-flight progress animation during parsing" do |value|
+          unless $stdout.tty?
+            Sickill::Rainbow.enabled = true
+            options.progress = true
+          end
+        end
+
+        opts.on '--static-repo [REPO]', String, "Add [REPO] to the list of static repos" do |value|
+          NginxTail::LogLine.add_static_repo(value)
+        end
+
+        opts.on '--persist', '-P', String, "Persist the parsed lines for future use" do |value|
+          options.persist = true
         end
 
         opts.on '--version', '-V', "Display the program version." do |value|

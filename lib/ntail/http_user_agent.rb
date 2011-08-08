@@ -16,6 +16,7 @@ class SearchBot < Agent
   end
   
   #
+  # Feedfetcher-Google; (+http://www.google.com/feedfetcher.html; feed-id=17168503030479467473)
   # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
   # Googlebot-Image/1.0
   # msnbot/2.0b (+http://search.msn.com/msnbot.htm)
@@ -29,6 +30,7 @@ class SearchBot < Agent
   #
 
   KNOWN_SEARCH_BOTS = [
+     GOOGLE_RSS = Regexp.compile('Feedfetcher-Google.*\/'),
      GOOGLE_BOT = Regexp.compile('Googlebot.*\/'),
         MSN_BOT = Regexp.compile('msnbot\/'),
       YAHOO_BOT = Regexp.compile('Yahoo! Slurp\/?'),

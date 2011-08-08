@@ -39,3 +39,5 @@ pkg
 #
 # For vim:
 #*.swp
+# For ntail:
+*.log
