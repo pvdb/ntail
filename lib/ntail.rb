@@ -10,7 +10,7 @@ module NginxTail
     end
     def self.component_to_ntail_module(component)
       # this mimicks the ActiveSupport::Inflector.constantize() method in Rails...
-      NginxTail.const_get(self.component_to_module_name(component))
+      NginxTail.const_get(self.component_to_module_name(component)) rescue nil
     end
   end
 end

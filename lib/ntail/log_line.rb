@@ -12,6 +12,9 @@ module NginxTail
     attr_reader :line_number
 
     COMPONENTS = [ # formatting token:
+
+      # NGINX
+
       :remote_addr,     # %a
       :remote_user,     # %u
       :time_local,      # %t
@@ -21,14 +24,9 @@ module NginxTail
       :http_referer,    # %R
       :http_user_agent, # %U
       :proxy_addresses, # %p
-    ]
 
-    COMPONENTS.each do |symbol|
-      attr_reader symbol
-      include Inflections.component_to_ntail_module(symbol)
-    end
+      # APACHE
 
-    APACHE_COMPONENTS = [
       :server_name,     # %V
       # :remote_addr,     # %h
       :remote_log_name, # %l
@@ -41,11 +39,14 @@ module NginxTail
       # :http_user_agent, # %%{User-agent}i
       :http_cookie,     # %{Cookie}i
       :time_taken,      # %D
+
     ]
 
-    APACHE_COMPONENTS.each do |symbol|
+    COMPONENTS.each do |symbol|
       attr_reader symbol
-      # include Inflections.component_to_ntail_module(symbol)
+      if (module_for_symbol = Inflections.component_to_ntail_module(symbol))
+        include module_for_symbol
+      end
     end
 
     include KnownIpAddresses # module to identify known IP addresses
