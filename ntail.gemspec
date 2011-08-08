@@ -5,25 +5,25 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ntail}
-  s.version = "0.0.11"
+  s.version = "0.0.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = %q{2011-01-19}
+  s.date = %q{2011-08-08}
   s.default_executable = %q{ntail}
   s.description = %q{A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines.}
   s.email = %q{pvandenberk@mac.com}
   s.executables = ["ntail"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "bin/ntail",
@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
     "lib/ntail/local_ip_addresses.rb",
     "lib/ntail/log_line.rb",
     "lib/ntail/node.rb",
+    "lib/ntail/options.rb",
     "lib/ntail/proxy_addresses.rb",
     "lib/ntail/remote_addr.rb",
     "lib/ntail/remote_user.rb",
@@ -48,10 +49,14 @@ Gem::Specification.new do |s|
     "lib/ntail/time_local.rb",
     "lib/ntail/uri.rb",
     "ntail.gemspec",
+    "spec/application_spec.rb",
+    "spec/spec_helper.rb",
     "test/helper.rb",
+    "test/ntail/test_formatting.rb",
     "test/ntail/test_http_method.rb",
     "test/ntail/test_http_referer.rb",
     "test/ntail/test_http_user_agent.rb",
+    "test/ntail/test_http_version.rb",
     "test/ntail/test_known_ip_addresses.rb",
     "test/ntail/test_local_ip_addresses.rb",
     "test/ntail/test_log_line.rb",
@@ -66,13 +71,17 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/pvdb/ntail}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.5.2}
   s.summary = %q{A tail(1)-like utility for nginx log files}
   s.test_files = [
+    "spec/application_spec.rb",
+    "spec/spec_helper.rb",
     "test/helper.rb",
+    "test/ntail/test_formatting.rb",
     "test/ntail/test_http_method.rb",
     "test/ntail/test_http_referer.rb",
     "test/ntail/test_http_user_agent.rb",
+    "test/ntail/test_http_version.rb",
     "test/ntail/test_known_ip_addresses.rb",
     "test/ntail/test_local_ip_addresses.rb",
     "test/ntail/test_log_line.rb",
@@ -86,37 +95,51 @@ Gem::Specification.new do |s|
   ]
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rainbow>, [">= 0"])
       s.add_runtime_dependency(%q<user-agent>, [">= 0"])
       s.add_runtime_dependency(%q<treetop>, ["~> 1.4.9"])
+      s.add_runtime_dependency(%q<sequel>, [">= 0"])
+      s.add_runtime_dependency(%q<mongoid>, [">= 0"])
+      s.add_runtime_dependency(%q<sqlite3-ruby>, [">= 0"])
+      s.add_development_dependency(%q<rake>, [">= 0.9.2"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
       s.add_development_dependency(%q<geoip>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 2.5"])
     else
       s.add_dependency(%q<rainbow>, [">= 0"])
       s.add_dependency(%q<user-agent>, [">= 0"])
       s.add_dependency(%q<treetop>, ["~> 1.4.9"])
+      s.add_dependency(%q<sequel>, [">= 0"])
+      s.add_dependency(%q<mongoid>, [">= 0"])
+      s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0.9.2"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
       s.add_dependency(%q<geoip>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 2.5"])
     end
   else
     s.add_dependency(%q<rainbow>, [">= 0"])
     s.add_dependency(%q<user-agent>, [">= 0"])
     s.add_dependency(%q<treetop>, ["~> 1.4.9"])
+    s.add_dependency(%q<sequel>, [">= 0"])
+    s.add_dependency(%q<mongoid>, [">= 0"])
+    s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0.9.2"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
     s.add_dependency(%q<geoip>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 2.5"])
   end
 end
 
