@@ -77,14 +77,27 @@ module NginxTail
 
     NGINX_LOG_PATTERN = Regexp.compile(/\A(\S+) - (\S+) \[([^\]]+)\] "([^"]+)" (\S+) (\S+) "([^"]*?)" "([^"]*?)"( "([^"]*?)")?\Z/)
 
+    #
+    # the actual pattern used for line matching, either nginx (default) or apache
+    #
+
+    @@log_pattern = nil
+
+    def self.set_log_pattern(nginx_format)
+      @@log_pattern = nginx_format ? NGINX_LOG_PATTERN : APACHE_LOG_PATTERN
+    end
+
     NGINX_REQUEST_PATTERN = Regexp.compile(/\A(\S+) (.*?) (\S+)\Z/)
     NGINX_PROXY_PATTERN = Regexp.compile(/\A "([^"]*)"\Z/)
 
     def initialize(line, filename = nil, line_number = nil)
       @filename = filename ; @line_number = line_number
-      @parsable = if APACHE_LOG_PATTERN.match(@raw_line = line)
-        # @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
-        @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie, @time_taken = $~.captures
+      @parsable = if @@log_pattern.match(@raw_line = line)
+        if @@log_pattern == NGINX_LOG_PATTERN
+          @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
+        elsif @@log_pattern == APACHE_LOG_PATTERN
+          @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie, @time_taken = $~.captures
+        end
         if NGINX_REQUEST_PATTERN.match(@request)
           # counter example (ie. HTTP request that cannot by parsed)
           # 91.203.96.51 - - [21/Dec/2010:05:26:53 +0000] "-" 400 0 "-" "-"
