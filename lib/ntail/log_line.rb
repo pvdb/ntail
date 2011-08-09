@@ -97,6 +97,7 @@ module NginxTail
           @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
         elsif @@log_pattern == APACHE_LOG_PATTERN
           @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie, @time_taken = $~.captures
+          @proxy_addresses = nil
         end
         if NGINX_REQUEST_PATTERN.match(@request)
           # counter example (ie. HTTP request that cannot by parsed)
