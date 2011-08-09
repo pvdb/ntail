@@ -40,7 +40,7 @@ module NginxTail
         end
 
         opts.on '--apache', "Try to match lines using the Apache log format instead of nginx (the default)" do |value|
-          options.nginx = false
+          options.pattern = :apache
         end
 
         opts.on '--sleep [SECONDS]', '-s', Float, "Sleeps for the given number of seconds before processing the next line (--raw only)" do |value|

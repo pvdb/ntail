@@ -83,8 +83,11 @@ module NginxTail
 
     @@log_pattern = NGINX_LOG_PATTERN
 
-    def self.set_log_pattern(nginx_format)
-      @@log_pattern = nginx_format ? NGINX_LOG_PATTERN : APACHE_LOG_PATTERN
+    def self.set_pattern(pattern)
+      @@log_pattern = case pattern
+        when :nginx then NGINX_LOG_PATTERN
+        when :apache then APACHE_LOG_PATTERN
+      end
     end
 
     NGINX_REQUEST_PATTERN = Regexp.compile(/\A(\S+) (.*?) (\S+)\Z/)
