@@ -43,18 +43,18 @@ module NginxTail
           !self.unknown_referer?(http_referer) && !self.internal_referer?(http_referer)
         end
 
-         def self.to_referer_s(http_referer)
-           if self.unknown_referer? http_referer
-             http_referer
-           else begin
-               # try to parse it as a URI, but with default value if un-parsable
-               URI.parse(http_referer).host || http_referer
+        def self.to_referer_s(http_referer)
+          if self.unknown_referer? http_referer
+            http_referer
+          else begin
+              # try to parse it as a URI, but with default value if un-parsable
+              URI.parse(http_referer).host || http_referer
             rescue URI::InvalidURIError
-               http_referer
+              http_referer
             end
           end
         end
-        
+
         # this ensures the below module methods actually make sense...
         raise "Class #{base.name} should implement instance method 'http_referer'" unless base.instance_methods.map(&:to_s).include? 'http_referer'
 
