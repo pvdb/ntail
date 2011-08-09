@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ntail}
-  s.version = "0.0.12"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = %q{2011-08-08}
+  s.date = %q{2011-08-09}
   s.default_executable = %q{ntail}
   s.description = %q{A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines.}
   s.email = %q{pvandenberk@mac.com}
@@ -71,7 +71,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/pvdb/ntail}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.5.2}
+  s.rubygems_version = %q{1.6.1}
   s.summary = %q{A tail(1)-like utility for nginx log files}
   s.test_files = [
     "spec/application_spec.rb",
