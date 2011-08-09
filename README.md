@@ -122,7 +122,7 @@ TODO
 * implement a native `"-f"` option for ntail, similar to that of `tail(1)`, using e.g. flori's [file-tail gem](https://github.com/flori/file-tail)
 * implement a `"-i"` option ("ignore exceptions"/"continue processing"), if handling a single line raises an exception
 * or indeed a reverse `"-r"` option ("re-raise exception"), to immediately stop processing and raising the exception for investigation
-* implement (better) support for custom nginx log formats, in addition to [nginx's default "combined" log format](http://wiki.nginx.org/NginxHttpLogModule#log_format).
+* implement (better) support for custom nginx log formats, in addition to [nginx's default "combined" log format](http://wiki.nginx.org/NginxHttpLogModule#log_format) (as well as Apache's various log formats)
 
 <a name="acknowledgements"/>
 
@@ -131,8 +131,9 @@ Acknowledgements
 
 * ntail's parsing feature is inspired by an nginx log parser written by [Richard Taylor (moomerman)](https://github.com/moomerman)
 * parsing and expanding ntail's formatting string is done using nathansobo's quite brilliant [treetop gem](https://github.com/nathansobo/treetop)
-* ntail's raw line output is compatible with Fudge's fun and useful [gltail gem](https://github.com/Fudge/gltail)
-* Kudos to [Ed James (edjames)](https://github.com/edjames) for recommending the use of [instance_eval][eval] to clean up the DSL
+* ntail's raw line output is compatible with Fudge's fun and useful [gltail gem](https://github.com/Fudge/gltail), as well as the quite amazing [logstalgia](http://code.google.com/p/logstalgia/)
+* kudos to [Ed James (edjames)](https://github.com/edjames) for recommending the use of [instance_eval][eval] to clean up the DSL
+* ntail's HTML formatting was requested/suggested by [Phil Berryman](http://twitter.com/#!/philberryman) and implemented whilst listening to [Leftism](http://en.wikipedia.org/wiki/Leftism_\(album\)), the Leftfield album recommended to me by [Alastair Douglas](http://twitter.com/#!/alastairdouglas)
 
 [eval]: https://github.com/pvdb/ntail/commit/b0f40522012b9858c433808cd1f5c21cb455fadd "use instance_eval to simplify the DSL"
 
