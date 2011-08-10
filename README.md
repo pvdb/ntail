@@ -53,9 +53,17 @@ Basic Usage
 
         $ ntail /var/log/nginx/access.log
 
+* process an entire nginx log file and pipe each parsed and formatted line into a browser _(depends on the optional `bcat` gem)_
+
+        $ ntail /var/log/nginx/access.log | bcat
+
 * tail an "active" nginx log file and print each new line to STDOUT _(stop with ^C)_
 
         $ tail -f /var/log/nginx/access.log | ntail
+
+* tail an "active" nginx log file and pipe each new line into a browser _(stop with ^C)_
+
+        $ tail -f /var/log/nginx/access.log | ntail | bcat
 
 <a name="advanced"/>
 
