@@ -123,6 +123,12 @@ module NginxTail
       raw_line.send method, *params
     end
 
+    @@output_format = :ansi
+
+    def self.set_output(output)
+      @@output_format = output
+    end
+
     @@parser = FormattingParser.new
 
     @@result = @@format = nil
@@ -132,7 +138,12 @@ module NginxTail
         raise @@parser.terminal_failures.join("\n")
       else
         def @@result.value(log_line, color)
-          elements.map { |element| element.value(log_line, color) }.join
+          if @@output_format == :ansi
+            elements.map { |element| element.value(log_line, color) }.join
+          elsif @@output_format == :html
+            line = elements.map { |element| element.value(log_line, nil) }.join
+            "<span style=\"font-family: monospace; color: #{color}\">%s</span></br>" % line
+          end
         end
       end
     end
@@ -146,7 +157,7 @@ module NginxTail
 
       # a bit less boring:
       color = options[:color] && if redirect_status?
-        :yellow
+        @@output_format == :ansi ? :yellow : :orange
       elsif !success_status?
         :red
       else

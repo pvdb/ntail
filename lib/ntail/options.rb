@@ -39,6 +39,10 @@ module NginxTail
           options.raw = true
         end
 
+        opts.on '--browser', '--html', "generate HTML output (the default is ANSI output)" do |value|
+          options.output = :html
+        end
+
         opts.on '--apache', "Try to match lines using the Apache log format instead of nginx (the default)" do |value|
           options.pattern = :apache
         end

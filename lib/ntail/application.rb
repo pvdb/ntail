@@ -11,6 +11,7 @@ module NginxTail
       :interrupted => false,
       :running => true,
       :pattern => :nginx,
+      :output => :ansi,
       :exit => 0,
     }
 
@@ -32,6 +33,7 @@ module NginxTail
     def run!
 
       LogLine.set_pattern(@options.pattern)
+      LogLine.set_output(@options.output)
 
       ['TERM', 'INT'].each do |signal|
         Signal.trap(signal) do
