@@ -4,15 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{ntail}
-  s.version = "0.2.0"
+  s.name = "ntail"
+  s.version = "1.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = %q{2011-11-05}
-  s.default_executable = %q{ntail}
-  s.description = %q{A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines.}
-  s.email = %q{pvandenberk@mac.com}
+  s.date = "2012-02-12"
+  s.description = "A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines."
+  s.email = "pvandenberk@mac.com"
   s.executables = ["ntail"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -68,11 +67,11 @@ Gem::Specification.new do |s|
     "test/ntail/test_uri.rb",
     "test/test_ntail.rb"
   ]
-  s.homepage = %q{http://github.com/pvdb/ntail}
+  s.homepage = "http://github.com/pvdb/ntail"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.1}
-  s.summary = %q{A tail(1)-like utility for nginx log files}
+  s.rubygems_version = "1.8.11"
+  s.summary = "A tail(1)-like utility for nginx log files"
   s.test_files = [
     "spec/application_spec.rb",
     "spec/spec_helper.rb",
@@ -101,28 +100,22 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<rainbow>, [">= 0"])
       s.add_runtime_dependency(%q<user-agent>, [">= 0"])
       s.add_runtime_dependency(%q<treetop>, ["~> 1.4.9"])
-      s.add_runtime_dependency(%q<sequel>, [">= 0"])
-      s.add_runtime_dependency(%q<mongoid>, [">= 0"])
-      s.add_runtime_dependency(%q<sqlite3-ruby>, [">= 0"])
-      s.add_development_dependency(%q<rake>, [">= 0.9.2"])
+      s.add_development_dependency(%q<rake>, ["~> 0.9.2.2"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<geoip>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 2.5"])
     else
       s.add_dependency(%q<rainbow>, [">= 0"])
       s.add_dependency(%q<user-agent>, [">= 0"])
       s.add_dependency(%q<treetop>, ["~> 1.4.9"])
-      s.add_dependency(%q<sequel>, [">= 0"])
-      s.add_dependency(%q<mongoid>, [">= 0"])
-      s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-      s.add_dependency(%q<rake>, [">= 0.9.2"])
+      s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
-      s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<geoip>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 2.5"])
     end
@@ -130,14 +123,11 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rainbow>, [">= 0"])
     s.add_dependency(%q<user-agent>, [">= 0"])
     s.add_dependency(%q<treetop>, ["~> 1.4.9"])
-    s.add_dependency(%q<sequel>, [">= 0"])
-    s.add_dependency(%q<mongoid>, [">= 0"])
-    s.add_dependency(%q<sqlite3-ruby>, [">= 0"])
-    s.add_dependency(%q<rake>, [">= 0.9.2"])
+    s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
-    s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<geoip>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 2.5"])
   end

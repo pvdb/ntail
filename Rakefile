@@ -26,7 +26,7 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
@@ -45,20 +45,6 @@ end
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |test|
-  test.verbose = true
-end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new(:test_rcov) do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.rcov_opts = %w{--exclude test\/,spec\/ -T}
-  test.verbose = true
-end
-Rcov::RcovTask.new(:spec_rcov) do |test|
-  test.libs << 'spec'
-  test.pattern = 'spec/**/*_spec.rb'
-  test.rcov_opts = %w{--exclude test\/,spec\/ -T}
   test.verbose = true
 end
 
