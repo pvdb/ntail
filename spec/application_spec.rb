@@ -8,6 +8,8 @@ describe NginxTail::Application do
     end
   end
 
+  # specs governing processing behaviour
+
   it "has a default 'exit' value of 0" do
     NginxTail::Application.new.exit.should eq(0)
   end
@@ -18,6 +20,16 @@ describe NginxTail::Application do
 
   it "has a default 'interrupted' value of false" do
     NginxTail::Application.new.interrupted.should eq(false)
+  end
+
+  # specs governing pattern matching behaviour
+
+  it "has a default 'pattern' value for nginx" do
+    NginxTail::Application.new.pattern.should eq(:nginx)
+  end
+
+  it "has a 'pattern' that can be set via options" do
+    NginxTail::Application.new(['--apache']).pattern.should eq(:apache)
   end
   
 end
