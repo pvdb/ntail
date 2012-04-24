@@ -22,6 +22,14 @@ describe NginxTail::Application do
     NginxTail::Application.new.interrupted.should eq(false)
   end
 
+  # specs governing the help function
+
+  it "doesn't run when printing help" do
+    stfu do
+      NginxTail::Application.new(['--help']).running.should eq(false)
+    end
+  end
+
   # specs governing pattern matching behaviour
 
   it "has a default 'pattern' value for nginx" do
