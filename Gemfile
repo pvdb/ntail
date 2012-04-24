@@ -6,8 +6,6 @@ source "http://rubygems.org"
 gem "rainbow"
 gem "user-agent"
 gem "treetop"
-gem "guard"
-gem "guard-rspec"
 # gem 'sequel'
 # gem 'mongoid'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
@@ -22,4 +20,7 @@ group :development do
   gem "simplecov"
   gem "geoip"
   gem "rspec"
+  gem "guard"
+  gem "growl"
+  gem "guard-rspec"
 end
