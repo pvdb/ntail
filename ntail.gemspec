@@ -17,8 +17,29 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency('rdoc')
-  gem.add_development_dependency('aruba')
-  gem.add_development_dependency('rake', '~> 0.9.2')
   gem.add_dependency('methadone', '~> 1.2.2')
+
+  # for building and gem management
+  gem.add_development_dependency('rake', '~> 0.9.2')
+
+  # for developing
+  gem.add_development_dependency('pry')
+  gem.add_development_dependency('rdoc')
+  gem.add_development_dependency('awesome_print')
+
+  # for testing
+  gem.add_development_dependency('rspec')
+  gem.add_development_dependency('cucumber')
+  gem.add_development_dependency('aruba')
+
+  # for monitoring
+  gem.add_development_dependency('guard')
+  gem.add_development_dependency('growl')
+  gem.add_development_dependency('rb-fsevent')
+
+  # for TDD/BDD/CI
+  gem.add_development_dependency('guard-rspec')
+  gem.add_development_dependency('guard-cucumber')
+  gem.add_development_dependency('rspec-pride')
+  gem.add_development_dependency('cucumber-pride')
 end
