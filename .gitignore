@@ -41,3 +41,5 @@ pkg
 #*.swp
 # For ntail:
 *.log
+# For ST2:
+*.sublime-*
