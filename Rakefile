@@ -46,6 +46,7 @@ end
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |test|
   test.verbose = true
+  test.rspec_opts = "--format d --color"
 end
 
 task :default => [:test, :spec]
