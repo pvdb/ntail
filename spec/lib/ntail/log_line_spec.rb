@@ -147,6 +147,18 @@ describe Ntail::LogLine do
       log_line.components['suffix'].should eq ""
     end
 
+    it 'should always capture the prefix and suffix non-greedily' do
+      # given/when
+      log_line = described_class.new("Foo Bar Blegga", /(?<first>[^ ]+) (?<second>[^ ]+) (?<third>[^ ]+)/)
+      # then
+      log_line.components['prefix'].should eq ""
+      log_line.components['suffix'].should eq ""
+      # and
+      log_line.components['first'].should eq "Foo"
+      log_line.components['second'].should eq "Bar"
+      log_line.components['third'].should eq "Blegga"
+    end
+
     it 'should always include the named captures in the regexp' do
       # given/when
       log_line = described_class.new("Foo Bar Blegga Qux Thud", / (?<first>.*) (?<second>.*) (?<third>.*) /)

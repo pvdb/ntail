@@ -23,7 +23,7 @@ module Ntail
       @raw_log_line = raw_log_line
       @log_line_regexp = log_line_regexp
 
-      full_regexp = Regexp.new('\A(?<prefix>.*)' + log_line_regexp.to_s + '(?<suffix>.*)\Z')
+      full_regexp = Regexp.new('\A(?<prefix>.*?)' + log_line_regexp.to_s + '(?<suffix>.*?)\Z')
 
       @parsable = !full_regexp.match(raw_log_line).nil?
       @components = Hash[*$~.names.zip($~.captures).flatten] if $~
