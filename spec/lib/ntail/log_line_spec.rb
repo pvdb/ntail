@@ -1,4 +1,4 @@
-require 'spec_helper'
+ require 'spec_helper'
 
 describe Ntail::LogLine do
 
@@ -111,5 +111,54 @@ describe Ntail::LogLine do
 
   end
 
+  describe '#components' do
+
+    let(:log_line) {
+      described_class.new(raw_log_line, log_line_regexp)
+    }
+
+    it 'stores the log line components as a Hash' do
+      log_line.components.should be_instance_of(Hash)
+    end
+
+    it 'should always have a "prefix" entry' do
+      log_line.components.should have_key 'prefix'
+    end
+
+    it 'should always have a "suffix" entry' do
+      log_line.components.should have_key 'suffix'
+    end
+
+    it 'should always include the captured prefix and suffix when not empty' do
+      # given/when
+      log_line = described_class.new("Foo Bar Blegga Qux Thud", / Blegga /)
+      # then
+      log_line.components['prefix'].should eq "Foo Bar"
+      # and
+      log_line.components['suffix'].should eq "Qux Thud"
+    end
+
+    it 'should always include the captured prefix and suffix even when empty' do
+      # given/when
+      log_line = described_class.new("Foo Bar Blegga Qux Thud", /Foo Bar Blegga Qux Thud/)
+      # then
+      log_line.components['prefix'].should eq ""
+      # and
+      log_line.components['suffix'].should eq ""
+    end
+
+    it 'should always include the named captures in the regexp' do
+      # given/when
+      log_line = described_class.new("Foo Bar Blegga Qux Thud", / (?<first>.*) (?<second>.*) (?<third>.*) /)
+      # then
+      log_line.components['prefix'].should eq "Foo"
+      log_line.components['suffix'].should eq "Thud"
+      # and
+      log_line.components['first'].should eq "Bar"
+      log_line.components['second'].should eq "Blegga"
+      log_line.components['third'].should eq "Qux"
+    end
+
+  end
 
 end

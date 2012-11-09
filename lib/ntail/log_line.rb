@@ -5,6 +5,7 @@ module Ntail
     attr_reader :log_line_regexp
 
     attr_reader :parsable
+    attr_reader :components
 
     attr_reader :filename
     attr_reader :line_number
@@ -22,7 +23,10 @@ module Ntail
       @raw_log_line = raw_log_line
       @log_line_regexp = log_line_regexp
 
-      @parsable = !log_line_regexp.match(raw_log_line).nil?
+      full_regexp = Regexp.new('\A(?<prefix>.*)' + log_line_regexp.to_s + '(?<suffix>.*)\Z')
+
+      @parsable = !full_regexp.match(raw_log_line).nil?
+      @components = Hash[*$~.names.zip($~.captures).flatten] if $~
 
       @filename = filename
       @line_number = line_number
