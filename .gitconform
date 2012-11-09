@@ -1,0 +1,2 @@
+[git "conform"]
+	checkers = CarriageReturnCharacterChecker:FileNotEmptyChecker:LowercaseFilenameChecker:NonAsciiCharacterChecker:NonAsciiFilenameChecker:TabCharacterChecker:TrailingWhitespaceChecker:WhitespaceFilenameChecker

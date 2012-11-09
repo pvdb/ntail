@@ -30,7 +30,7 @@ class App
   # Or, just call OptionParser methods on opts
   #
   # Require an argument
-  # arg :some_arg 
+  # arg :some_arg
   #
   # # Make an argument optional
   # arg :optional_arg, :optional
