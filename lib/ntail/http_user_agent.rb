@@ -27,17 +27,21 @@ class SearchBot < Agent
   # ia_archiver (+http://www.alexa.com/site/help/webmasters; crawler@alexa.com)
   # Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)
   # Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
+  # ClickTale bot
+  # "Mozilla/5.0 (compatible; MSIE 7.0; MSIE 6.0; ScanAlert; +http://www.scanalert.com/bot.jsp) Firefox/2.0.0.3"
   #
 
   KNOWN_SEARCH_BOTS = [
-     GOOGLE_RSS = Regexp.compile('Feedfetcher-Google.*\/'),
-     GOOGLE_BOT = Regexp.compile('Googlebot.*\/'),
-        MSN_BOT = Regexp.compile('msnbot\/'),
-      YAHOO_BOT = Regexp.compile('Yahoo! Slurp\/?'),
-    PINGDOM_BOT = Regexp.compile('Pingdom.com_bot_version_'),
-      ALEXA_BOT = Regexp.compile('ia_archiver'),
-     YANDEX_BOT = Regexp.compile('YandexBot\/'),
-       BING_BOT = Regexp.compile('bingbot\/'),
+    GOOGLE_RSS    = Regexp.compile('Feedfetcher-Google.*\/'),
+    GOOGLE_BOT    = Regexp.compile('Googlebot.*\/'),
+    MSN_BOT       = Regexp.compile('msnbot\/'),
+    YAHOO_BOT     = Regexp.compile('Yahoo! Slurp\/?'),
+    PINGDOM_BOT   = Regexp.compile('Pingdom.com_bot_version_'),
+    ALEXA_BOT     = Regexp.compile('ia_archiver'),
+    YANDEX_BOT    = Regexp.compile('YandexBot\/'),
+    BING_BOT      = Regexp.compile('bingbot\/'),
+    CLICKTALE_BOT = Regexp.compile('ClickTale bot'),
+    SCANALERT_BOT = Regexp.compile('ScanAlert; '),
   ]
 
   def self.search_bot?(http_user_agent)
@@ -55,26 +59,30 @@ class SearchBot < Agent
 
   def self.name_for_user_agent string
     case string
-      when  GOOGLE_BOT then :googlebot
-      when     MSN_BOT then :msnbot
-      when   YAHOO_BOT then :yahoo_slurp
-      when   ALEXA_BOT then :ia_archiver
-      when PINGDOM_BOT then :pingdom_bot
-      when  YANDEX_BOT then :yandex_bot
-      when    BING_BOT then :bingbot
+      when    GOOGLE_BOT then :googlebot
+      when       MSN_BOT then :msnbot
+      when     YAHOO_BOT then :yahoo_slurp
+      when     ALEXA_BOT then :ia_archiver
+      when   PINGDOM_BOT then :pingdom_bot
+      when    YANDEX_BOT then :yandex_bot
+      when      BING_BOT then :bingbot
+      when CLICKTALE_BOT then :clicktale_bot
+      when SCANALERT_BOT then :scanalert_bot
       else super(string)
     end
   end
   
   def self.os_for_user_agent string
     case string
-      when  GOOGLE_BOT then :"google.com"
-      when     MSN_BOT then :"msn.com"
-      when   YAHOO_BOT then :"yahoo.com"
-      when   ALEXA_BOT then :"alexa.com"
-      when PINGDOM_BOT then :"pingdom.com"
-      when  YANDEX_BOT then :"yandex.com"
-      when    BING_BOT then :"bing.com"
+      when    GOOGLE_BOT then :"google.com"
+      when       MSN_BOT then :"msn.com"
+      when     YAHOO_BOT then :"yahoo.com"
+      when     ALEXA_BOT then :"alexa.com"
+      when   PINGDOM_BOT then :"pingdom.com"
+      when    YANDEX_BOT then :"yandex.com"
+      when      BING_BOT then :"bing.com"
+      when CLICKTALE_BOT then :"clicktale.com"
+      when SCANALERT_BOT then :"mcafeesecure.com"
       else super(string)
     end
   end
