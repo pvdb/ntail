@@ -59,3 +59,11 @@ end
 
 task :default => [:test,:features]
 
+task :gemspec do
+  @gemspec ||= eval(File.read(Dir["*.gemspec"].first))
+end
+
+desc "Validate the gemspec"
+task :validate => :gemspec do
+  @gemspec.validate
+end
