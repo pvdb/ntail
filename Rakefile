@@ -23,13 +23,20 @@ def dump_load_path
     puts "Found in #{path}"
   end
 end
+
 require 'bundler'
+require 'bundler/gem_tasks'
+
 require 'rake/clean'
 
 require 'rake/testtask'
 
 require 'cucumber'
 require 'cucumber/rake/task'
+
+require 'rspec'
+require 'rspec/core/rake_task'
+
 gem 'rdoc' # we need the installed RDoc gem, not the system one
 require 'rdoc/task'
 
@@ -50,6 +57,11 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.fork = false
 end
 
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = "--format d --color"
+end
+task :rspec => [:spec]
+
 Rake::RDocTask.new do |rd|
 
   rd.main = "README.rdoc"
@@ -57,7 +69,7 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
 end
 
-task :default => [:test,:features]
+task :default => [:test, :spec, :features]
 
 task :gemspec do
   @gemspec ||= eval(File.read(Dir["*.gemspec"].first))

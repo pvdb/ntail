@@ -14,3 +14,9 @@ end
 After do
   ENV['RUBYLIB'] = @original_rubylib
 end
+
+require 'cucumber-pride'
+
+require 'pry'
+require 'awesome_print'
+
