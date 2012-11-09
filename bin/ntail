@@ -1,8 +1,16 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
 require 'optparse'
 require 'methadone'
-require 'ntail'
+
+begin
+  require 'ntail'
+rescue LoadError
+  require 'rubygems'
+  require 'ntail'
+end
 
 class App
   include Methadone::Main
@@ -41,3 +49,5 @@ class App
 
   go!
 end
+
+# That's all, Folks!
