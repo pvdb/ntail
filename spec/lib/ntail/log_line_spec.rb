@@ -43,11 +43,25 @@ describe Ntail::LogLine do
       }.to raise_error(ArgumentError, "Required 'raw_log_line' parameter is missing")
     end
 
+    it 'throws an exception if raw_log_line is not a String' do
+      # when/then
+      expect {
+        described_class.new(Object.new, log_line_regexp)
+      }.to raise_error(ArgumentError, "Paramter 'raw_log_line' should be a String")
+    end
+
     it 'throws an exception if log_line_regexp is missing' do
       # when/then
       expect {
         described_class.new(raw_log_line, nil)
       }.to raise_error(ArgumentError, "Required 'log_line_regexp' parameter is missing")
+    end
+
+    it 'throws an exception if raw_log_line is not a Regexp' do
+      # when/then
+      expect {
+        described_class.new(raw_log_line, Object.new)
+      }.to raise_error(ArgumentError, "Paramter 'log_line_regexp' should be a Regexp")
     end
 
     it 'accepts filename and line number as optional parameters' do
@@ -78,5 +92,24 @@ describe Ntail::LogLine do
     end
 
   end
+
+  describe '#parsable' do
+
+    it 'is true when raw_log_line matches log_line_regexp' do
+      # given/when
+      log_line = described_class.new('Foo Bar Blegga Qux Thud', /Blegga/)
+      # then
+      log_line.parsable.should be_true
+    end
+
+    it 'is false when raw_log_line does not match log_line_regexp' do
+      # given/when
+      log_line = described_class.new('Foo Bar Blegga Qux Thud', /Square/)
+      # then
+      log_line.parsable.should be_false
+    end
+
+  end
+
 
 end
