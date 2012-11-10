@@ -201,4 +201,58 @@ describe Ntail::LogLine do
 
   end
 
+  context "metaprogramming" do
+
+    let(:log_line) {
+      described_class.new("Foo Bar Blegga", /(?<first>[^ ]+) (?<second>[^ ]+) (?<third>[^ ]+)/)
+    }
+
+    describe '#respond_to?' do
+
+      it 'is true for all named capture groups' do
+        # given/when
+        log_line.components.keys.should include :first
+        log_line.components.keys.should include :second
+        log_line.components.keys.should include :third
+        # then
+        log_line.should respond_to(:first)
+        log_line.should respond_to(:second)
+        log_line.should respond_to(:third)
+      end
+
+      it 'is false for everything else' do
+        # given/when
+        log_line.components.keys.should_not include :fourth
+        # then
+        log_line.should_not respond_to(:fourth)
+      end
+
+    end
+
+    describe '#method_missing' do
+
+      it 'returns the corresponding component for all named capture groups' do
+        # given/when
+        log_line.components[:first].should eq "Foo"
+        log_line.components[:second].should eq "Bar"
+        log_line.components[:third].should eq "Blegga"
+        # then
+        log_line.first.should eq "Foo"
+        log_line.second.should eq "Bar"
+        log_line.third.should eq "Blegga"
+      end
+
+      it 'raises exception for everything else' do
+        # given/when
+        log_line.components.keys.should_not include :fourth
+        # then
+        expect {
+          log_line.fourth
+        }.to raise_error(NoMethodError, "undefined method `fourth' for Foo Bar Blegga:Ntail::LogLine")
+      end
+
+    end
+
+  end
+
 end

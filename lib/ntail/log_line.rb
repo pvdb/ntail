@@ -37,8 +37,16 @@ module Ntail
 
     end
 
-    def to_s format_string = nil
+    def to_s(format_string = nil)
       format_string ? sprintf(format_string, @components) : raw_log_line
+    end
+
+    def respond_to?(symbol, include_private = false)
+      super || @components.keys.include?(symbol)
+    end
+
+    def method_missing(symbol, *args)
+      @components.keys.include?(symbol) ? @components[symbol] : super
     end
 
   end
