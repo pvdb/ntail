@@ -69,7 +69,8 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
 end
 
-task :default => [:test, :spec, :features]
+# task :default => [:test, :spec, :features]
+task :default => [:spec, :features]
 
 task :gemspec do
   @gemspec ||= eval(File.read(Dir["*.gemspec"].first))
