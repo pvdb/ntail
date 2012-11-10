@@ -122,53 +122,53 @@ describe Ntail::LogLine do
     end
 
     it 'should always have a "prefix" entry' do
-      log_line.components.should have_key 'prefix'
+      log_line.components.should have_key :prefix
     end
 
     it 'should always have a "suffix" entry' do
-      log_line.components.should have_key 'suffix'
+      log_line.components.should have_key :suffix
     end
 
     it 'should always include the captured prefix and suffix when not empty' do
       # given/when
       log_line = described_class.new("Foo Bar Blegga Qux Thud", / Blegga /)
       # then
-      log_line.components['prefix'].should eq "Foo Bar"
+      log_line.components[:prefix].should eq "Foo Bar"
       # and
-      log_line.components['suffix'].should eq "Qux Thud"
+      log_line.components[:suffix].should eq "Qux Thud"
     end
 
     it 'should always include the captured prefix and suffix even when empty' do
       # given/when
       log_line = described_class.new("Foo Bar Blegga Qux Thud", /Foo Bar Blegga Qux Thud/)
       # then
-      log_line.components['prefix'].should eq ""
+      log_line.components[:prefix].should eq ""
       # and
-      log_line.components['suffix'].should eq ""
+      log_line.components[:suffix].should eq ""
     end
 
     it 'should always capture the prefix and suffix non-greedily' do
       # given/when
       log_line = described_class.new("Foo Bar Blegga", /(?<first>[^ ]+) (?<second>[^ ]+) (?<third>[^ ]+)/)
       # then
-      log_line.components['prefix'].should eq ""
-      log_line.components['suffix'].should eq ""
+      log_line.components[:prefix].should eq ""
+      log_line.components[:suffix].should eq ""
       # and
-      log_line.components['first'].should eq "Foo"
-      log_line.components['second'].should eq "Bar"
-      log_line.components['third'].should eq "Blegga"
+      log_line.components[:first].should eq "Foo"
+      log_line.components[:second].should eq "Bar"
+      log_line.components[:third].should eq "Blegga"
     end
 
     it 'should always include the named captures in the regexp' do
       # given/when
       log_line = described_class.new("Foo Bar Blegga Qux Thud", / (?<first>.*) (?<second>.*) (?<third>.*) /)
       # then
-      log_line.components['prefix'].should eq "Foo"
-      log_line.components['suffix'].should eq "Thud"
+      log_line.components[:prefix].should eq "Foo"
+      log_line.components[:suffix].should eq "Thud"
       # and
-      log_line.components['first'].should eq "Bar"
-      log_line.components['second'].should eq "Blegga"
-      log_line.components['third'].should eq "Qux"
+      log_line.components[:first].should eq "Bar"
+      log_line.components[:second].should eq "Blegga"
+      log_line.components[:third].should eq "Qux"
     end
 
   end

@@ -26,7 +26,7 @@ module Ntail
       full_regexp = Regexp.new('\A(?<prefix>.*?)' + log_line_regexp.to_s + '(?<suffix>.*?)\Z')
 
       @parsable = !full_regexp.match(raw_log_line).nil?
-      @components = Hash[*$~.names.zip($~.captures).flatten] if $~
+      @components = Hash[*$~.names.map(&:to_sym).zip($~.captures).flatten] if $~
 
       @filename = filename
       @line_number = line_number
