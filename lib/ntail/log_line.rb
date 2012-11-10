@@ -33,5 +33,9 @@ module Ntail
 
     end
 
+    def to_s format_string = nil
+      format_string ? sprintf(format_string, @components) : raw_log_line
+    end
+
   end
 end

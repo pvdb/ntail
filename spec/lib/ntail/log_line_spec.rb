@@ -173,4 +173,25 @@ describe Ntail::LogLine do
 
   end
 
+  describe '#to_s' do
+
+    let(:log_line) {
+      described_class.new("Foo Bar Blegga", /(?<first>[^ ]+) (?<second>[^ ]+) (?<third>[^ ]+)/)
+    }
+
+    it 'defaults to the raw_log_line' do
+      log_line.to_s.should eq "Foo Bar Blegga"
+    end
+
+    it 'accepts sprintf-compatible format strings with named references' do
+      # then
+      log_line.components[:first].should eq "Foo"
+      log_line.components[:second].should eq "Bar"
+      log_line.components[:third].should eq "Blegga"
+      # and
+      log_line.to_s('%{third} - %{second}: %{first}').should eq "Blegga - Bar: Foo"
+    end
+
+  end
+
 end
