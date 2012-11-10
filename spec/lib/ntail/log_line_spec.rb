@@ -117,6 +117,13 @@ describe Ntail::LogLine do
       described_class.new(raw_log_line, log_line_regexp)
     }
 
+    it 'is nil if the log line does not match the regexp' do
+      # given/when
+      log_line = described_class.new("Foo Bar Blegga", /qux thud/)
+      # then
+      log_line.components.should be_nil
+    end
+
     it 'stores the log line components as a Hash' do
       log_line.components.should be_instance_of(Hash)
     end
@@ -153,7 +160,7 @@ describe Ntail::LogLine do
       # then
       log_line.components[:prefix].should eq ""
       log_line.components[:suffix].should eq ""
-      # and
+      # and
       log_line.components[:first].should eq "Foo"
       log_line.components[:second].should eq "Bar"
       log_line.components[:third].should eq "Blegga"
