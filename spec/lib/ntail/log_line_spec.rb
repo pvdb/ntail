@@ -2,23 +2,13 @@
 
 describe Ntail::LogLine do
 
-  let(:raw_log_line) {
-    "Foo Bar Blegga Qux Thud"
-  }
-
-  let(:log_line_regexp) {
-    /Blegga/
-  }
-
-  let(:filename) {
-    "foo/bar/blegga.log"
-  }
-
-  let(:line_number) {
-    666
-  }
-
   describe '#initialize' do
+
+    let(:raw_log_line) { "Foo Bar Blegga Qux Thud" }
+    let(:log_line_regexp) { /Blegga/ }
+
+    let(:filename) { "foo/bar/blegga.log" }
+    let(:line_number) { 666 }
 
     it 'requires raw_log_line and log_line_regexp as mandatory parameters' do
       # when
@@ -112,6 +102,9 @@ describe Ntail::LogLine do
   end
 
   describe '#components' do
+
+    let(:raw_log_line) { "Foo Bar Blegga Qux Thud" }
+    let(:log_line_regexp) { /Blegga/ }
 
     let(:log_line) {
       described_class.new(raw_log_line, log_line_regexp)
