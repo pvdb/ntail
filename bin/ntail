@@ -18,9 +18,21 @@ class App
   include Methadone::CLILogging
 
   main do |*files|
+
+    files_read = lines_read = 0
+
     files.each do |file|
       info "now processing: #{file}"
+      files_read += 1
+      open(file, "r") do |file|
+        while line = file.gets
+          lines_read += 1
+        end
+      end
     end
+
+    info "processed #{lines_read} line(s) in #{files_read} file(s)"
+
   end
 
   # supplemental methods here
