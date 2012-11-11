@@ -17,10 +17,10 @@ class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do |*files|
+    files.each do |file|
+      puts "[INFO] now processing file #{file}"
+    end
   end
 
   # supplemental methods here
