@@ -35,3 +35,10 @@ Feature: ntail's file processing
           """
           processed 3 line(s) in 2 file(s)
           """
+
+  Scenario: ntail counts files and lines, even with no input
+     When I run `ntail`
+     Then the output should contain:
+          """
+          processed 0 line(s) in 0 file(s)
+          """
