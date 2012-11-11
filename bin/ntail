@@ -13,6 +13,7 @@ rescue LoadError
 end
 
 class App
+
   include Methadone::Main
   include Methadone::CLILogging
 
@@ -37,17 +38,15 @@ class App
   #
   # Or, just call OptionParser methods on opts
   #
-  # Require an argument
-  # arg :some_arg
-  #
-  # # Make an argument optional
-  # arg :optional_arg, :optional
+
+  arg :file, :any, "List of files to process"
 
   version Ntail::VERSION
 
   use_log_level_option
 
   go!
+
 end
 
 # That's all, Folks!
