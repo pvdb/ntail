@@ -51,6 +51,8 @@ class App
   # Or, just call OptionParser methods on opts
   #
 
+  on('--pattern REGEXP', 'The regexp pattern each log line is processed with')
+
   arg :file, :any, "List of files to process"
 
   version Ntail::VERSION
