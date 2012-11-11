@@ -19,7 +19,7 @@ class App
 
   main do |*files|
     files.each do |file|
-      puts "[INFO] now processing file #{file}"
+      info "now processing: #{file}"
     end
   end
 
