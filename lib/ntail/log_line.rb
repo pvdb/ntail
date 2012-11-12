@@ -43,8 +43,8 @@ module Ntail
       format_string ? sprintf(format_string, @components) : raw_log_line
     end
 
-    def respond_to?(symbol, include_private = false)
-      super || @components.keys.include?(symbol)
+    def respond_to_missing?(symbol, include_private = false)
+      @components.keys.include?(symbol)
     end
 
     def method_missing(symbol, *args)
