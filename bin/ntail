@@ -61,6 +61,7 @@ class App
   #
 
   on('--pattern REGEXP', 'The regular expression each line is matched against')
+  on('--filter BLOCK', 'The filter that will be applied to each line (boolean Ruby code block)')
 
   arg :file, :any, "List of files to process"
 

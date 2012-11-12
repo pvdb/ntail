@@ -11,5 +11,6 @@ Feature: My bootstrapped app kinda works
       And the following options should be documented:
           | --version |
           | --pattern |
+          | --filter  |
       And the banner should document that this app's arguments are:
           | file | which is any |
