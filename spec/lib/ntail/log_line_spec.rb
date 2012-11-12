@@ -83,20 +83,20 @@ describe Ntail::LogLine do
 
   end
 
-  describe '#parsable' do
+  describe '#parsable?' do
 
     it 'is true when raw_log_line matches log_line_regexp' do
       # given/when
       log_line = described_class.new('Foo Bar Blegga Qux Thud', /Blegga/)
       # then
-      log_line.parsable.should be_true
+      log_line.parsable?.should be_true
     end
 
     it 'is false when raw_log_line does not match log_line_regexp' do
       # given/when
       log_line = described_class.new('Foo Bar Blegga Qux Thud', /Square/)
       # then
-      log_line.parsable.should be_false
+      log_line.parsable?.should be_false
     end
 
   end

@@ -37,6 +37,8 @@ module Ntail
 
     end
 
+    alias_method :parsable?, :parsable
+
     def to_s(format_string = nil)
       format_string ? sprintf(format_string, @components) : raw_log_line
     end
