@@ -37,7 +37,7 @@ describe Ntail::LogLine do
       # when/then
       expect {
         described_class.new(Object.new, log_line_regexp)
-      }.to raise_error(ArgumentError, "Paramter 'raw_log_line' should be a String")
+      }.to raise_error(ArgumentError, "Parameter 'raw_log_line' should be a String")
     end
 
     it 'throws an exception if log_line_regexp is missing' do
@@ -51,7 +51,7 @@ describe Ntail::LogLine do
       # when/then
       expect {
         described_class.new(raw_log_line, Object.new)
-      }.to raise_error(ArgumentError, "Paramter 'log_line_regexp' should be a Regexp")
+      }.to raise_error(ArgumentError, "Parameter 'log_line_regexp' should be a Regexp")
     end
 
     it 'accepts filename and line number as optional parameters' do
