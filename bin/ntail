@@ -19,7 +19,10 @@ class App
 
   main do |*files|
 
+    pattern = Regexp.new(options[:pattern] || '.*')
+
     files_read = lines_read = 0
+    parsable_lines = unparsable_lines = 0
 
     files.each do |file|
       info "now processing: #{file}"
@@ -27,11 +30,17 @@ class App
       open(file, "r") do |file|
         while line = file.gets
           lines_read += 1
+          if (log_line = Ntail::LogLine.new(line, pattern, nil, nil)).parsable?
+            parsable_lines += 1
+          else
+            unparsable_lines += 1
+          end
         end
       end
     end
 
     info "processed #{lines_read} line(s) in #{files_read} file(s)"
+    info "#{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
 
   end
 
@@ -51,7 +60,7 @@ class App
   # Or, just call OptionParser methods on opts
   #
 
-  on('--pattern REGEXP', 'The regexp pattern each log line is processed with')
+  on('--pattern REGEXP', 'The regular expression each line is matched against')
 
   arg :file, :any, "List of files to process"
 
