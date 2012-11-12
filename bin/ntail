@@ -23,6 +23,7 @@ class App
 
     files_read = lines_read = 0
     parsable_lines = unparsable_lines = 0
+    lines_processed = lines_filtered = 0
 
     files.each do |file|
       info "now processing: #{file}"
@@ -30,8 +31,13 @@ class App
       open(file, "r") do |file|
         while line = file.gets
           lines_read += 1
-          if (log_line = Ntail::LogLine.new(line, pattern, nil, nil)).parsable?
+          if (log_line = Ntail::LogLine.new(line.chomp, pattern, nil, nil)).parsable?
             parsable_lines += 1
+            if !options[:filter] || log_line.instance_eval(options[:filter])
+              lines_processed += 1
+            else
+              lines_filtered += 1
+            end
           else
             unparsable_lines += 1
           end
@@ -41,6 +47,7 @@ class App
 
     info "processed #{lines_read} line(s) in #{files_read} file(s)"
     info "#{parsable_lines} parsable lines, #{unparsable_lines} unparsable lines"
+    info "processed #{lines_processed} lines, filtered out #{lines_filtered} lines"
 
   end
 
