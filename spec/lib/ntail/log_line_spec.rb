@@ -238,10 +238,12 @@ describe Ntail::LogLine do
       it 'raises exception for everything else' do
         # given/when
         log_line.components.keys.should_not include :fourth
+        # and (http://split-s.blogspot.co.uk/2006/01/replacing-methods.html)
+        log_line_to_s = Object.instance_method(:to_s).bind(log_line).call
         # then
         expect {
           log_line.fourth
-        }.to raise_error(NoMethodError, "undefined method `fourth' for Foo Bar Blegga:Ntail::LogLine")
+        }.to raise_error(NoMethodError, "undefined method `fourth' for #{log_line_to_s}")
       end
 
     end
