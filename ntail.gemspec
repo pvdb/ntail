@@ -23,9 +23,12 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('rake', '~> 0.9.2')
 
   # for developing
-  gem.add_development_dependency('pry')
   gem.add_development_dependency('rdoc')
   gem.add_development_dependency('awesome_print')
+
+  # for debugging
+  gem.add_development_dependency('pry-plus')
+  gem.add_development_dependency('methodfinder')
 
   # for testing
   gem.add_development_dependency('rspec')
@@ -36,6 +39,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('guard')
   gem.add_development_dependency('growl')
   gem.add_development_dependency('rb-fsevent')
+  gem.add_development_dependency('rb-readline')
 
   # for TDD/BDD/CI
   gem.add_development_dependency('guard-rspec')
