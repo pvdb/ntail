@@ -27,11 +27,13 @@ class App
 
     files.each do |file|
       info "now processing: #{file}"
-      files_read += 1
+      files_read += 1 ; line_number = 0
       open(file, "r") do |file|
         while line = file.gets
-          lines_read += 1
-          if (log_line = Ntail::LogLine.new(line.chomp, pattern, nil, nil)).parsable?
+          lines_read += 1 ; line_number += 1
+          log_line = Ntail::LogLine.new(line.chomp, pattern, file.path, line_number)
+          debug log_line.to_s(:debug)
+          if log_line.parsable?
             parsable_lines += 1
             if !options[:filter] || log_line.instance_eval(options[:filter])
               lines_processed += 1
