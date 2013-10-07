@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('methadone', '~> 1.2.2')
 
   # for building and gem management
-  gem.add_development_dependency('rake', '~> 0.9.2')
+  gem.add_development_dependency('rake')
 
   # for developing
   gem.add_development_dependency('rdoc')
