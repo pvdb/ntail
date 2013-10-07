@@ -39,8 +39,14 @@ module Ntail
 
     alias_method :parsable?, :parsable
 
-    def to_s(format_string = nil)
-      format_string ? sprintf(format_string, @components) : raw_log_line
+    def to_s(formatter = nil)
+      case formatter
+        when String   then sprintf(formatter, @components)
+        when NilClass then raw_log_line
+        when :debug   then "#{@filename || '-'}:#{@line_number || -1}"
+      else
+        super
+      end
     end
 
     def respond_to_missing?(symbol, include_private = false)

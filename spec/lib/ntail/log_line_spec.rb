@@ -183,13 +183,41 @@ describe Ntail::LogLine do
       log_line.to_s.should eq "Foo Bar Blegga"
     end
 
-    it 'accepts sprintf-compatible format strings with named references' do
-      # then
-      log_line.components[:first].should eq "Foo"
-      log_line.components[:second].should eq "Bar"
-      log_line.components[:third].should eq "Blegga"
-      # and
-      log_line.to_s('%{third} - %{second}: %{first}').should eq "Blegga - Bar: Foo"
+    describe 'with sprintf-compatible format strings' do
+
+      it 'accepts named references' do
+        # then
+        log_line.components[:first].should eq "Foo"
+        log_line.components[:second].should eq "Bar"
+        log_line.components[:third].should eq "Blegga"
+        # and
+        log_line.to_s('%{third} - %{second}: %{first}').should eq "Blegga - Bar: Foo"
+      end
+
+    end
+
+    describe 'with symbolic formatters' do
+
+      context 'with filename and line_number missing' do
+        subject { Ntail::LogLine.new('blegga', /.*/, nil, nil).to_s(:debug) }
+        it { should eq "-:-1" }
+      end
+
+      context 'with filename set, but line_number missing' do
+        subject { Ntail::LogLine.new('blegga', /.*/, 'foo_bar.log', nil).to_s(:debug) }
+        it { should eq "foo_bar.log:-1" }
+      end
+
+      context 'with filename missing, but line_number set' do
+        subject { Ntail::LogLine.new('blegga', /.*/, nil, 666).to_s(:debug) }
+        it { should eq "-:666" }
+      end
+
+      context 'with filename and line_number set' do
+        subject { Ntail::LogLine.new('blegga', /.*/, 'foo_bar.log', 666).to_s(:debug) }
+        it { should eq "foo_bar.log:666" }
+      end
+
     end
 
   end
