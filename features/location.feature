@@ -14,9 +14,9 @@ Feature: ntail's filename and line_number logging
           """
      When I run `ntail --log-level debug blegga.log thud.log`
      Then the output should contain all of these:
-          | blegga.log:1 | 
-          | blegga.log:2 | 
-          | blegga.log:3 | 
-          | thud.log:1   | 
-          | thud.log:2   | 
+          | blegga.log:1 |
+          | blegga.log:2 |
+          | blegga.log:3 |
+          | thud.log:1   |
+          | thud.log:2   |
 

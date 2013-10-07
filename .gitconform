@@ -1,2 +1,11 @@
 [git "conform"]
-	checkers = CarriageReturnCharacterChecker:FileNotEmptyChecker:LowercaseFilenameChecker:NonAsciiCharacterChecker:NonAsciiFilenameChecker:TabCharacterChecker:TrailingWhitespaceChecker:WhitespaceFilenameChecker
+	checker = CarriageReturnCharacterChecker
+	checker = FileNotEmptyChecker
+	checker = LowercaseFilenameChecker
+	checker = NonAsciiCharacterChecker
+	checker = NonAsciiFilenameChecker
+	checker = TabCharacterChecker
+	checker = TrailingWhitespaceChecker
+	checker = WhitespaceFilenameChecker
+	binary = *.db
+	binary = *.csv
