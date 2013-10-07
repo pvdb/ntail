@@ -1,0 +1,3 @@
+# If you want another formatter, create .rspec-local with your preferred settings
+--require rspec/pride --format RSpec::Pride
+--color
