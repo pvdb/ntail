@@ -196,26 +196,45 @@ describe Ntail::LogLine do
 
     end
 
-    describe 'with symbolic formatters' do
+    describe 'with symbolic formatter :character_count' do
+
+      context 'with more than 1 character' do
+        subject { Ntail::LogLine.new('blegga', /.*/).to_s(:character_count) }
+        it { should eq "6 characters" }
+      end
+
+      context 'with exactly 1 character' do
+        subject { Ntail::LogLine.new('x', /.*/).to_s(:character_count) }
+        it { should eq "1 character" }
+      end
+
+      context 'with 0 characters' do
+        subject { Ntail::LogLine.new('', /.*/).to_s(:character_count) }
+        it { should eq "0 characters" }
+      end
+
+    end
+
+    describe 'with symbolic formatter :debug' do
 
       context 'with filename and line_number missing' do
         subject { Ntail::LogLine.new('blegga', /.*/, nil, nil).to_s(:debug) }
-        it { should eq "-:-1" }
+        it { should eq "-:-1 - 6 characters" }
       end
 
       context 'with filename set, but line_number missing' do
-        subject { Ntail::LogLine.new('blegga', /.*/, 'foo_bar.log', nil).to_s(:debug) }
-        it { should eq "foo_bar.log:-1" }
+        subject { Ntail::LogLine.new('foo', /.*/, 'foo_bar.log', nil).to_s(:debug) }
+        it { should eq "foo_bar.log:-1 - 3 characters" }
       end
 
       context 'with filename missing, but line_number set' do
-        subject { Ntail::LogLine.new('blegga', /.*/, nil, 666).to_s(:debug) }
-        it { should eq "-:666" }
+        subject { Ntail::LogLine.new('thud', /.*/, nil, 666).to_s(:debug) }
+        it { should eq "-:666 - 4 characters" }
       end
 
       context 'with filename and line_number set' do
-        subject { Ntail::LogLine.new('blegga', /.*/, 'foo_bar.log', 666).to_s(:debug) }
-        it { should eq "foo_bar.log:666" }
+        subject { Ntail::LogLine.new('x', /.*/, 'foo_bar.log', 666).to_s(:debug) }
+        it { should eq "foo_bar.log:666 - 1 character" }
       end
 
     end

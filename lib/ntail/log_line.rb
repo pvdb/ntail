@@ -41,9 +41,10 @@ module Ntail
 
     def to_s(formatter = nil)
       case formatter
-        when String   then sprintf(formatter, @components)
-        when NilClass then raw_log_line
-        when :debug   then "#{@filename || '-'}:#{@line_number || -1}"
+        when NilClass         then raw_log_line
+        when String           then sprintf(formatter, @components)
+        when :character_count then "%d character%s" % [count = raw_log_line.length, count == 1 ? '' : 's']
+        when :debug           then "#{@filename || '-'}:#{@line_number || -1} - #{to_s(:character_count)}"
       else
         super
       end
