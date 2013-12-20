@@ -25,6 +25,11 @@ module NginxTail
       :http_user_agent, # %U
       :proxy_addresses, # %p
 
+      # UPSTREAM = NGINX + ...
+
+      :upstream_response_time, # %?
+      :request_time,           # %D
+
       # APACHE
 
       :server_name,     # %V
@@ -75,6 +80,12 @@ module NginxTail
     # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
     #
 
+    UPSTREAM_LOG_PATTERN = Regexp.compile(/\A(\S+) - (\S+) \[([^\]]+)\] "([^"]+)" (\S+) (\S+) "([^"]*?)" "([^"]*?)"( "([^"]*?)")? - ([\d]+\.[\d]+) ([\d]+\.[\d]+)\Z/)
+
+    #
+    # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
+    #
+
     NGINX_LOG_PATTERN = Regexp.compile(/\A(\S+) - (\S+) \[([^\]]+)\] "([^"]+)" (\S+) (\S+) "([^"]*?)" "([^"]*?)"( "([^"]*?)")?\Z/)
 
     #
@@ -86,6 +97,7 @@ module NginxTail
     def self.set_pattern(pattern)
       @@log_pattern = case pattern
         when :nginx then NGINX_LOG_PATTERN
+        when :upstream then UPSTREAM_LOG_PATTERN
         when :apache then APACHE_LOG_PATTERN
       end
     end
@@ -98,6 +110,8 @@ module NginxTail
       @parsable = if @@log_pattern.match(@raw_line = line)
         if @@log_pattern == NGINX_LOG_PATTERN
           @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses = $~.captures
+        elsif @@log_pattern == UPSTREAM_LOG_PATTERN
+          @remote_addr, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @proxy_addresses, _, @upstream_response_time, @request_time = $~.captures
         elsif @@log_pattern == APACHE_LOG_PATTERN
           @server_name, @remote_addr, @remote_log_name, @remote_user, @time_local, @request, @status, @body_bytes_sent, @http_referer, @http_user_agent, @http_cookie, @time_taken = $~.captures
           @proxy_addresses = nil

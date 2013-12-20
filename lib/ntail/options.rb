@@ -43,6 +43,10 @@ module NginxTail
           options.output = :html
         end
 
+        opts.on '--upstream', "Try to match lines using the extended nginx 'upstream' log format" do |value|
+          options.pattern = :upstream
+        end
+
         opts.on '--apache', "Try to match lines using the Apache log format instead of nginx (the default)" do |value|
           options.pattern = :apache
         end
