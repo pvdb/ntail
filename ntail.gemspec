@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ntail"
-  s.version = "1.0.0"
+  s.version = "1.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = "2012-02-12"
+  s.date = "2013-12-20"
   s.description = "A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines."
   s.email = "pvandenberk@mac.com"
   s.executables = ["ntail"]
@@ -19,9 +19,10 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
-    ".rvmrc",
+    ".ruby-version",
     "Gemfile",
     "Gemfile.lock",
+    "Guardfile",
     "LICENSE.txt",
     "README.md",
     "Rakefile",
@@ -71,28 +72,8 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/pvdb/ntail"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.11"
+  s.rubygems_version = "1.8.23"
   s.summary = "A tail(1)-like utility for nginx log files"
-  s.test_files = [
-    "spec/application_spec.rb",
-    "spec/spec_helper.rb",
-    "test/helper.rb",
-    "test/ntail/test_formatting.rb",
-    "test/ntail/test_http_method.rb",
-    "test/ntail/test_http_referer.rb",
-    "test/ntail/test_http_user_agent.rb",
-    "test/ntail/test_http_version.rb",
-    "test/ntail/test_known_ip_addresses.rb",
-    "test/ntail/test_local_ip_addresses.rb",
-    "test/ntail/test_log_line.rb",
-    "test/ntail/test_remote_addr.rb",
-    "test/ntail/test_remote_user.rb",
-    "test/ntail/test_request.rb",
-    "test/ntail/test_status.rb",
-    "test/ntail/test_time_local.rb",
-    "test/ntail/test_uri.rb",
-    "test/test_ntail.rb"
-  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
@@ -100,37 +81,46 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rainbow>, [">= 0"])
       s.add_runtime_dependency(%q<user-agent>, [">= 0"])
-      s.add_runtime_dependency(%q<treetop>, ["~> 1.4.9"])
-      s.add_development_dependency(%q<rake>, ["~> 0.9.2.2"])
+      s.add_runtime_dependency(%q<treetop>, [">= 0"])
+      s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
+      s.add_development_dependency(%q<bundler>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
       s.add_development_dependency(%q<geoip>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 2.5"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<guard>, [">= 0"])
+      s.add_development_dependency(%q<growl>, [">= 0"])
+      s.add_development_dependency(%q<guard-rspec>, [">= 0"])
     else
       s.add_dependency(%q<rainbow>, [">= 0"])
       s.add_dependency(%q<user-agent>, [">= 0"])
-      s.add_dependency(%q<treetop>, ["~> 1.4.9"])
-      s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
+      s.add_dependency(%q<treetop>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
-      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
+      s.add_dependency(%q<bundler>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
       s.add_dependency(%q<geoip>, [">= 0"])
-      s.add_dependency(%q<rspec>, [">= 2.5"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<guard>, [">= 0"])
+      s.add_dependency(%q<growl>, [">= 0"])
+      s.add_dependency(%q<guard-rspec>, [">= 0"])
     end
   else
     s.add_dependency(%q<rainbow>, [">= 0"])
     s.add_dependency(%q<user-agent>, [">= 0"])
-    s.add_dependency(%q<treetop>, ["~> 1.4.9"])
-    s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
+    s.add_dependency(%q<treetop>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
-    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
+    s.add_dependency(%q<bundler>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
     s.add_dependency(%q<geoip>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 2.5"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<guard>, [">= 0"])
+    s.add_dependency(%q<growl>, [">= 0"])
+    s.add_dependency(%q<guard-rspec>, [">= 0"])
   end
 end
 
