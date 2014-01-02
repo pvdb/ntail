@@ -29,6 +29,7 @@ class SearchBot < Agent
   # Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
   # ClickTale bot
   # "Mozilla/5.0 (compatible; MSIE 7.0; MSIE 6.0; ScanAlert; +http://www.scanalert.com/bot.jsp) Firefox/2.0.0.3"
+  # "HTTP-Monitor/1.1"
   #
 
   KNOWN_SEARCH_BOTS = [
@@ -42,6 +43,7 @@ class SearchBot < Agent
     BING_BOT      = Regexp.compile('bingbot\/'),
     CLICKTALE_BOT = Regexp.compile('ClickTale bot'),
     SCANALERT_BOT = Regexp.compile('ScanAlert; '),
+    STINGRAY_BOT  = Regexp.compile('HTTP-Monitor/\..\."')
   ]
 
   def self.search_bot?(http_user_agent)
@@ -68,6 +70,7 @@ class SearchBot < Agent
       when      BING_BOT then :bingbot
       when CLICKTALE_BOT then :clicktale_bot
       when SCANALERT_BOT then :scanalert_bot
+      when  STINGRAY_BOT then :stingray_bot
       else super(string)
     end
   end
@@ -83,6 +86,7 @@ class SearchBot < Agent
       when      BING_BOT then :"bing.com"
       when CLICKTALE_BOT then :"clicktale.com"
       when SCANALERT_BOT then :"mcafeesecure.com"
+      when  STINGRAY_BOT then :"riverbed.com"
       else super(string)
     end
   end
