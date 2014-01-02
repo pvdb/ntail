@@ -30,6 +30,8 @@ class SearchBot < Agent
   # ClickTale bot
   # "Mozilla/5.0 (compatible; MSIE 7.0; MSIE 6.0; ScanAlert; +http://www.scanalert.com/bot.jsp) Firefox/2.0.0.3"
   # "HTTP-Monitor/1.1"
+  # "Simply Business Nagios v0.1"
+  # "CopperEgg/RevealUptime/LondonUK"
   #
 
   KNOWN_SEARCH_BOTS = [
@@ -43,7 +45,9 @@ class SearchBot < Agent
     BING_BOT      = Regexp.compile('bingbot\/'),
     CLICKTALE_BOT = Regexp.compile('ClickTale bot'),
     SCANALERT_BOT = Regexp.compile('ScanAlert; '),
-    STINGRAY_BOT  = Regexp.compile('HTTP-Monitor\/')
+    STINGRAY_BOT  = Regexp.compile('HTTP-Monitor\/'),
+    SB_NAGIOS_BOT = Regexp.compile('Simply Business Nagios v'),
+    COPPEREGG_BOT = Regexp.compile('CopperEgg/RevealUptime/LondonUK'),
   ]
 
   def self.search_bot?(http_user_agent)
@@ -71,6 +75,8 @@ class SearchBot < Agent
       when CLICKTALE_BOT then :clicktale_bot
       when SCANALERT_BOT then :scanalert_bot
       when  STINGRAY_BOT then :stingray_bot
+      when SB_NAGIOS_BOT then :sb_nagios_bot
+      when COPPEREGG_BOT then :copperegg_bot
       else super(string)
     end
   end
@@ -87,6 +93,8 @@ class SearchBot < Agent
       when CLICKTALE_BOT then :"clicktale.com"
       when SCANALERT_BOT then :"mcafeesecure.com"
       when  STINGRAY_BOT then :"riverbed.com"
+      when SB_NAGIOS_BOT then :"nagios.org"
+      when COPPEREGG_BOT then :"copperegg.com"
       else super(string)
     end
   end
