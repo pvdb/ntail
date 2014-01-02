@@ -43,7 +43,7 @@ class SearchBot < Agent
     BING_BOT      = Regexp.compile('bingbot\/'),
     CLICKTALE_BOT = Regexp.compile('ClickTale bot'),
     SCANALERT_BOT = Regexp.compile('ScanAlert; '),
-    STINGRAY_BOT  = Regexp.compile('HTTP-Monitor/\..\."')
+    STINGRAY_BOT  = Regexp.compile('HTTP-Monitor\/\..\."')
   ]
 
   def self.search_bot?(http_user_agent)
