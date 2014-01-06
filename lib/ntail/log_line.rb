@@ -80,7 +80,7 @@ module NginxTail
     # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
     #
 
-    UPSTREAM_LOG_PATTERN = Regexp.compile(/\A(\S+) - (\S+) \[([^\]]+)\] "([^"]+)" (\S+) (\S+) "([^"]*?)" "([^"]*?)"( "([^"]*?)")? - ([\d]+\.[\d]+) ([\d]+\.[\d]+)\Z/)
+    UPSTREAM_LOG_PATTERN = Regexp.compile(/\A(\S+) - (\S+) \[([^\]]+)\] "([^"]+)" (\S+) (\S+) "([^"]*?)" "([^"]*?)"( "([^"]*?)")? - ([\d]+\.[\d]+|-) ([\d]+\.[\d]+|-)\Z/)
 
     #
     # http://wiki.nginx.org/NginxHttpLogModule#log_format - we currently only support the default "combined" log format...
