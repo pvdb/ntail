@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "ntail"
-  s.version = "1.1.3"
+  s.version = "1.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Vandenberk"]
-  s.date = "2014-01-02"
+  s.date = "2014-01-06"
   s.description = "A tail(1)-like utility for nginx log files. It supports parsing, filtering and formatting individual log lines."
   s.email = "pvandenberk@mac.com"
   s.executables = ["ntail"]
