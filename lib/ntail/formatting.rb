@@ -352,7 +352,12 @@ module Formatting
 
   module UpstreamResponseTime0
     def value(log_line, color)
-      foreground(log_line.upstream_response_time, color)
+      if color && Sickill::Rainbow.enabled
+        # 15 = 6 + 9, the extra amount of bytes required for the ANSI escape codes...
+        "%15s" % foreground(log_line.upstream_response_time, color)
+      else
+        "%6s" % log_line.upstream_response_time
+      end
     end
   end
 
@@ -383,7 +388,12 @@ module Formatting
 
   module RequestTime0
     def value(log_line, color)
-      foreground(log_line.request_time, color)
+      if color && Sickill::Rainbow.enabled
+        # 15 = 6 + 9, the extra amount of bytes required for the ANSI escape codes...
+        "%15s" % foreground(log_line.request_time, color)
+      else
+        "%6s" % log_line.request_time
+      end
     end
   end
 
