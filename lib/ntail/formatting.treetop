@@ -14,7 +14,7 @@ grammar Formatting
   end
 
   rule token
-    remote_addr / remote_user / time_local / request / status / body_bytes_sent / http_referer / http_user_agent / proxy_addresses
+    remote_addr / remote_user / time_local / request / status / body_bytes_sent / upstream_response_time / request_time / http_referer / http_user_agent / proxy_addresses
   end
 
   rule remote_addr
@@ -66,6 +66,22 @@ grammar Formatting
     '%b' <Node> {
       def value(log_line, color)
         foreground(log_line.body_bytes_sent, color)
+      end
+    }
+  end
+
+  rule upstream_response_time
+    '%<T' <Node> {
+      def value(log_line, color)
+        foreground(log_line.upstream_response_time, color)
+      end
+    }
+  end
+
+  rule request_time
+    '%T' <Node> {
+      def value(log_line, color)
+        foreground(log_line.request_time, color)
       end
     }
   end

@@ -120,20 +120,30 @@ module Formatting
               if r6
                 r0 = r6
               else
-                r7 = _nt_http_referer
+                r7 = _nt_upstream_response_time
                 if r7
                   r0 = r7
                 else
-                  r8 = _nt_http_user_agent
+                  r8 = _nt_request_time
                   if r8
                     r0 = r8
                   else
-                    r9 = _nt_proxy_addresses
+                    r9 = _nt_http_referer
                     if r9
                       r0 = r9
                     else
-                      @index = i0
-                      r0 = nil
+                      r10 = _nt_http_user_agent
+                      if r10
+                        r0 = r10
+                      else
+                        r11 = _nt_proxy_addresses
+                        if r11
+                          r0 = r11
+                        else
+                          @index = i0
+                          r0 = nil
+                        end
+                      end
                     end
                   end
                 end
@@ -336,6 +346,68 @@ module Formatting
     end
 
     node_cache[:body_bytes_sent][start_index] = r0
+
+    r0
+  end
+
+  module UpstreamResponseTime0
+    def value(log_line, color)
+      foreground(log_line.upstream_response_time, color)
+    end
+  end
+
+  def _nt_upstream_response_time
+    start_index = index
+    if node_cache[:upstream_response_time].has_key?(index)
+      cached = node_cache[:upstream_response_time][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%<T', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 3))
+      r0.extend(UpstreamResponseTime0)
+      @index += 3
+    else
+      terminal_parse_failure('%<T')
+      r0 = nil
+    end
+
+    node_cache[:upstream_response_time][start_index] = r0
+
+    r0
+  end
+
+  module RequestTime0
+    def value(log_line, color)
+      foreground(log_line.request_time, color)
+    end
+  end
+
+  def _nt_request_time
+    start_index = index
+    if node_cache[:request_time].has_key?(index)
+      cached = node_cache[:request_time][index]
+      if cached
+        cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+        @index = cached.interval.end
+      end
+      return cached
+    end
+
+    if has_terminal?('%T', false, index)
+      r0 = instantiate_node(Node,input, index...(index + 2))
+      r0.extend(RequestTime0)
+      @index += 2
+    else
+      terminal_parse_failure('%T')
+      r0 = nil
+    end
+
+    node_cache[:request_time][start_index] = r0
 
     r0
   end

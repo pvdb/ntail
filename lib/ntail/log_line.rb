@@ -27,8 +27,8 @@ module NginxTail
 
       # UPSTREAM = NGINX + ...
 
-      :upstream_response_time, # %?
-      :request_time,           # %D
+      :upstream_response_time, #       %<T (seconds, with millisecond resolution)
+      :request_time,           # %T or %>T (seconds, with millisecond resolution) / but also see: %D (microseconds)
 
       # APACHE
 
