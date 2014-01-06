@@ -15,6 +15,10 @@ module NginxTail
           options.verbose = true
         end
 
+        opts.on '--format FORMAT_STRING',  "Set the format string to use when outputting parsed log lines" do |value|
+          NginxTail::LogLine.format = value
+        end
+
         opts.on '--filter',  '-f CODE', "Ruby code block for filtering (parsed) lines - needs to return true or false." do |value|
           options.filter = value
         end
