@@ -3,7 +3,7 @@ require 'helper'
 class TestStatus < Test::Unit::TestCase
 
   context "ntail" do
-    
+
     should "correctly identify the nginx 499 status code" do
       status = NginxTail::Status::NGINX_MAGIC_STATUS # 499
       # directly via the helper function
@@ -20,7 +20,7 @@ class TestStatus < Test::Unit::TestCase
       assert !log_line.client_error_status?
       assert !log_line.server_error_status?
     end
-        
+
   end
 
 end

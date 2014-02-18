@@ -3,7 +3,7 @@ require 'helper'
 class TestHttpUserAgent < Test::Unit::TestCase
 
   context "ntail" do
-    
+
     should "correctly identify search bot user agent" do
       search_bot_user_agent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
       # directly via the helper function
@@ -23,7 +23,7 @@ class TestHttpUserAgent < Test::Unit::TestCase
       assert !log_line.search_bot?
       assert !log_line.to_agent.search_bot?
     end
-        
+
   end
 
 end

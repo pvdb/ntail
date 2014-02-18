@@ -3,7 +3,7 @@ require 'helper'
 class TestRemoteAddr < Test::Unit::TestCase
 
   context "ntail" do
-    
+
     setup do
       @remote_addr = "192.0.32.10"
       @log_line = random_log_line(:remote_addr => @remote_addr)
@@ -36,7 +36,7 @@ class TestRemoteAddr < Test::Unit::TestCase
       # parsed from a raw log line
       assert ["www.example.com", "192.0.32.10"].include? @log_line.to_host_s
     end
-    
+
     should "convert the request's remote address into a country string" do
       return unless File.exists?('/usr/share/GeoIP/GeoIP.dat')
       # directly via the helper function
@@ -45,7 +45,7 @@ class TestRemoteAddr < Test::Unit::TestCase
       # parsed from a raw log line
       assert_equal "United States", @log_line.to_country_s
     end
-    
+
     should "convert the request's remote address into a city string" do
       return unless File.exists?('/usr/share/GeoIP/GeoIPCity.dat')
       # directly via the helper function
@@ -54,7 +54,7 @@ class TestRemoteAddr < Test::Unit::TestCase
       # parsed from a raw log line
       assert_equal "Marina Del Rey", @log_line.to_city_s
     end
-    
+
   end
 
 end

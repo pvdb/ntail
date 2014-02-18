@@ -2,7 +2,7 @@ require 'date'
 
 module NginxTail
   module TimeLocal
-    
+
     def self.included(base) # :nodoc:
       base.class_eval do
 
@@ -15,17 +15,17 @@ module NginxTail
         def self.to_date(time_local)
           DateTime.strptime(time_local, '%d/%b/%Y:%T %z')
         end
-        
+
         def self.to_date_s(time_local, format = "%Y-%m-%d %X")
           self.to_date(time_local).strftime(format)
         end
 
         # this ensures the below module methods actually make sense...
         raise "Class #{base.name} should implement instance method 'time_local'" unless base.instance_methods.map(&:to_s).include? 'time_local'
-        
+
       end
     end
-    
+
     def to_date
       self.class.to_date(self.time_local)
     end
@@ -33,6 +33,6 @@ module NginxTail
     def to_date_s
       self.class.to_date_s(self.time_local)
     end
-    
+
   end
 end

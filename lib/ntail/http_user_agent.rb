@@ -2,7 +2,7 @@ require 'rubygems'
 require 'user-agent'
 
 class Agent
-  
+
   def search_bot?
     false
   end
@@ -14,7 +14,7 @@ class SearchBot < Agent
   def search_bot?
     true
   end
-  
+
   #
   # Feedfetcher-Google; (+http://www.google.com/feedfetcher.html; feed-id=17168503030479467473)
   # Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
@@ -52,8 +52,8 @@ class SearchBot < Agent
 
   def self.search_bot?(http_user_agent)
     !KNOWN_SEARCH_BOTS.detect { |bot| bot.match(http_user_agent) }.nil?
-  end 
-  
+  end
+
   attr_accessor :name
   attr_accessor :os
 
@@ -80,7 +80,7 @@ class SearchBot < Agent
       else super(string)
     end
   end
-  
+
   def self.os_for_user_agent string
     case string
       when    GOOGLE_BOT then :"google.com"
@@ -98,18 +98,18 @@ class SearchBot < Agent
       else super(string)
     end
   end
-  
+
 end
 
 module NginxTail
   module HttpUserAgent
-    
+
     def self.included(base) # :nodoc:
       base.class_eval do
 
         def self.search_bot?(http_user_agent)
           SearchBot.search_bot?(http_user_agent)
-        end 
+        end
 
         def self.to_agent(http_user_agent)
           if self.search_bot? http_user_agent
@@ -126,22 +126,22 @@ module NginxTail
 
         # this ensures the below module methods actually make sense...
         raise "Class #{base.name} should implement instance method 'http_user_agent'" unless base.instance_methods.map(&:to_s).include? 'http_user_agent'
-        
+
       end
     end
-    
+
     def search_bot?
       self.class.search_bot?(self.http_user_agent)
     end
-    
+
     def to_agent
       self.class.to_agent(self.http_user_agent)
     end
-    
+
     def to_agent_s
       self.class.to_agent_s(self.http_user_agent)
     end
-    
+
   end
 end
 

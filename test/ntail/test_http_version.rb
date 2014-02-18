@@ -3,7 +3,7 @@ require 'helper'
 class TestHttpVersion < Test::Unit::TestCase
 
   context "ntail" do
-    
+
     should "correctly identify the HTTP version of the request" do
       http_version = "HTTP/1.0"
       # directly via the helper function

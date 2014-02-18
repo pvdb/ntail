@@ -1,6 +1,6 @@
 module NginxTail
   module Uri
-    
+
     def self.included(base) # :nodoc:
       base.class_eval do
 
@@ -90,10 +90,10 @@ module NginxTail
 
         # this ensures the below module methods actually make sense...
         raise "Class #{base.name} should implement instance method 'uri'" unless base.instance_methods.map(&:to_s).include? 'uri'
-        
+
       end
     end
-    
+
     def to_uri_s
       self.class.to_uri_s(self.uri)
     end
@@ -105,6 +105,6 @@ module NginxTail
     def static_uri?
       self.class.static_uri?(self.uri)
     end
-    
+
   end
 end

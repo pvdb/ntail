@@ -18,12 +18,12 @@ module NginxTail
         def self.reset_authenticated_users
           while !@@authenticated_users.empty? ; @@authenticated_users.pop ; end
         end
-        
+
         # mainly (solely?) for testing purposes...
         def self.authenticated_users
           @@authenticated_users.dup
         end
-        
+
         def self.add_authenticated_user(authenticated_user)
           raise "Cannot add unkown remote user" if self.unknown_remote_user? authenticated_user
           (@@authenticated_users << authenticated_user).uniq!
@@ -36,7 +36,7 @@ module NginxTail
         def self.remote_user?(remote_user)
           !self.unknown_remote_user?(remote_user)
         end
-        
+
         def self.authenticated_user?(remote_user)
           self.remote_user?(remote_user) && @@authenticated_users.include?(remote_user)
         end
@@ -54,7 +54,7 @@ module NginxTail
     def remote_user?
       self.class.remote_user?(self.remote_user)
     end
-    
+
     def authenticated_user?
       self.class.authenticated_user?(self.remote_user)
     end

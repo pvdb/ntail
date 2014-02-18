@@ -3,17 +3,17 @@ require 'helper'
 class TestHttpReferer < Test::Unit::TestCase
 
   context "ntail" do
-    
+
     setup do
       @http_referer = "http://example.com/index.html"
       @log_line = random_log_line(:http_referer => @http_referer)
     end
-    
+
     teardown do
       # undo any changes the test may have made
       NginxTail::LogLine.reset_internal_referers
     end
-    
+
     should "have empty list of internal referers without configuration" do
       assert NginxTail::LogLine.internal_referers.empty?
     end
@@ -52,13 +52,13 @@ class TestHttpReferer < Test::Unit::TestCase
       assert @log_line.external_referer?
 
       NginxTail::LogLine.add_internal_referer(/http:\/\/example\.com/)
-      
+
       assert NginxTail::LogLine.internal_referer?(@http_referer)
       assert !NginxTail::LogLine.external_referer?(@http_referer)
       assert @log_line.internal_referer?
       assert !@log_line.external_referer?
     end
-    
+
     should "parse and format the unknownHTTP referer" do
       http_referer = NginxTail::HttpReferer::UNKNOWN_REFERER
       assert_equal http_referer, NginxTail::LogLine.to_referer_s(http_referer)
@@ -69,9 +69,9 @@ class TestHttpReferer < Test::Unit::TestCase
       to_referer_s = NginxTail::LogLine.to_referer_s(@http_referer)
       assert_equal "example.com", to_referer_s
       # parsed from a raw log line
-      assert_equal "example.com", @log_line.to_referer_s    
+      assert_equal "example.com", @log_line.to_referer_s
     end
-    
+
   end
 
 end

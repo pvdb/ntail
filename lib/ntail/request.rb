@@ -1,8 +1,8 @@
 module NginxTail
   module Request
-    
+
     UNKNOWN_REQUEST = "-".freeze # the 'default' nginx value for $request variable
-    
+
     def self.included(base) # :nodoc:
       base.class_eval do
 
@@ -12,7 +12,7 @@ module NginxTail
 
         # this ensures the below module methods actually make sense...
         raise "Class #{base.name} should implement instance method 'request'" unless base.instance_methods.map(&:to_s).include? 'request'
-        
+
       end
     end
 
@@ -28,6 +28,6 @@ module NginxTail
         "%s %s" % [self.to_http_method_s, self.to_uri_s]
       end
     end
-        
+
   end
 end

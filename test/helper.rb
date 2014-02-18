@@ -20,26 +20,26 @@ class Test::Unit::TestCase
   def random_ip_address
     ((1..4).map { Kernel.rand(256) }).join('.')
   end
-  
+
   def local_ip_address
     # http://en.wikipedia.org/wiki/IP_address#IPv4_private_addresses
     (['192', '168'] + (1..2).map { Kernel.rand(256) }).join('.')
   end
 
-  # 
+  #
   # http://wiki.nginx.org/NginxHttpLogModule#log_format
   #
   # There is a predefined log format called "combined":
-  # 
+  #
   # log_format combined '$remote_addr - $remote_user [$time_local] '
   #                     '"$request" $status $body_bytes_sent '
   #                     '"$http_referer" "$http_user_agent"';
-  # 
+  #
 
   LOG_FORMAT_COMBINED = '%s - %s [%s] ' \
                         '"%s" %d %d ' \
                         '"%s" "%s"'
-                        
+
   DEFAULT_VALUES = {
     :remote_addr => '72.46.130.42',
     :remote_user => '-',
@@ -54,9 +54,9 @@ class Test::Unit::TestCase
     :http_user_agent => 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.224 Safari/534.10',
     :proxy_addresses => nil
   }
-  
+
   REQUEST_FORMAT = '%s %s %s'
-  
+
   def random_raw_line(options = {})
     options = DEFAULT_VALUES.merge options
     options[:request] ||= REQUEST_FORMAT % [
@@ -76,19 +76,19 @@ class Test::Unit::TestCase
       # TODO implement support for :proxy_addresses
     ]
   end
-  
+
   def random_log_line(options = {})
     NginxTail::LogLine.new(random_raw_line(options))
   end
-  
+
   def bad_request_raw_line
     # a "bad request", resulting in a 400 status, is logged by nginx as follows:
     # 121.8.101.138 - - [28/Dec/2010:23:50:58 +0000] "-" 400 0 "-" "-"
     '121.8.101.138 - - [28/Dec/2010:23:50:58 +0000] "-" 400 0 "-" "-"'
   end
-  
+
   def bad_request_log_line
     NginxTail::LogLine.new(bad_request_raw_line)
   end
-  
+
 end

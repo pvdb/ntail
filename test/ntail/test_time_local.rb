@@ -3,7 +3,7 @@ require 'helper'
 class TestTimeLocal < Test::Unit::TestCase
 
   context "ntail" do
-    
+
     setup do
       @time_local = "13/Apr/2010:04:45:51 +0100"
       @log_line = random_log_line(:time_local => @time_local)
@@ -22,9 +22,9 @@ class TestTimeLocal < Test::Unit::TestCase
       to_date_s = NginxTail::LogLine.to_date_s(@time_local)
       assert_equal "2010-04-13 04:45:51", to_date_s
       # parsed from a raw log line
-      assert_equal "2010-04-13 04:45:51", @log_line.to_date_s    
+      assert_equal "2010-04-13 04:45:51", @log_line.to_date_s
     end
-    
+
   end
 
 end
