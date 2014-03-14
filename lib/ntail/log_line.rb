@@ -3,6 +3,8 @@ require 'net/http'
 require 'rubygems'
 require 'rainbow'
 
+require 'rainbow/ext/string'
+
 module NginxTail
   class LogLine
 
